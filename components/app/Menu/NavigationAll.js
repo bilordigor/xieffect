@@ -560,7 +560,7 @@ const NavigationAll = inject('store')(observer((props) => {
                                 </IconButton>
                             </Paper>}
                             {/* Панель свойств отображения главного контента на странице */}
-                            {!openSearch &&
+                            {/* {!openSearch &&
                                 <Button
                                     ref={anchorRefExpandMore}
                                     aria-controls={openExpandMore ? 'menu-list-grow' : undefined}
@@ -570,9 +570,9 @@ const NavigationAll = inject('store')(observer((props) => {
                                     {!openExpandMore && <LightTooltip title="Настройки отображения"><ExpandMoreIcon fontSize="large" className={classes.expandMoreIcon} /></LightTooltip>}
                                     {openExpandMore && <ExpandLessIcon fontSize="large" className={classes.expandMoreIcon} />}
                                 </Button>
-                            }
+                            } */}
                             {/* Выпадающее меню свойств отображения главного контента на странице */}
-                            <Popper open={openExpandMore} anchorEl={anchorRefExpandMore.current} role={undefined} transition disablePortal>
+                            {/* <Popper open={openExpandMore} anchorEl={anchorRefExpandMore.current} role={undefined} transition disablePortal>
                                 {({ TransitionProps, placement }) => (
                                     <Grow
                                         {...TransitionProps}
@@ -603,7 +603,7 @@ const NavigationAll = inject('store')(observer((props) => {
                                         </Paper>
                                     </Grow>
                                 )}
-                            </Popper>
+                            </Popper> */}
                             {/* Кнопка-иконка создания новых курсов */}
                             <LightTooltip title="Создать курс">
                                 <Fab size="medium" aria-label="add" className={classes.addCourse}>
