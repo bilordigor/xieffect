@@ -12,7 +12,8 @@ const useStyles = makeStyles((theme) => ({
     root: {
         //boxSizing: 'border-box',
         // position: 'absolute',
-        backgroundColor: theme.main.palette.content.background,
+        backgroundColor: '#2c2c2c',
+        //backgroundColor: theme.main.palette.content.background,
         // top: 0,
         // left: 0,
         // right: 0,
@@ -111,7 +112,6 @@ const Support = inject('store')(observer((props) => {
             <div className={classes.root}>
                 <Background src={wallpapers()} />
                 <Grid container direction="column" justifyContent="flex-start" alignItems="center">
-                    <Background className={classes.img} src={wallpapers()} />
                     <Navigation />
                     <Grid container direction="row" justifyContent="center" alignItems="center" className={classes.gridLabelMain}>
                         <Typography className={classes.labelMain}> Поддержка </Typography>

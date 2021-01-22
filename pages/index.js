@@ -1,7 +1,7 @@
 import Head from 'next/head'
 import Link from 'next/link'
 import * as React from 'react';
-import { Divider, Paper, Grid, AppBar, Toolbar, Typography, CssBaseline, useScrollTrigger, Box, Container, Fab, Zoom, Button } from '@material-ui/core';
+import { Divider, Paper, Grid, AppBar, Toolbar, Typography, CssBaseline, useScrollTrigger, Box, Container, Fab, Zoom, Button, Hidden } from '@material-ui/core';
 import { makeStyles, useTheme } from '@material-ui/core/styles'
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp'
 import { Link as LinkUI } from '@material-ui/core'
@@ -18,7 +18,8 @@ const useStyles = makeStyles((theme) => ({
   root: {
     //boxSizing: 'border-box',
     // position: 'absolute',
-    backgroundColor: theme.main.palette.content.background,
+    backgroundColor: '#2c2c2c',
+    // backgroundColor: theme.main.palette.content.background,
     // top: 0,
     // left: 0,
     // right: 0,
@@ -191,8 +192,25 @@ const useStyles = makeStyles((theme) => ({
     // //   marginTop: '400px'
     // // },
     // backgroundColor: theme.main.palette.content.background,
-  }
-
+  },
+  gridButtonsSmall: {
+    marginTop: 64,
+    paddingBottom: '185px',
+  },
+  dowloadButtomSmall: {
+    color: theme.main.palette.header.text,
+    zIndex: 999,
+    paddingLeft: 4,
+    borderRadius: 24,
+  },
+  openInBroweserSmall: {
+    color: theme.main.palette.header.text,
+    zIndex: 999,
+    paddingLeft: 4,
+    borderRadius: 24,
+    marginTop: 8,
+    marginLeft: 0,
+  },
 }));
 
 
@@ -226,16 +244,30 @@ const Home = (props) => {
           {/* <Grid container direction="row" justifyContent="center" alignItems="center" className={classes.gridLabelSecondarytwo}>
           <Typography className={classes.labelSecondarytwo}> И ещё куча возможностей для образования ;) </Typography>
         </Grid> */}
-          <Grid container direction="row" justifyContent="center" alignItems="center" className={classes.gridButtons}>
-            <Button variant="contained" className={classes.dowloadButtom}>
-              <UseAnimations strokeColor={theme.main.palette.header.text} animation={download} size={56} style={{}} />
+          <Hidden mdDown>
+            <Grid container direction="row" justifyContent="center" alignItems="center" className={classes.gridButtons}>
+              <Button variant="contained" className={classes.dowloadButtom}>
+                <UseAnimations strokeColor={theme.main.palette.header.text} animation={download} size={56} style={{}} />
             Загрузить
-          </Button>
-            <Button variant="contained" className={classes.openInBroweser}>
-              <UseAnimations strokeColor={theme.main.palette.header.text} animation={activity} size={56} style={{}} speed={0.5} />
+            </Button>
+              <Button variant="contained" className={classes.openInBroweser}>
+                <UseAnimations strokeColor={theme.main.palette.header.text} animation={activity} size={56} style={{}} speed={0.5} />
             Открыть в Браузере
-          </Button>
-          </Grid>
+            </Button>
+            </Grid>
+          </Hidden>
+          <Hidden mdUp>
+            <Grid container direction="column" justifyContent="center" alignItems="center" className={classes.gridButtonsSmall}>
+              <Button variant="contained" className={classes.dowloadButtomSmall}>
+                <UseAnimations strokeColor={theme.main.palette.header.text} animation={download} size={32} style={{}} />
+            Загрузить
+            </Button>
+              <Button variant="contained" className={classes.openInBroweserSmall}>
+                <UseAnimations strokeColor={theme.main.palette.header.text} animation={activity} size={32} style={{}} speed={0.5} />
+            Открыть в Браузере
+            </Button>
+            </Grid>
+          </Hidden>
           <Grid className={classes.gridDivider}>
             <Divider className={classes.divider} />
           </Grid>

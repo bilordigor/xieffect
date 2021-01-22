@@ -12,7 +12,8 @@ const useStyles = makeStyles((theme) => ({
     root: {
         //boxSizing: 'border-box',
         // position: 'absolute',
-        backgroundColor: theme.main.palette.content.background,
+        backgroundColor: '#2c2c2c',
+        //backgroundColor: theme.main.palette.content.background,
         // top: 0,
         // left: 0,
         // right: 0,
