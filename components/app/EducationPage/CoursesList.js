@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
 import cx from 'clsx';
-
+import axios from 'axios';
 import { Divider, IconButton, CardMedia, Avatar, CardContent, CardHeader, Menu, MenuItem, Button, Card, CardActions, Grid, Box, Typography, makeStyles, useTheme } from '@material-ui/core';
 
 // import { useContainedCardHeaderStyles } from '@mui-treasury/styles/cardHeader/contained';
@@ -18,15 +18,15 @@ import { inject, observer } from 'mobx-react'
 const useStyles = makeStyles((theme) => ({
     card: {
         position: 'relative',
-        paddingLeft: 4,
-        border: '4px solid',
-        borderColor: theme.main.palette.content.border,
-        borderRadius: 16,
+        //paddingLeft: 4,
+        // border: '4px solid',
+        // borderColor: theme.main.palette.content.border,
+        borderRadius: 4,
         transition: '0.4s',
         '&:hover': {
             borderColor: theme.main.palette.main.main,
         },
-        marginTop: theme.spacing(8),
+        // marginTop: theme.spacing(8),
 
         transition: '0.3s',
         width: '99%',
@@ -44,18 +44,11 @@ const useStyles = makeStyles((theme) => ({
     gridCard: {
         paddingRight: 2,
         paddingLeft: 2,
+        paddingBottom: 20,
     },
     cardbegin: {
         zIndex: 999,
-        [theme.breakpoints.up('lg')]: {
-            marginTop: -24,
-        },
-        [theme.breakpoints.only('lg')]: {
-            marginTop: 4,
-        },
-        [theme.breakpoints.down('lg')]: {
-            marginTop: 32,
-        },
+
         // [theme.breakpoints.only('xs')]: {
         //     paddingLeft: theme.spacing(2),
         // },
@@ -124,6 +117,11 @@ const useStyles = makeStyles((theme) => ({
     },
     media: {
         height: 320,
+        width: '100%',
+        paddingLeft: 0,
+        paddingRight: 0,
+        marinLeft: 0,
+        marginRight: 0,
     },
     title: {
         fontSize: 28,
@@ -135,15 +133,21 @@ const useStyles = makeStyles((theme) => ({
     },
     Page: {
         height: 320,
+        width: '100%',
+        paddingLeft: 0,
+        paddingRight: 0,
+        marinLeft: 0,
+        marginRight: 0,
     }
 }));
 
 
 
-const CoursesList = inject('store')(observer((props) => {
+const CoursesList = inject('store')(observer(({ store }) => {
     const classes = useStyles();
     const theme = useTheme();
-
+    // console.log(store)
+    // console.log(data)
     const options = [
         'Скрыть курс',
         'Пожаловаться',
@@ -153,17 +157,8 @@ const CoursesList = inject('store')(observer((props) => {
 
     const ITEM_HEIGHT = 48;
 
-    const courseList = [
-        { key: '1', id: '1', nameCourse: 'Английский язык', secondNameCourse: 'Школьный курс', courseAvatar: "/education/bigben1.jpg", createrName: 'Ξ Effect', createrAvatar: 'Ξ' },
-        { key: '2', id: '2', nameCourse: 'История', secondNameCourse: 'ЕГЭ', courseAvatar: "/education/historyEGE.jpeg", createrName: 'Ξ Effect', createrAvatar: 'Ξ' },
-        { key: '3', id: '3', nameCourse: 'Цифровая Культура', secondNameCourse: 'Школьный курс', courseAvatar: "/education/internetculture.jpg", createrName: 'Ξ Effect', createrAvatar: 'Ξ' },
-        { key: '4', id: '4', nameCourse: 'История', secondNameCourse: 'Школьный курс', createrName: 'Ξ Effect', courseAvatar: "/education/historyjpg.jpg", createrAvatar: 'Ξ' },
-        { key: '5', id: '5', nameCourse: 'Литература', secondNameCourse: 'Школьный курс', courseAvatar: "/education/literature.jpg", createrName: 'Ξ Effect', createrAvatar: 'Ξ' },
-        { key: '6', id: '6', nameCourse: 'Робототехника', secondNameCourse: 'Кружок ', courseAvatar: "/education/robotechnik.jpg", createrName: 'Ξ Effect', createrAvatar: 'Ξ' },
-        { key: '7', id: '7', nameCourse: 'Профильная Математика', secondNameCourse: 'ЕГЭ', courseAvatar: "/education/math.jpg", createrName: 'Ξ Effect', createrAvatar: 'Ξ' },
-        { key: '8', id: '8', nameCourse: 'Веб Дизайн', secondNameCourse: 'Кружок ', courseAvatar: "/education/webdesign.jpg", createrName: 'Ξ Effect', createrAvatar: 'Ξ' },
-
-    ]
+    //const courseList = data.courseList
+    const courseList = store.courseList
 
     const [value, setValue] = React.useState(0);
 
@@ -193,12 +188,41 @@ const CoursesList = inject('store')(observer((props) => {
         // enqueueSnackbar('Ссылка на курс успешно скопирована в буффер обмена', { variant });
     };
 
+    // React.useEffect = () => {
+    //     async function fetchData() {
+    //         const res = await fetch(`http://localhost:4200/courses`)
+    //         const data = await res.json()
+    //         console.log(data)
+    //         store.setCourseList(data)
+    //     }
+    // }
+
+    // useEffect(() => {
+    //     // const result = await axios(
+    //     //     'http://localhost:4200/courses',
+    //     // );
+    //     async function fetchData() {
+    //         const res = await fetch(`http://localhost:4200/courses`)
+    //         const data = await res.json()
+    //         console.log(data)
+    //         store.setCourseList(data)
+    //     }
+    // });
+
+    useEffect(() => {
+        fetch("http://localhost:4200/courses")
+            .then((response) => response.json())
+            .then((data) => {
+                store.setCourseList(data) // new
+            })
+    }, [])
+
     return (
 
         <Grid container className={classes.cardbegin}>
             {
-                courseList.map((course) => (
-                    <Grid xs={12} sm={12} md={6} lg={4} xl={3} className={classes.gridCard} container key={course.key}>
+                store.courseList.map((course) => (
+                    <Grid xs={12} sm={12} md={6} lg={4} xl={3} item className={classes.gridCard} container key={course.key}>
                         <Card className={cx(classes.card)} key={course.key}>
                             <Box className={classes.boxCardHeader}>
                                 <CardHeader
@@ -286,5 +310,7 @@ const CoursesList = inject('store')(observer((props) => {
         </Grid>
     )
 }));
+
+
 
 export default CoursesList;

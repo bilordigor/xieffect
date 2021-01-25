@@ -1,5 +1,6 @@
 import Head from 'next/head'
 import Link from 'next/link'
+import Router from 'next/router'
 import * as React from 'react';
 import { Divider, Paper, Grid, AppBar, Toolbar, Typography, CssBaseline, useScrollTrigger, Box, Container, Fab, Zoom, Button, Hidden } from '@material-ui/core';
 import { makeStyles, useTheme } from '@material-ui/core/styles'
@@ -214,13 +215,27 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-const Home = (props) => {
+const Home = ({ data }) => {
   const classes = useStyles();
   const theme = useTheme();
 
   const wallpapers = () => {
+    // console.log(data)
     let count = Math.floor(Math.random() * (Math.floor(5) - Math.ceil(1))) + Math.ceil(1)
     return "/wallpapers/hp" + count.toString() + ".jpg"
+
+  }
+
+  const gotoAuth = (event) => {
+    const router = Router
+    router.push('/login')
+    event.preventDefault();
+  }
+
+  const gotoDownload = (event) => {
+    const router = Router
+    router.push('/download')
+    event.preventDefault();
   }
 
   return (
@@ -247,10 +262,10 @@ const Home = (props) => {
           <Hidden mdDown>
             <Grid container direction="row" justifyContent="center" alignItems="center" className={classes.gridButtons}>
               <Button variant="contained" className={classes.dowloadButtom}>
-                <UseAnimations strokeColor={theme.main.palette.header.text} animation={download} size={56} style={{}} />
+                <UseAnimations onClick={gotoDownload} strokeColor={theme.main.palette.header.text} animation={download} size={56} style={{}} />
             Загрузить
             </Button>
-              <Button variant="contained" className={classes.openInBroweser}>
+              <Button onClick={gotoAuth} variant="contained" className={classes.openInBroweser}>
                 <UseAnimations strokeColor={theme.main.palette.header.text} animation={activity} size={56} style={{}} speed={0.5} />
             Открыть в Браузере
             </Button>
@@ -258,11 +273,11 @@ const Home = (props) => {
           </Hidden>
           <Hidden mdUp>
             <Grid container direction="column" justifyContent="center" alignItems="center" className={classes.gridButtonsSmall}>
-              <Button variant="contained" className={classes.dowloadButtomSmall}>
+              <Button onClick={gotoDownload} variant="contained" className={classes.dowloadButtomSmall}>
                 <UseAnimations strokeColor={theme.main.palette.header.text} animation={download} size={32} style={{}} />
             Загрузить
             </Button>
-              <Button variant="contained" className={classes.openInBroweserSmall}>
+              <Button onClick={gotoAuth} variant="contained" className={classes.openInBroweserSmall}>
                 <UseAnimations strokeColor={theme.main.palette.header.text} animation={activity} size={32} style={{}} speed={0.5} />
             Открыть в Браузере
             </Button>
@@ -279,5 +294,20 @@ const Home = (props) => {
     </>
   );
 }
+
+// export async function getStaticProps(context) {
+//   const res = await fetch(`http://localhost:4200/courses`)
+//   const data = await res.json()
+
+//   if (!data) {
+//     return {
+//       notFound: true,
+//     }
+//   }
+
+//   return {
+//     props: { data, }, // will be passed to the page component as props
+//   }
+// }
 
 export default Home

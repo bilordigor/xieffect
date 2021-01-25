@@ -249,7 +249,7 @@ const User = inject('store')(observer((props) => {
                                 <FormControl className={classes.textField} variant="outlined">
                                     <InputLabel className={classes.inputLabel} htmlFor="outlined-adornment-password"> <Typography className={classes.textFieldTypography}>Имя</Typography></InputLabel>
                                     <OutlinedInput
-                                        id="outlined-adornment-password"
+                                        
                                         type='text'
                                         value={values.email}
                                         onChange={handleChange('password')}
@@ -260,7 +260,7 @@ const User = inject('store')(observer((props) => {
                                 <FormControl className={classes.textField} variant="outlined">
                                     <InputLabel className={classes.inputLabel} htmlFor="outlined-adornment-password"> <Typography className={classes.textFieldTypography}>Фамилия</Typography> </InputLabel>
                                     <OutlinedInput
-                                        id="outlined-adornment-password"
+                                        
                                         type='text'
                                         value={values.password}
                                         onChange={handleChange('password')}
@@ -272,7 +272,7 @@ const User = inject('store')(observer((props) => {
                                 <FormControl className={classes.textField} variant="outlined">
                                     <InputLabel className={classes.inputLabel} htmlFor="outlined-adornment-password"> <Typography className={classes.textFieldTypography}>Никнейм</Typography> </InputLabel>
                                     <OutlinedInput
-                                        id="outlined-adornment-password"
+                                        
                                         type='text'
                                         value={values.password}
                                         onChange={handleChange('password')}

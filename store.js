@@ -31,6 +31,14 @@ class Store {
   }
 
 
+  //Интерфейс
+
+  @observable openMenu = false
+
+  @action setOpenMenu = () => {
+    this.openMenu = !this.openMenu
+  }
+
   @observable userData = {
     isBackgroundImageInMain: false,
     isBackgroundImageInEducation: false,
@@ -47,7 +55,6 @@ class Store {
     this.userData.isDarkMode = !this.userData.isDarkMode
 
   }
-
 
   @action setReadyAuth = () => {
     this.userData.readyAuth = !this.userData.readyAuth
@@ -106,6 +113,12 @@ class Store {
   //   { key: '6', id: '6', nameCourse: 'Профильная Математика', secondNameCourse: 'ЕГЭ', courseAvatar: "/education/math.jpg", createrName: 'Ξ Effect', createrAvatar: 'Ξ' },
   // ]
 
+  @observable courseList = [{key: '1'}, {key: '2'}, {key: '3'}, {key: '4'}, {key: '5'}, {key: '6'}, {key: '7'}, {key: '8'},]
+
+  @action setCourseList = (data) => {
+    this.courseList = data
+  }
+
   @observable menulist = [
     {
       name: 'Главная',
@@ -161,6 +174,16 @@ class Store {
   ]
 
 
+  @observable chipsList = [
+    { key: 0, title: "Все", clicked: true },
+    { key: 1, title: "Ваши курсы", clicked: false },
+    { key: 2, title: "Избранное", clicked: false },
+    { key: 3, title: "Популярное", clicked: false },
+    { key: 4, title: "Рекомендации", clicked: false },
+    { key: 5, title: "Школьные курсы", clicked: false },
+    { key: 6, title: "ЕГЭ", clicked: false },
+    { key: 7, title: "Кружок", clicked: false },
+  ]
 
   @action chipperClick = (key) => {
     for (let i = 0; i < this.chipsList.length; i++) {
@@ -175,16 +198,14 @@ class Store {
     // }
   }
 
-  @observable chipsList = [
-    { key: 0, title: "Все", clicked: true },
-    { key: 1, title: "Ваши курсы", clicked: false },
-    { key: 2, title: "Избранное", clicked: false },
-    { key: 3, title: "Популярное", clicked: false },
-    { key: 4, title: "Рекомендации", clicked: false },
-    { key: 5, title: "Школьные курсы", clicked: false },
-    { key: 6, title: "ЕГЭ", clicked: false },
-    { key: 7, title: "Кружок", clicked: false },
-  ]
+
+
+  // @action hydrate = (data) => {
+  //   if (!data) return
+
+  //   this.courseList = data.courseList
+  //   console.log(this.courseList)
+  // }
 }
 
 function initializeStore(initialData = null) {

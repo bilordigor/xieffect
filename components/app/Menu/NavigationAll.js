@@ -53,7 +53,7 @@ const useStyles = makeStyles((theme) => ({
         zIndex: theme.zIndex.drawer + 1,
         transition: '1s',
         transition: theme.transitions.create(['width', 'margin'], {
-            backgroundColor: theme.main.palette.header.background,
+            // backgroundColor: theme.main.palette.header.background,
             easing: theme.transitions.easing.sharp,
             duration: theme.transitions.duration.leavingScreen,
         }),
@@ -389,18 +389,18 @@ const NavigationAll = inject('store')(observer((props) => {
 
     // const open = props.store.topLeftMenuButtom
 
-    const [open, setOpen] = React.useState(false);
+    //const [open, setOpen] = React.useState(false);
 
     // const setOpen = () => {
     //     props.store.setTrueTopLeftMenuButtom()
     // }
 
     const handleDrawerOpen = () => {
-        setOpen(true);
+        props.store.setOpenMenu()
     };
 
     const handleDrawerClose = () => {
-        setOpen(false);
+        props.store.setOpenMenu()
     };
 
     const pushMobileMenuButton = (way) => {
@@ -459,7 +459,7 @@ const NavigationAll = inject('store')(observer((props) => {
     }
 
     // return focus to the button when we transitioned from !open -> open
-    const prevOpen = React.useRef(open);
+    const prevOpen = React.useRef(false);
     React.useEffect(() => {
         if (prevOpen.current === true && openExpandMore === false) {
             anchorRefExpandMore.current.focus();
@@ -495,7 +495,7 @@ const NavigationAll = inject('store')(observer((props) => {
             <CssBaseline />
             <AppBar position="fixed"
                 className={clsx(classes.appBar, {
-                    [classes.appBarShift]: open,
+                    [classes.appBarShift]: props.store.openMenu,
                 })}>
                 <Toolbar>
                     {/* Кнопка-иконка меню (Отображается всегда, при этом на мобильных платформах исчезает т.к. меню переносится вниз в горизонтальное положение) */}
@@ -506,7 +506,7 @@ const NavigationAll = inject('store')(observer((props) => {
                             onClick={handleDrawerOpen}
                             edge="start"
                             className={clsx(classes.menuButton, {
-                                [classes.hide]: open,
+                                [classes.hide]: props.store.openMenu,
                             })}
 
                         >
@@ -613,7 +613,7 @@ const NavigationAll = inject('store')(observer((props) => {
                         </>}
                         {/* Аватарка-ссылка на профиль. (Отображается в мобильной версии) */}
                         <Hidden smUp>
-                            <Link href="/profile" className={classes.linkMobile}>
+                            <Link href="/app/profile" className={classes.linkMobile}>
                                 <ListItemIcon className={classes.imageAvatarMobile}>
                                     <img alt="Ваш Аватар" src={files?.source || defaultSrc} className={classes.avatarMobile} />
                                 </ListItemIcon>
@@ -626,13 +626,13 @@ const NavigationAll = inject('store')(observer((props) => {
                 <Drawer
                     variant="permanent"
                     className={clsx(classes.drawer, {
-                        [classes.drawerOpen]: open,
-                        [classes.drawerClose]: !open,
+                        [classes.drawerOpen]: props.store.openMenu,
+                        [classes.drawerClose]: !props.store.openMenu,
                     })}
                     classes={{
                         paper: clsx({
-                            [classes.drawerOpen]: open,
-                            [classes.drawerClose]: !open,
+                            [classes.drawerOpen]: props.store.openMenu,
+                            [classes.drawerClose]: !props.store.openMenu,
                         }),
                     }}
                 >
@@ -652,11 +652,11 @@ const NavigationAll = inject('store')(observer((props) => {
                                 <ListItemIcon className={classes.imageAvatar}>
                                     <img alt="Ваш Аватар" src={files?.source || defaultSrc} className={classes.Avatar} />
                                 </ListItemIcon>
-                                {open && <Grid container direction="column">
-                                    <Typography noWrap="true" className={classes.imageAvatarText}>{props.store.userData.name}</Typography>
-                                    <Typography noWrap="true" className={classes.imageAvatarText}>{props.store.userData.secondName}</Typography>
+                                {props.store.openMenu && <Grid container direction="column">
+                                    <Typography noWrap={true} className={classes.imageAvatarText}>{props.store.userData.name}</Typography>
+                                    <Typography noWrap={true} className={classes.imageAvatarText}>{props.store.userData.secondName}</Typography>
                                 </Grid>}
-                                {router.pathname === '/profile' && <Divider orientation="vertical" className={classes.nowPageDividerAvatar} />}
+                                {router.pathname === '/app/profile' && <Divider orientation="vertical" className={classes.nowPageDividerAvatar} />}
                             </ListItem>
                         </Link>
                         <Divider />
@@ -669,7 +669,7 @@ const NavigationAll = inject('store')(observer((props) => {
                                         <ListItemIcon className={classes.Image}>
                                             {obj.logo}
                                         </ListItemIcon>
-                                        {open && <ListItemText primary={obj.name} className={classes.ImageText} />}
+                                        {props.store.openMenu && <ListItemText primary={obj.name} className={classes.ImageText} />}
                                         {router.pathname === obj.way && <Divider orientation="vertical" className={classes.nowPageDivider} />}
                                     </ListItem>
                                 </Link>
@@ -693,8 +693,8 @@ const NavigationAll = inject('store')(observer((props) => {
                 </AppBar>
             </Hidden>
             <main className={clsx(classes.mainClass, {
-                [classes.mainOpen]: open,
-                [classes.mainClose]: !open,
+                [classes.mainOpen]: props.store.openMenu,
+                [classes.mainClose]: !props.store.openMenu,
             })}>
                 {props.children}
             </main>

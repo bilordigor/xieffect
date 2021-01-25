@@ -233,7 +233,7 @@ const Login = inject('store')(observer((props) => {
                                     <InputLabel className={classes.inputLabel} htmlFor="outlined-adornment-password"> <Typography className={classes.textFieldTypography}>Адрес Электронной почты </Typography></InputLabel>
                                     <OutlinedInput
                                         className={classes.outlinedInput}
-                                        id="outlined-adornment-password"
+                                        
                                         type='text'
                                         value={values.email}
                                         onChange={handleChange('password')}
@@ -257,7 +257,7 @@ const Login = inject('store')(observer((props) => {
                                 <FormControl className={classes.textField} variant="outlined">
                                     <InputLabel className={classes.inputLabel} htmlFor="outlined-adornment-password"> <Typography className={classes.textFieldTypography}>Пароль</Typography> </InputLabel>
                                     <OutlinedInput
-                                        id="outlined-adornment-password"
+                                        
                                         type={values.showPassword ? 'text' : 'password'}
                                         value={values.password}
                                         onChange={handleChange('password')}

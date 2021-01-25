@@ -33,15 +33,27 @@ const useStyles = makeStyles((theme) => ({
     // zIndex: 999,
     //paddingBottom: "100px",
   },
+  gridCoursesList: {
+    [theme.breakpoints.up('md')]: {
+      marginTop: 30,
+    },
+    [theme.breakpoints.only('md')]: {
+      marginTop: 60,
+    },
+    [theme.breakpoints.down('md')]: {
+      marginTop: 100,
+    },  
+  }
 
 }));
 
-const Education = inject('store')(observer((props) => {
+const Education = inject('store')(observer(({ store }) => {
 
   const classes = useStyles();
   const theme = useTheme();
   const [value, setValue] = React.useState(0);
 
+  //console.log(data)
 
   const [state, setState] = React.useState({
     checkedA: true,
@@ -95,10 +107,10 @@ const Education = inject('store')(observer((props) => {
           {/* {props.store.userData.isBackgroundImageInEducation && <Background src="https://wallpapercave.com/wp/wp5440815.png" />} */}
           {/* <Background src="https://wallpapercave.com/wp/wp5440815.png" /> */}
           <Grid container direction="column" className={classes.main}>
-            <Grid>
-              <Chipper/>
+            <Grid className={classes.gridChipper}>
+              <Chipper />
             </Grid>
-            <Grid>
+            <Grid className={classes.gridCoursesList}>
               <CoursesList />
             </Grid>
           </Grid>
@@ -109,5 +121,21 @@ const Education = inject('store')(observer((props) => {
     </>
   )
 }))
+
+// export async function getStaticProps(context) {
+//   //const res = await fetch('https://jsonplaceholder.typicode.com/todos/1')
+//   const res = await fetch(`http://localhost:4200/courses`)
+//   const data = await res.json()
+//   console.log(data)
+//   if (!data) {
+//     return {
+//       notFound: true,
+//     }
+//   }
+//   console.log(data)
+//   return {
+//     props: { data }, // will be passed to the page component as props
+//   }
+// }
 
 export default Education

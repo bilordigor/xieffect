@@ -24,16 +24,25 @@ const useStyles = makeStyles((theme) => ({
         paddingLeft: '5%',
     },
     text: {
-
+        [theme.breakpoints.up('sm')]: {
+            fontSize: '200px',
+        },
+        [theme.breakpoints.down('sm')]: {
+            fontSize: '100px',
+        },
         color: "#ffffff",
-        fontSize: '200px',
         fontFamily: 'Roboto',
         fontFamily: 'sans-serif',
     },
     divider: {
         width: '4px',
         marginTop: '20%',
-        height: '280px',
+        [theme.breakpoints.up('sm')]: {
+            height: '280px',
+        },
+        [theme.breakpoints.down('sm')]: {
+            height: '140px',
+        },
         marginLeft: '8px',
         backgroundColor: "#ffffff",
     },
@@ -44,7 +53,12 @@ const useStyles = makeStyles((theme) => ({
     text2: {
         //paddingTop: '420px',
         color: "#ffffff",
-        fontSize: '48px',
+        [theme.breakpoints.up('sm')]: {
+            fontSize: '48px',
+        },
+        [theme.breakpoints.down('sm')]: {
+            fontSize: '36px',
+        },
         fontFamily: 'Roboto',
         fontFamily: 'sans-serif',
     }

@@ -5,7 +5,9 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "serve": "concurrently \" npm run dev\" \" npm run mock \"",
+    "mock": " json-server -w db.json -p 4200"
   },
   "dependencies": {
     "@agney/react-loading": "^0.1.2",
@@ -21,6 +23,7 @@
     "@material-ui/lab": "^5.0.0-alpha.22",
     "@material-ui/pickers": "^3.2.10",
     "@material-ui/styles": "^4.11.2",
+    "axios": "^0.21.1",
     "clsx": "^1.1.1",
     "date-fns": "^2.16.1",
     "fontsource-roboto": "^4.0.0",
@@ -28,6 +31,7 @@
     "mobx-react": "^7.0.5",
     "moment": "^2.29.1",
     "next": "10.0.3",
+    "next-auth": "^3.1.0",
     "notistack": "^1.0.2",
     "nprogress": "^0.2.0",
     "react": "^17.0.1",
@@ -48,5 +52,8 @@
     "smooth-scrollbar": "^8.5.3",
     "use-file-upload": "^1.0.9"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "concurrently": "^5.3.0",
+    "json-server": "^0.16.3"
+  }
 }
