@@ -210,10 +210,10 @@ const CoursesList = inject('store')(observer(({ store }) => {
     // });
 
     useEffect(() => {
-        console.log(window.location.href.indexOf('local'))
+        console.log(window.location.href.includes('local'))
         console.log(window.location.href)
         if (window.location.href.indexOf('local')) {
-            console.log(window.location.href.indexOf('local'))
+            console.log(window.location.href.includes('local'))
             console.log(window.location.href)
             fetch("http://localhost:4200/courses")
                 .then((response) => response.json())
