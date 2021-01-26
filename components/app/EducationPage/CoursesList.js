@@ -210,8 +210,11 @@ const CoursesList = inject('store')(observer(({ store }) => {
     // });
 
     useEffect(() => {
-        
+        console.log(window.location.href.indexOf('local'))
+        console.log(window.location.href)
         if (window.location.href.indexOf('local')) {
+            console.log(window.location.href.indexOf('local'))
+            console.log(window.location.href)
             fetch("http://localhost:4200/courses")
                 .then((response) => response.json())
                 .then((data) => {
@@ -225,9 +228,9 @@ const CoursesList = inject('store')(observer(({ store }) => {
                 { key: '3', id: '3', nameCourse: 'Цифровая Культура', secondNameCourse: 'Школьный курс', courseAvatar: "/education/internetculture.jpg", createrName: 'Ξ Effect', createrAvatar: 'Ξ' },
                 { key: '4', id: '4', nameCourse: 'История', secondNameCourse: 'Школьный курс', createrName: 'Ξ Effect', courseAvatar: "/education/historyjpg.jpg", createrAvatar: 'Ξ' },
                 { key: '5', id: '5', nameCourse: 'Литература', secondNameCourse: 'Школьный курс', courseAvatar: "/education/literature.jpg", createrName: 'Ξ Effect', createrAvatar: 'Ξ' },
-                { key: "6", id: "6", nameCourse: "Робототехника",secondNameCourse: "Кружок ", courseAvatar: "/education/robotechnik.jpg", createrName: "Ξ Effect", createrAvatar: "Ξ"},
-                { key: "7", id: "7", nameCourse: "Профильная Математика", secondNameCourse: "ЕГЭ", courseAvatar: "/education/math.jpg", createrName: "Ξ Effect", createrAvatar: "Ξ"},
-                { key: "8", id: "8", nameCourse: "Веб Дизайн", secondNameCourse: "Кружок", courseAvatar: "/education/webdesign.jpg", createrName: "Ξ Effect", createrAvatar: "Ξ"}
+                { key: "6", id: "6", nameCourse: "Робототехника", secondNameCourse: "Кружок ", courseAvatar: "/education/robotechnik.jpg", createrName: "Ξ Effect", createrAvatar: "Ξ" },
+                { key: "7", id: "7", nameCourse: "Профильная Математика", secondNameCourse: "ЕГЭ", courseAvatar: "/education/math.jpg", createrName: "Ξ Effect", createrAvatar: "Ξ" },
+                { key: "8", id: "8", nameCourse: "Веб Дизайн", secondNameCourse: "Кружок", courseAvatar: "/education/webdesign.jpg", createrName: "Ξ Effect", createrAvatar: "Ξ" }
             ]
             store.setCourseList(list)
         }
