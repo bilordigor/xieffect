@@ -210,6 +210,7 @@ const CoursesList = inject('store')(observer(({ store }) => {
     // });
 
     useEffect(() => {
+        
         if (window.location.href.indexOf('local')) {
             fetch("http://localhost:4200/courses")
                 .then((response) => response.json())
@@ -218,7 +219,7 @@ const CoursesList = inject('store')(observer(({ store }) => {
                 })
         }
         else {
-            store.setCourseList([
+            list = [
                 { key: '1', id: '1', nameCourse: 'Английский язык', secondNameCourse: 'Школьный курс', courseAvatar: "/education/bigben1.jpg", createrName: 'Ξ Effect', createrAvatar: 'Ξ' },
                 { key: '2', id: '2', nameCourse: 'История', secondNameCourse: 'ЕГЭ', courseAvatar: "/education/historyEGE.jpeg", createrName: 'Ξ Effect', createrAvatar: 'Ξ' },
                 { key: '3', id: '3', nameCourse: 'Цифровая Культура', secondNameCourse: 'Школьный курс', courseAvatar: "/education/internetculture.jpg", createrName: 'Ξ Effect', createrAvatar: 'Ξ' },
@@ -227,7 +228,8 @@ const CoursesList = inject('store')(observer(({ store }) => {
                 { key: "6", id: "6", nameCourse: "Робототехника",secondNameCourse: "Кружок ", courseAvatar: "/education/robotechnik.jpg", createrName: "Ξ Effect", createrAvatar: "Ξ"},
                 { key: "7", id: "7", nameCourse: "Профильная Математика", secondNameCourse: "ЕГЭ", courseAvatar: "/education/math.jpg", createrName: "Ξ Effect", createrAvatar: "Ξ"},
                 { key: "8", id: "8", nameCourse: "Веб Дизайн", secondNameCourse: "Кружок", courseAvatar: "/education/webdesign.jpg", createrName: "Ξ Effect", createrAvatar: "Ξ"}
-            ])
+            ]
+            store.setCourseList(list)
         }
     }, [])
 
