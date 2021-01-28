@@ -4,7 +4,7 @@ import SwipeableViews from 'react-swipeable-views'
 import { makeStyles, useTheme } from '@material-ui/core/styles'
 import { AppBar, Tabs, Tab, Typography, Box } from '@material-ui/core'
 import Profile from './Profile';
-import Castomize from './Castomize';
+import Castomize from '../Menu/Dialog/Castomize';
 
 const useTabPanelStyles = makeStyles((theme) => ({
   div: {

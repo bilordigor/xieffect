@@ -22,13 +22,11 @@ export default function Communities() {
             <Head>
                 <title>Ξ Профиль</title>
             </Head>
-            <NavigationAll>
-                <Grid className={classes.main}>
-                    {/* <Page loader={"bar"} color={"#4452b8"} size={16}> */}
-                    <MainSwipeBar />
-                    {/* </Page> */}
-                </Grid>
-            </NavigationAll>
+            <Grid className={classes.main}>
+                {/* <Page loader={"bar"} color={"#4452b8"} size={16}> */}
+                <MainSwipeBar />
+                {/* </Page> */}
+            </Grid>
         </>
     )
 }

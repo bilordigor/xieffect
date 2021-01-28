@@ -2,7 +2,6 @@
 import React from 'react';
 import Head from "next/head";
 import PropTypes from 'prop-types';
-import MenuLayout from '../components/app/Menu/MenuLayout';
 import { makeStyles, useTheme, createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 import { Provider } from 'mobx-react'
 import { useStore } from '../store'
@@ -29,8 +28,8 @@ const MyApp = (observer(({ Component, pageProps }) => {
         header: {
           main: store.userData.isDarkMode ? '#373737' : '#3f50b5',
           secondary: store.userData.isDarkMode ? '#3f50b5' : '#3f50b5',
-          text: store.userData.isDarkMode ? '#e0e0e0' : '#e0e0e0',
-          icon: store.userData.isDarkMode ? '#e0e0e0' : '#e0e0e0',
+          text: store.userData.isDarkMode ? '#e0e0e0' : '#424242',
+          icon: store.userData.isDarkMode ? '#e0e0e0' : '#424242',
           background: store.userData.isDarkMode ? '#373737' : '#3f50b5',
           border: store.userData.isDarkMode ? '#9e9e9e' : '#e0e0e0',
         },
@@ -65,6 +64,10 @@ const MyApp = (observer(({ Component, pageProps }) => {
           icon: store.userData.isDarkMode ? '#e0e0e0' : '#424242',
           secondary: store.userData.isDarkMode ? '#3f50b5' : '#3f50b5',
           background: store.userData.isDarkMode ? 'rgb(49,51,57)' : '##bdbdbd',
+        },
+        help :{
+          red: store.userData.isDarkMode ? '#b71c1c' : '#e57373',
+          redbackground:  store.userData.isDarkMode ? 'rgb(183, 28, 28, .2)' : 'rgb(229, 115, 115, .2)',
         }
       }
     }

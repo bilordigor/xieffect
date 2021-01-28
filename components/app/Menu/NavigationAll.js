@@ -1,6 +1,7 @@
 import * as React from 'react';
 
 import clsx from 'clsx';
+import PropTypes from 'prop-types';
 
 //New icons 
 import HomeIcon from '@material-ui/icons/Home';
@@ -10,14 +11,12 @@ import FireplaceIcon from '@material-ui/icons/Fireplace';
 import PublicIcon from '@material-ui/icons/Public';
 import MessageIcon from '@material-ui/icons/Message';
 
-import { CssBaseline, Box, InputBase, FormControlLabel, Switch, withStyles, Tooltip, Fab, BottomNavigation, BottomNavigationAction, Hidden, ClickAwayListener, AppBar, Toolbar, Typography, IconButton, Drawer, List, Avatar, Grid, Paper, Button, Divider, ListItem, ListItemIcon, ListItemText, MenuItem, MenuList, Grow, Popper, makeStyles, useTheme } from '@material-ui/core';
+import { Tabs, Tab, Dialog, TransitionProps, Slide, CssBaseline, Box, IconButton, InputBase, FormControlLabel, Switch, withStyles, Tooltip, Fab, BottomNavigation, BottomNavigationAction, Hidden, ClickAwayListener, AppBar, Toolbar, Typography, Drawer, List, Avatar, Grid, Paper, Button, Divider, ListItem, ListItemIcon, ListItemText, MenuItem, MenuList, Grow, Popper, makeStyles, useTheme } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
-import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import AddIcon from '@material-ui/icons/Add';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import ExpandLessIcon from '@material-ui/icons/ExpandLess';
+import CloseIcon from '@material-ui/icons/Close';
 import SearchIcon from '@material-ui/icons/Search';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import Context from '../../../store'
@@ -28,6 +27,16 @@ import { useRouter } from 'next/router'
 import Router from 'next/router';
 
 import { inject, observer } from 'mobx-react'
+
+import UseAnimations from 'react-useanimations';
+import settings from 'react-useanimations/lib/settings'
+import info from 'react-useanimations/lib/info'
+import volume from 'react-useanimations/lib/volume'
+import microphone from 'react-useanimations/lib/microphone'
+import arrowLeftCircle from 'react-useanimations/lib/arrowLeftCircle'
+
+import { Scrollbars } from 'rc-scrollbars';
+import Castomize from './Dialog/Castomize';
 
 const defaultSrc = "/avatardefault.png";
 
@@ -77,15 +86,17 @@ const useStyles = makeStyles((theme) => ({
         display: 'none',
     },
     drawer: {
-        width: drawerWidth,
+        //width: drawerWidth,
         flexShrink: 0,
         whiteSpace: 'nowrap',
         boxSizing: 'border-box',
+        overflow: 'hidden',
         backgroundColor: theme.main.palette.navbar.background,
 
     },
     drawerOpen: {
         width: drawerWidth,
+        overflow: 'hidden',
         transition: '1s',
         backgroundColor: theme.main.palette.navbar.background,
         transition: theme.transitions.create('width', {
@@ -117,7 +128,7 @@ const useStyles = makeStyles((theme) => ({
     menuButtonIcon: {
         width: 30,
         height: 30,
-        color: theme.main.palette.header.icon,
+        color: theme.main.palette.navbar.iconMenu,
     },
     hide: {
         display: 'none',
@@ -146,20 +157,20 @@ const useStyles = makeStyles((theme) => ({
         color: '#000000'
     },
     imageAvatarMobile: {
-        marginLeft: '3px',
-        marginTop: '6px',
-        marginBottom: '6px',
-        marginRight: '-12px',
+        marginTop: 6,
+        marginLeft: 4,
+        marginRight: 0,
+        marginBottom: 8,
     },
     avatarMobile: {
-        borderRadius: '50%',
-        height: '48px',
-        width: '48px',
-        transitionDuration: '.5s',
-        '&:hover': {
-            borderRadius: '25%',
-            cursor: 'pointer',
-        }
+        // borderRadius: '50%',
+        height: 56,
+        width: 56,
+        // transitionDuration: '.5s',
+        // '&:hover': {
+        //     borderRadius: '25%',
+        //     cursor: 'pointer',
+        // }
     },
     Image: {
         marginLeft: '-9%',
@@ -174,16 +185,22 @@ const useStyles = makeStyles((theme) => ({
         height: '2px',
     },
     addCourse: {
-        margin: theme.spacing(1),
+        marginTop: 8,
+        marginLeft: 4,
+        marginRight: 4,
+        marginBottom: 8,
         color: 'white',
         backgroundColor: theme.main.palette.main.main,
         transition: '0.6s',
+        height: 50,
+        width: 50,
         '&:hover': {
             backgroundColor: 'white',
-            color: theme.main.palette.main.main,
+            color: theme.main.palette.header.icon,
             cursor: 'pointer',
             border: '10px solid',
             borderColor: theme.main.palette.main.main,
+            backgroundColor: theme.main.palette.header.main,
         }
     },
     expandMoreIcon: {
@@ -208,10 +225,11 @@ const useStyles = makeStyles((theme) => ({
         display: 'flex',
         alignItems: 'center',
         height: 30,
-        width: '180px',
+        width: '160px',
         backgroundColor: '#dbdbdb',
-        marginTop: "17px",
-        marginBottom: "17px",
+        marginTop: "20px",
+        marginRight: 4,
+        marginBottom: "18px",
     },
     input: {
         zIndex: 999,
@@ -238,7 +256,7 @@ const useStyles = makeStyles((theme) => ({
         transitionDuration: '.5s',
         '&:hover': {
             borderRadius: '25%',
-            cursor: 'pointer',
+            //cursor: 'pointer',
         }
     },
     imageAvatar: {
@@ -272,14 +290,14 @@ const useStyles = makeStyles((theme) => ({
         display: 'flex',
         alignItems: 'center',
         height: 30,
-        width: '230px',
+        width: '210px',
         backgroundColor: '#dbdbdb',
-        marginTop: "17px",
-        marginBottom: "17px",
+        marginTop: "20px",
+        marginBottom: "18px",
     },
     appBarBottom: {
         backgroundColor: theme.main.palette.navbar.background,
-        height: 70,
+        height: 64,
         top: 'auto',
         bottom: 0,
         right: 0,
@@ -288,15 +306,18 @@ const useStyles = makeStyles((theme) => ({
     },
     BottomNavigation: {
         backgroundColor: theme.main.palette.navbar.background,
-        top: 'auto',
-        height: 68,
-        width: '100%',
-        position: 'absolute',
-        left: 0,
-        right: 0,
-        bottom: 0,
+        // top: 'auto',
+        height: 62,
+        //width: 'auto',
+        //position: 'absolute',
+        // left: 20,
+        // right: 20,
+        // bottom: 0,
+        marginLeft: 20,
+        marginRight: 20,
     },
     BottomNavigationAction: {
+        // width: 30,
         backgroundColor: theme.main.palette.navbar.background,
     },
     icons: {
@@ -305,8 +326,8 @@ const useStyles = makeStyles((theme) => ({
             width: 36,
             height: 36,
         },
-        width: 28,
-        height: 28,
+        width: 30,
+        height: 30,
         color: theme.main.palette.navbar.icon,
     },
     iconsMenu: {
@@ -328,8 +349,425 @@ const useStyles = makeStyles((theme) => ({
         paddingRight: theme.spacing(2),
         width: '100%',
         height: '100%',
+    },
+    toolIconButton: {
+        // width: 64,
+        // height: 64,
+        color: theme.main.palette.header.icon,
+    },
+    toolIcons: {
+        width: 48,
+        height: 48,
+    },
+    gridToolIconButton: {
+        marginTop: -4,
+        marginLeft: 5,
+        cursor: 'pointer',
     }
 }));
+
+//DialogAll
+
+// const Transition = React.forwardRef(function Transition(
+//     props: TransitionProps & {
+//         children?: React.ReactElement;
+//     },
+//     ref: React.Ref<unknown>,
+// ) {
+//     return <Slide direction="up" ref={ref} {...props} />;
+// });
+
+// function TabPanel(props) {
+//     const { children, value, index, ...other } = props;
+//     const classes = useStylesDialogAll();
+//     const theme = useTheme();
+//     return (
+//         <div
+//         // role="tabpanel"
+//         // hidden={value !== index}
+//         // id={`vertical-tabpanel-${index}`}
+//         // aria-labelledby={`vertical-tab-${index}`}
+//         // {...other}
+//         >
+//             {value === index && (
+//                 <div className={classes.TabPanel}>
+//                     {children}
+//                 </div>
+//             )}
+//         </div>
+//     );
+// }
+
+// TabPanel.propTypes = {
+//     children: PropTypes.node,
+//     index: PropTypes.number.isRequired,
+//     value: PropTypes.number.isRequired,
+// };
+
+// const AntTabs = withStyles((theme) => ({
+//     root: {
+//         //borderBottom: '1px solid #e8e8e8',
+//     },
+//     indicator: {
+//         display: 'none',
+//         //backgroundColor: theme.main.palette.main.main,
+//         backgroundColor: 'none',
+//     },
+// }))(Tabs);
+
+// const AntTab = withStyles((theme) => ({
+//     root: {
+//         textAlign: 'left',
+//         // textTransform: 'none',
+//         width: 200,
+//         // fontWeight: theme.typography.fontWeightRegular,
+//         marginRight: 0,
+//         // fontFamily: [
+//         //     '-apple-system',
+//         //     'BlinkMacSystemFont',
+//         //     '"Segoe UI"',
+//         //     'Roboto',
+//         //     '"Helvetica Neue"',
+//         //     'Arial',
+//         //     'sans-serif',
+//         //     '"Apple Color Emoji"',
+//         //     '"Segoe UI Emoji"',
+//         //     '"Segoe UI Symbol"',
+//         // ].join(','),
+//         '&:hover': {
+//             //color: '#40a9ff',
+//             //opacity: 1,
+//         },
+//         '&$selected': {
+//             //color: '#1890ff',
+//             //fontWeight: theme.typography.fontWeightMedium,
+//         },
+//         '&:focus': {
+//             //color: '#40a9ff',
+//         },
+//     },
+//     selected: {},
+// }))((props) => <Tab disableRipple {...props} />);
+
+// function a11yProps(index) {
+//     return {
+//         id: `vertical-tab-${index}`,
+//         'aria-controls': `vertical-tabpanel-${index}`,
+//     };
+// }
+
+const useStylesDialogAll = makeStyles((theme) => ({
+    root: {
+        display: 'flex',
+        backgroundColor: theme.main.palette.content.background,
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+    },
+
+    tabs: {
+        borderRight: `2px solid ${theme.main.palette.main.background}`,
+        color: theme.main.palette.content.text,
+        backgroundColor: theme.main.palette.content.background,
+        marginTop: 32,
+        height: window.innerHeight - 64,
+    },
+    gridRoot: {
+        flexGrow: 1,
+        backgroundColor: theme.main.palette.content.background,
+        display: 'flex',
+        // height: 224,
+        width: '100vw',
+    },
+    gridTabs: {
+        width: '100%',
+    },
+    gridTabPanel: {
+        width: '100%',
+    },
+    TabPanel: {
+        paddingLeft: 8,
+        minWidth: 350,
+        backgroundColor: theme.main.palette.content.main,
+    },
+    menuTypography: {
+        paddingLeft: 16,
+        fontWeight: 'bold',
+        fontSize: 16,
+    },
+    menuButton: {
+        // display: 'flex',
+        // textAlign: 'left',
+        // float: 'left',
+        width: 220,
+        marginRight: 4,
+        '&:hover': {
+            backgroundColor: theme.main.palette.content.reverseText,
+            //opacity: 1,
+        },
+        // '&$selected': {
+        //     backgroundColor: theme.main.palette.content.border,
+        //     //fontWeight: theme.typography.fontWeightMedium,
+        // },
+    },
+    menuButtonClicked: {
+        backgroundColor: theme.main.palette.content.reverseText,
+    },
+    buttonLabel: {
+        paddingLeft: 0,
+        marginRight: 'auto',
+        textTransform: 'none',
+        fontSize: 20,
+        color: theme.main.palette.content.text,
+    },
+    divider: {
+        marginTop: 4,
+        marginBottom: 8,
+        height: 1,
+        width: 200,
+        backgroundColor: theme.main.palette.content.border,
+    },
+    menuExitButton: {
+        width: 220,
+        marginRight: 4,
+        '&:hover': {
+            backgroundColor: theme.main.palette.help.redbackground,
+            //opacity: 1,
+        },
+        '&$selected': {
+            backgroundColor: theme.main.palette.content.border,
+            //fontWeight: theme.typography.fontWeightMedium,
+        },
+    },
+    buttonExitLabel: {
+        paddingLeft: 0,
+        marginRight: 'auto',
+        textTransform: 'none',
+        fontSize: 20,
+        color: theme.main.palette.help.red,
+    },
+    content: {
+        marginTop: 32,
+        marginLeft: 32,
+        width: 400,
+        height: "100%",
+    },
+    goBackButton: {
+        position: 'fixed',
+        top: 32,
+        right: 32,
+        cursor: 'pointer',
+    }
+}));
+
+const DialogAll = inject('store')(observer((props) => {
+    const classes = useStylesDialogAll();
+    const theme = useTheme();
+
+    const goBack = () => {
+        setTimeout(props.store.setDialogMenu, 1000)
+    }
+
+    return (
+        <Dialog
+            fullScreen
+            className={classes.root}
+            open={props.store.dialogMenu}
+        //onClose={props.store.setDialogMenu}
+        //TransitionComponent={Transition}
+        >
+            {props.store.userData.isDarkMode && <UseAnimations onClick={goBack} className={classes.goBackButton} strokeColor={'#e0e0e0'} animation={arrowLeftCircle} size={64} style={{}} speed={1} />}
+            {!props.store.userData.isDarkMode && <UseAnimations onClick={goBack} className={classes.goBackButton} strokeColor={'#424242'} animation={arrowLeftCircle} size={64} style={{}} speed={1} />}
+
+            <Grid
+                item
+                container
+                direction="row"
+                justifyContent="center"
+                alignItems="flex-start"
+                className={classes.gridRoot}
+            >
+                {/* <Grid item> */}
+                <Box className={classes.tabs}>
+                    <Grid
+                        container
+                        direction="column"
+                        justifyContent="flex-start"
+                        alignItems="flex-start"
+                    >
+                        <Scrollbars style={{ width: 230, height: window.innerHeight - 64 }}>
+                            <>
+                                <Typography className={classes.menuTypography}> Настройки Пользователя </Typography>
+                                <Button onClick={() => props.store.setDialogMenuItem(0)} className={clsx(classes.menuButton, {[classes.menuButtonClicked]: props.store.dialogMenuItem === 0,})}>
+                                    <Typography className={classes.buttonLabel}> Учётная запись </Typography>
+                                </Button>
+                                <Button onClick={() => props.store.setDialogMenuItem(1)} className={clsx(classes.menuButton, {[classes.menuButtonClicked]: props.store.dialogMenuItem === 1,})}>
+                                    <Typography className={classes.buttonLabel}> Конфиденциальность </Typography>
+                                </Button>
+                                <Button onClick={() => props.store.setDialogMenuItem(2)} className={clsx(classes.menuButton, {[classes.menuButtonClicked]: props.store.dialogMenuItem === 2,})}>
+                                    <Typography className={classes.buttonLabel}> Boost Effect </Typography>
+                                </Button>
+                                <Divider className={classes.divider} />
+                                <Typography className={classes.menuTypography}> Настройки Приложения </Typography>
+                                <Button onClick={() => props.store.setDialogMenuItem(3)} className={clsx(classes.menuButton, {[classes.menuButtonClicked]: props.store.dialogMenuItem === 3,})}>
+                                    <Typography className={classes.buttonLabel}> Внешний вид </Typography>
+                                </Button>
+                                <Button onClick={() => props.store.setDialogMenuItem(4)} className={clsx(classes.menuButton, {[classes.menuButtonClicked]: props.store.dialogMenuItem === 4,})}>
+                                    <Typography className={classes.buttonLabel}> Уведомления </Typography>
+                                </Button>
+                                <Button onClick={() => props.store.setDialogMenuItem(5)} className={clsx(classes.menuButton, {[classes.menuButtonClicked]: props.store.dialogMenuItem === 5,})}>
+                                    <Typography className={classes.buttonLabel}> Язык </Typography>
+                                </Button>
+                                <Divider className={classes.divider} />
+                                <Button className={classes.menuExitButton}>
+                                    <Typography className={classes.buttonExitLabel}> Выйти </Typography>
+                                </Button>
+                            </>
+                        </Scrollbars>
+
+                    </Grid>
+                </Box>
+                <Box>
+                    <Grid
+                        container
+                        direction="column"
+                        justifyContent="flex-start"
+                        alignItems="flex-start"
+                    >
+                        {props.store.dialogMenuItem === 0 && <div className={classes.content}>
+                            0
+                        </div>}
+                        {props.store.dialogMenuItem === 1 && <div className={classes.content}>
+                            1
+                        </div>}
+                        {props.store.dialogMenuItem === 2 && <div className={classes.content}>
+                            2
+                        </div>}
+                        {props.store.dialogMenuItem === 3 && <div className={classes.content}>
+                            <Castomize/>
+                        </div>}
+                        {props.store.dialogMenuItem === 4 && <div className={classes.content}>
+                            4
+                        </div>}
+                        {props.store.dialogMenuItem === 5 && <div className={classes.content}>
+                            5
+                        </div>}
+                        {props.store.dialogMenuItem === 6 && <div className={classes.content}>
+                            6
+                        </div>}
+                    </Grid>
+                </Box>
+            </Grid>
+        </Dialog>
+    )
+}))
+
+const ToolbarAll = inject('store')(observer((props) => {
+    const classes = useStyles();
+    const theme = useTheme();
+    const { files, selectFiles } = React.useContext(Context)
+
+    //Открыть поиск в мобильной версии
+
+    const [openSearch, setOpenSearch] = React.useState(false);
+
+    const setNewOpenSearch = () => {
+        setOpenSearch((prevOpen) => !prevOpen);
+    };
+
+    const handleDrawerOpen = () => {
+        props.store.setOpenMenu()
+    };
+
+    const router = useRouter()
+
+    return (
+        <>
+            {/* Кнопка-иконка меню (Отображается всегда, при этом на мобильных платформах исчезает т.к. меню переносится вниз в горизонтальное положение) */}
+            < Hidden only='xs' >
+                <IconButton
+                    color="inherit"
+                    aria-label="open drawer"
+                    onClick={handleDrawerOpen}
+                    edge="start"
+                    className={clsx(classes.menuButton, {
+                        [classes.hide]: props.store.openMenu,
+                    })}
+
+                >
+                    <MenuIcon className={classes.menuButtonIcon} />
+                </IconButton>
+            </Hidden >
+            {/* Основное название сайта. (Отображается всегда) */}
+            < Link href="/" >
+                <Typography variant="h4" display='inline' className={classes.typographyEffect}>
+                    Ξ Effect
+                </Typography>
+            </Link >
+            {/* Набор инструментов главной части приложения. (Меняется в зависимости от страницы мменю. В мобильной версии в самой правой части отображается аватарка-ссылка на профиль пользователя) */}
+            < Grid container direction="row" justifyContent="flex-end" >
+                {/* Набор инструментов для вкладки Образование */}
+                {
+                    router.pathname === '/app/education' && <>
+                        {/* Поиск по курсам. Только НЕ для мобильной версии */}
+                        {!openSearch && <Hidden only={['xs', 'sm']}>
+                            <Paper component="form" className={classes.GridHeaderSearch}>
+                                <InputBase
+                                    className={classes.input}
+                                    placeholder="Поиск курсов"
+                                    inputProps={{ 'aria-label': 'Поиск курсов' }}
+                                />
+                                <Divider className={classes.divider} orientation="vertical" />
+                                <IconButton type="submit" className={classes.iconButton} aria-label="search">
+                                    <SearchIcon />  {/*  className={classes.iconButtonSearch} */}
+                                </IconButton>
+                            </Paper>
+                        </Hidden>}
+                        {/* Кнопка-иконка для открытия панели поиска в мобильной версии. (Видна только в мобильной версии)  */}
+                        {!openSearch && <Hidden mdUp>
+                            <IconButton onClick={setNewOpenSearch} className={classes.iconButton}>
+                                <SearchIcon className={classes.iconButtonSearch} />
+                            </IconButton>
+                        </Hidden>}
+                        {/* Панель поиска, открывающаяся для мобильной версии при нажатии кнопки-иконки поиска */}
+                        {openSearch && <Paper component="form" className={classes.gridHeaderSearchMobile}>
+                            <InputBase
+                                className={classes.input}
+                                placeholder="Поиск курсов"
+                                inputProps={{ 'aria-label': 'Поиск курсов' }}
+                            />
+                            <Divider className={classes.divider} orientation="vertical" />
+                            <IconButton type="submit" className={classes.iconButton} aria-label="search">
+                                <SearchIcon />  {/*  className={classes.iconButtonSearch} */}
+                            </IconButton>
+                            <Divider className={classes.divider} orientation="vertical" />
+                            <IconButton onClick={setNewOpenSearch} className={classes.iconButton}>
+                                <ExitToAppIcon />  {/*  className={classes.iconButtonSearch} */}
+                            </IconButton>
+                        </Paper>}
+                        {/* Кнопка-иконка создания новых курсов */}
+                        <LightTooltip title="Создать курс">
+                            <Fab size="medium" aria-label="add" className={classes.addCourse}>
+                                <AddIcon />
+                            </Fab>
+                        </LightTooltip>
+                    </>
+
+                }
+                {/* Аватарка-ссылка на профиль. (Отображается в мобильной версии) */}
+                <Hidden smUp>
+                    {/* <Link href="" className={classes.linkMobile}> */}
+                        <ListItemIcon className={classes.imageAvatarMobile}>
+                            <img alt="Ваш Аватар" src={files?.source || defaultSrc} className={classes.avatarMobile} />
+                        </ListItemIcon>
+                    {/* </Link> */}
+                </Hidden>
+            </Grid >
+        </>
+    );
+}))
 
 const NavigationAll = inject('store')(observer((props) => {
     const classes = useStyles();
@@ -340,6 +778,8 @@ const NavigationAll = inject('store')(observer((props) => {
     const handleChange = (event, newValue) => {
         setValue(newValue);
     };
+
+    const { files, selectFiles } = React.useContext(Context)
 
     //Меню
     const menulist = [
@@ -387,18 +827,6 @@ const NavigationAll = inject('store')(observer((props) => {
         }
     ]
 
-    // const open = props.store.topLeftMenuButtom
-
-    //const [open, setOpen] = React.useState(false);
-
-    // const setOpen = () => {
-    //     props.store.setTrueTopLeftMenuButtom()
-    // }
-
-    const handleDrawerOpen = () => {
-        props.store.setOpenMenu()
-    };
-
     const handleDrawerClose = () => {
         props.store.setOpenMenu()
     };
@@ -407,88 +835,17 @@ const NavigationAll = inject('store')(observer((props) => {
         Router.push(way)
     }
 
-    const setClose = () => {
-        props.store.setFalseTopLeftMenuButtom()
-    }
-
-    //Профиль
-    const [open1, setOpen1] = React.useState(false);
-    const anchorRef = React.useRef(null);
-
-    const handleToggle = () => {
-        setOpen1((prevOpen) => !prevOpen);
-    };
-
-    const handleClose = (event) => {
-        if (anchorRef.current && anchorRef.current.contains(event.target)) {
-            return;
-        }
-
-        setOpen1(false);
-    };
-
-    function handleListKeyDown(event) {
-        if (event.key === 'Tab') {
-            event.preventDefault();
-            setOpen1(false);
-        }
-    }
-
-    //Стрелочка выпадающего меню
-
-    const [openExpandMore, setOpenExpandMore] = React.useState(false);
-    const anchorRefExpandMore = React.useRef(null);
-
-    const handleToggleExpandMore = () => {
-        setOpenExpandMore((prevOpen) => !prevOpen);
-    };
-
-    const handleCloseExpandMore = (event) => {
-        if (anchorRefExpandMore.current && anchorRefExpandMore.current.contains(event.target)) {
-            return;
-        }
-
-        setOpenExpandMore(false);
-    };
-
-    function handleListKeyDownExpandMore(event) {
-        if (event.key === 'Tab') {
-            event.preventDefault();
-            setOpenExpandMore(false);
-        }
-    }
-
-    // return focus to the button when we transitioned from !open -> open
-    const prevOpen = React.useRef(false);
-    React.useEffect(() => {
-        if (prevOpen.current === true && openExpandMore === false) {
-            anchorRefExpandMore.current.focus();
-        }
-
-        prevOpen.current = openExpandMore;
-    }, [openExpandMore]);
-
-    const [state, setState] = React.useState({
-        checkedA: true,
-        checkedB: true,
-        checkedC: true,
-    });
-
-    const handleChangeSwitch = (event) => {
-        setState({ ...state, [event.target.name]: event.target.checked });
-    };
-
     const router = useRouter()
 
-    //Открыть поиск в мобильной версии
+    //Tool
 
-    const [openSearch, setOpenSearch] = React.useState(false);
+    const gotoInfo = () => {
+        window.open("https://xieffect.vercel.app/support");
+    }
 
-    const setNewOpenSearch = () => {
-        setOpenSearch((prevOpen) => !prevOpen);
-    };
-
-    const { files, selectFiles } = React.useContext(Context)
+    // const setOpenDialog = () => {
+    //     props.store.setDialogMenu()
+    // }
 
     return (
         <div className={classes.root}>
@@ -498,128 +855,7 @@ const NavigationAll = inject('store')(observer((props) => {
                     [classes.appBarShift]: props.store.openMenu,
                 })}>
                 <Toolbar>
-                    {/* Кнопка-иконка меню (Отображается всегда, при этом на мобильных платформах исчезает т.к. меню переносится вниз в горизонтальное положение) */}
-                    <Hidden only='xs'>
-                        <IconButton
-                            color="inherit"
-                            aria-label="open drawer"
-                            onClick={handleDrawerOpen}
-                            edge="start"
-                            className={clsx(classes.menuButton, {
-                                [classes.hide]: props.store.openMenu,
-                            })}
-
-                        >
-                            <MenuIcon className={classes.menuButtonIcon} />
-                        </IconButton>
-                    </Hidden>
-                    {/* Основное название сайта. (Отображается всегда) */}
-                    <Link href="/">
-                        <Typography variant="h4" display='inline' className={classes.typographyEffect}>
-                            Ξ Effect
-                        </Typography>
-                    </Link>
-                    {/* Набор инструментов главной части приложения. (Меняется в зависимости от страницы мменю. В мобильной версии в самой правой части отображается аватарка-ссылка на профиль пользователя) */}
-                    <Grid container direction="row" justifyContent="flex-end">
-                        {/* Набор инструментов для вкладки Образование */}
-                        {router.pathname === '/app/education' && <>
-                            {/* Поиск по курсам. Только НЕ для мобильной версии */}
-                            {!openSearch && <Hidden only={['xs', 'sm']}>
-                                <Paper component="form" className={classes.GridHeaderSearch}>
-                                    <InputBase
-                                        className={classes.input}
-                                        placeholder="Поиск курсов"
-                                        inputProps={{ 'aria-label': 'Поиск курсов' }}
-                                    />
-                                    <Divider className={classes.divider} orientation="vertical" />
-                                    <IconButton type="submit" className={classes.iconButton} aria-label="search">
-                                        <SearchIcon />  {/*  className={classes.iconButtonSearch} */}
-                                    </IconButton>
-                                </Paper>
-                            </Hidden>}
-                            {/* Кнопка-иконка для открытия панели поиска в мобильной версии. (Видна только в мобильной версии)  */}
-                            {!openSearch && <Hidden mdUp>
-                                <IconButton onClick={setNewOpenSearch} className={classes.iconButton}>
-                                    <SearchIcon className={classes.iconButtonSearch} />
-                                </IconButton>
-                            </Hidden>}
-                            {/* Панель поиска, открывающаяся для мобильной версии при нажатии кнопки-иконки поиска */}
-                            {openSearch && <Paper component="form" className={classes.gridHeaderSearchMobile}>
-                                <InputBase
-                                    className={classes.input}
-                                    placeholder="Поиск курсов"
-                                    inputProps={{ 'aria-label': 'Поиск курсов' }}
-                                />
-                                <Divider className={classes.divider} orientation="vertical" />
-                                <IconButton type="submit" className={classes.iconButton} aria-label="search">
-                                    <SearchIcon />  {/*  className={classes.iconButtonSearch} */}
-                                </IconButton>
-                                <Divider className={classes.divider} orientation="vertical" />
-                                <IconButton onClick={setNewOpenSearch} className={classes.iconButton}>
-                                    <ExitToAppIcon />  {/*  className={classes.iconButtonSearch} */}
-                                </IconButton>
-                            </Paper>}
-                            {/* Панель свойств отображения главного контента на странице */}
-                            {/* {!openSearch &&
-                                <Button
-                                    ref={anchorRefExpandMore}
-                                    aria-controls={openExpandMore ? 'menu-list-grow' : undefined}
-                                    aria-haspopup="true"
-                                    onClick={handleToggleExpandMore}
-                                >
-                                    {!openExpandMore && <LightTooltip title="Настройки отображения"><ExpandMoreIcon fontSize="large" className={classes.expandMoreIcon} /></LightTooltip>}
-                                    {openExpandMore && <ExpandLessIcon fontSize="large" className={classes.expandMoreIcon} />}
-                                </Button>
-                            } */}
-                            {/* Выпадающее меню свойств отображения главного контента на странице */}
-                            {/* <Popper open={openExpandMore} anchorEl={anchorRefExpandMore.current} role={undefined} transition disablePortal>
-                                {({ TransitionProps, placement }) => (
-                                    <Grow
-                                        {...TransitionProps}
-                                        style={{ transformOrigin: placement === 'bottom' ? 'center top' : 'center bottom' }}
-                                    >
-                                        <Paper>
-                                            <ClickAwayListener onClickAway={handleCloseExpandMore}>
-                                                <MenuList autoFocusItem={openExpandMore} id="menu-list-grow" onKeyDown={handleListKeyDown} className={classes.menuList}>
-                                                    <Grid container direction="column" className={classes.gridHeaderFormControlLabel}>
-                                                        <FormControlLabel
-                                                            control={<Switch checked={state.checkedA} onChange={handleChangeSwitch} name="checkedA" />}
-                                                            label="Избранное"
-                                                            className={classes.headerFormControlLabel}
-                                                        />
-                                                        <FormControlLabel
-                                                            control={<Switch checked={state.checkedB} onChange={handleChangeSwitch} color="primary" name="checkedB" />}
-                                                            label="Ваши Курсы"
-                                                            className={classes.headerFormControlLabel}
-                                                        />
-                                                        <FormControlLabel
-                                                            control={<Switch checked={state.checkedC} onChange={handleChangeSwitch} color="primary" name="checkedC" />}
-                                                            label="Рекомендации"
-                                                            className={classes.headerFormControlLabel}
-                                                        />
-                                                    </Grid>
-                                                </MenuList>
-                                            </ClickAwayListener>
-                                        </Paper>
-                                    </Grow>
-                                )}
-                            </Popper> */}
-                            {/* Кнопка-иконка создания новых курсов */}
-                            <LightTooltip title="Создать курс">
-                                <Fab size="medium" aria-label="add" className={classes.addCourse}>
-                                    <AddIcon />
-                                </Fab>
-                            </LightTooltip>
-                        </>}
-                        {/* Аватарка-ссылка на профиль. (Отображается в мобильной версии) */}
-                        <Hidden smUp>
-                            <Link href="/app/profile" className={classes.linkMobile}>
-                                <ListItemIcon className={classes.imageAvatarMobile}>
-                                    <img alt="Ваш Аватар" src={files?.source || defaultSrc} className={classes.avatarMobile} />
-                                </ListItemIcon>
-                            </Link>
-                        </Hidden>
-                    </Grid>
+                    <ToolbarAll />
                 </Toolbar>
             </AppBar>
             <Hidden only='xs'>
@@ -647,18 +883,33 @@ const NavigationAll = inject('store')(observer((props) => {
                     {/* Список иконок меню */}
                     <List>
                         {/* Аватар-профиль */}
-                        <Link href="/app/profile" className={classes.aNavLink}>
-                            <ListItem button key="profile">
-                                <ListItemIcon className={classes.imageAvatar}>
-                                    <img alt="Ваш Аватар" src={files?.source || defaultSrc} className={classes.Avatar} />
-                                </ListItemIcon>
-                                {props.store.openMenu && <Grid container direction="column">
-                                    <Typography noWrap={true} className={classes.imageAvatarText}>{props.store.userData.name}</Typography>
-                                    <Typography noWrap={true} className={classes.imageAvatarText}>{props.store.userData.secondName}</Typography>
-                                </Grid>}
-                                {router.pathname === '/app/profile' && <Divider orientation="vertical" className={classes.nowPageDividerAvatar} />}
-                            </ListItem>
-                        </Link>
+                        {/* <Link href="/app/profile" className={classes.aNavLink}> */}
+                        <ListItem key="profile">
+                            <ListItemIcon className={classes.imageAvatar}>
+                                <img alt="Ваш Аватар" src={files?.source || defaultSrc} className={classes.Avatar} />
+                            </ListItemIcon>
+                            {props.store.openMenu && <Grid container direction="column">
+                                <Typography noWrap={true} className={classes.imageAvatarText}>{props.store.userData.name}</Typography>
+                                <Typography noWrap={true} className={classes.imageAvatarText}>{props.store.userData.secondName}</Typography>
+                            </Grid>}
+                            {router.pathname === '/app/profile' && <Divider orientation="vertical" className={classes.nowPageDividerAvatar} />}
+                        </ListItem>
+                        <Grid className={classes.gridToolIconButton} container direction="row" justifyContent="flex-start" alignItems="center">
+                            {/* <IconButton className={classes.toolIconButton}> */}
+                            {props.store.userData.isDarkMode && <UseAnimations onClick={props.store.setDialogMenu} className={classes.toolIcons} strokeColor={'#e0e0e0'} animation={settings} size={30} />}
+                            {!props.store.userData.isDarkMode && <UseAnimations onClick={props.store.setDialogMenu} className={classes.toolIcons} strokeColor={'#424242'} animation={settings} size={30} />}
+                            {props.store.userData.isDarkMode && <UseAnimations onClick={gotoInfo} className={classes.toolIcons} strokeColor={'#e0e0e0'} animation={info} size={30} />}
+                            {!props.store.userData.isDarkMode && <UseAnimations onClick={gotoInfo} className={classes.toolIcons} strokeColor={'#424242'} animation={info} size={30} />}
+                            {props.store.userData.isDarkMode && <UseAnimations className={classes.toolIcons} strokeColor={'#e0e0e0'} animation={microphone} size={30} />}
+                            {!props.store.userData.isDarkMode && <UseAnimations className={classes.toolIcons} strokeColor={'#424242'} animation={microphone} size={30} />}
+                            {props.store.userData.isDarkMode && <UseAnimations className={classes.toolIcons} strokeColor={'#e0e0e0'} animation={volume} size={30} />}
+                            {!props.store.userData.isDarkMode && <UseAnimations className={classes.toolIcons} strokeColor={'#424242'} animation={volume} size={30} />}
+
+
+                            {/* </IconButton> */}
+                        </Grid>
+                        <DialogAll />
+                        {/* </Link> */}
                         <Divider />
                         {/* Список главного меню  */}
                         <Grid container direction="row" justifyContent="center" alignItems="center">

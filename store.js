@@ -33,6 +33,18 @@ class Store {
 
   //Интерфейс
 
+  @observable dialogMenuItem = 0
+
+  @action setDialogMenuItem = (item) => {
+    this.dialogMenuItem = item
+  }
+
+  @observable dialogMenu = false
+
+  @action setDialogMenu = () => {
+    this.dialogMenu = !this.dialogMenu
+  }
+
   @observable openMenu = false
 
   @action setOpenMenu = () => {
@@ -113,7 +125,7 @@ class Store {
   //   { key: '6', id: '6', nameCourse: 'Профильная Математика', secondNameCourse: 'ЕГЭ', courseAvatar: "/education/math.jpg", createrName: 'Ξ Effect', createrAvatar: 'Ξ' },
   // ]
 
-  @observable courseList = [{key: '1'}, {key: '2'}, {key: '3'}, {key: '4'}, {key: '5'}, {key: '6'}, {key: '7'}, {key: '8'},]
+  @observable courseList = [{ key: '1' }, { key: '2' }, { key: '3' }, { key: '4' }, { key: '5' }, { key: '6' }, { key: '7' }, { key: '8' },]
 
   @action setCourseList = (data) => {
     this.courseList = data
