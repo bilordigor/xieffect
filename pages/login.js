@@ -4,7 +4,6 @@ import Router from 'next/router';
 import { InputBase, Grid, TextField, InputLabel, InputAdornment, IconButton, FormControl, OutlinedInput, FormControlLabel, Switch, AppBar, Tabs, Tab, Typography, Box, Button, Paper } from '@material-ui/core';
 import { Link as LinkUI } from '@material-ui/core';
 import React from 'react'
-// import MainSwipeBar from '../components/app/ProfilePage/MainSwipeBar'
 import Background from '../components/app/help/background/background'
 import clsx from 'clsx'
 import { inject, observer } from 'mobx-react'

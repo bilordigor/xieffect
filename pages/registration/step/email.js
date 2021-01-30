@@ -6,7 +6,6 @@ import Page from 'react-page-loading'
 import { Grid, TextField, InputLabel, InputAdornment, IconButton, FormControl, OutlinedInput, FormControlLabel, Switch, AppBar, Tabs, Tab, Typography, Box, Button, Paper } from '@material-ui/core';
 import { Link as LinkUI } from '@material-ui/core';
 
-import MainSwipeBar from '../../../components/app/ProfilePage/MainSwipeBar'
 import { makeStyles } from '@material-ui/core/styles';
 import Background from '../../../components/app/help/background/background'
 import clsx from 'clsx'
