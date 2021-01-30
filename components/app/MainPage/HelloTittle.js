@@ -88,11 +88,11 @@ const HelloTittle = () => {
     return (
         <Grid container justifyContent="flex-start" className={classes.root}>
             <Grid item xs={12} sm={12} md={6} className={classes.gridTypographyGetDaysPart}>
-                <Typography className={classes.typographyGetDaysPart} variant="h3"> {getDaysPart() + ' '} </Typography>
+                <Typography className={classes.typographyGetDaysPart} variant="h4"> {getDaysPart() + ' '} </Typography>
             </Grid>
             <Grid item xs={12} sm={12} md={6} className={classes.gridTypographyWeekday}>
                 {/* <Typography className={classes.typographyWeekday} variant="h4"> {getWeekDay() + ','} </Typography> */}
-                <Typography className={classes.typographyDate} variant="h4"> {getWeekDay() + ',  ' + getDate() + ' ' + getMonth()} </Typography>
+                <Typography className={classes.typographyDate} variant="h5"> {getWeekDay() + ',  ' + getDate() + ' ' + getMonth()} </Typography>
             </Grid>
         </Grid>
     )

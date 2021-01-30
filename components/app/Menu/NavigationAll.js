@@ -349,6 +349,7 @@ const useStyles = makeStyles((theme) => ({
         paddingRight: theme.spacing(2),
         width: '100%',
         height: '100%',
+        zIndex: 1,
     },
     toolIconButton: {
         // width: 64,
@@ -438,10 +439,6 @@ const useStyles = makeStyles((theme) => ({
 //             //color: '#40a9ff',
 //             //opacity: 1,
 //         },
-//         '&$selected': {
-//             //color: '#1890ff',
-//             //fontWeight: theme.typography.fontWeightMedium,
-//         },
 //         '&:focus': {
 //             //color: '#40a9ff',
 //         },
@@ -507,10 +504,6 @@ const useStylesDialogAll = makeStyles((theme) => ({
             backgroundColor: theme.main.palette.content.reverseText,
             //opacity: 1,
         },
-        // '&$selected': {
-        //     backgroundColor: theme.main.palette.content.border,
-        //     //fontWeight: theme.typography.fontWeightMedium,
-        // },
     },
     menuButtonClicked: {
         backgroundColor: theme.main.palette.content.reverseText,
@@ -535,10 +528,6 @@ const useStylesDialogAll = makeStyles((theme) => ({
         '&:hover': {
             backgroundColor: theme.main.palette.help.redbackground,
             //opacity: 1,
-        },
-        '&$selected': {
-            backgroundColor: theme.main.palette.content.border,
-            //fontWeight: theme.typography.fontWeightMedium,
         },
     },
     buttonExitLabel: {

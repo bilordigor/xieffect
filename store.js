@@ -3,7 +3,7 @@ import { enableStaticRendering } from 'mobx-react'
 import { useMemo } from 'react'
 import React from 'react'
 import { makeStyles, useTheme, createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
-
+import Emojify from 'react-emojione';
 import HomeIcon from '@material-ui/icons/Home';
 import AppsIcon from '@material-ui/icons/Apps';
 import SchoolIcon from '@material-ui/icons/School';
@@ -124,6 +124,38 @@ class Store {
   //   { key: '5', id: '5', nameCourse: 'Литература', secondNameCourse: 'Школьный курс', courseAvatar: "/education/literature.jpg", createrName: 'Ξ Effect', createrAvatar: 'Ξ' },
   //   { key: '6', id: '6', nameCourse: 'Профильная Математика', secondNameCourse: 'ЕГЭ', courseAvatar: "/education/math.jpg", createrName: 'Ξ Effect', createrAvatar: 'Ξ' },
   // ]
+
+  @observable todoList = [
+    { key: 0, time: '10:30', task: 'Математика', info: 'Курс', done: false },
+    { key: 1, time: '12:30', task: 'Робототехника', info: 'Кружок', done: false },
+    { key: 2, time: '14:20', task: 'Время покушать!', info: 'Приятного аппетита :)', done: false },
+    { key: 3, time: '15:40', task: 'История', info: 'Школьный урок', done: false },
+    { key: 4, time: '21:30', task: 'Веб Дизайн', info: 'Кружок', done: false },
+  ]
+
+  @observable lastActiveList = [
+    { key: 0, label: 'Физика. Общий школьный курс' },
+    { key: 1, label: 'Кружок по Олимпиадной Биологии' },
+    { key: 2, label: 'Коворкинг в Сообществе \"Кефир\" ' },
+    { key: 3, label: 'Спортивная секция. Волейбол'},
+    { key: 4, label: 'Кружок Информатики' },
+    { key: 5, label: 'Трансляция лекции по дисциплине Цифровая культура' },
+  ]
+
+  @observable NoteList = [
+    { key: 0, label: 'Вы получили 2 по предмету Физика' },
+    { key: 1, label: 'На завтра нужно сделать ЭССЕ по предмету История' },
+    { key: 2, label: 'Сегодня в столовой блины!' },
+    { key: 3, label: 'Не забываем о концерте к 1 Мая © Алёна Алексеевна'},
+    { key: 4, label: 'Кружок Информатики ведёт набор!' },
+    { key: 5, label: ' Котики, пора дочитать Войну и Мир. - Ваша ЛН' },
+  ]
+
+  @action setIsIcon = (key) => {
+
+    this.todoList[key].done = !this.todoList[key].done
+    //console.log(this.todoList[key].done)
+  }
 
   @observable courseList = [{ key: '1' }, { key: '2' }, { key: '3' }, { key: '4' }, { key: '5' }, { key: '6' }, { key: '7' }, { key: '8' },]
 
