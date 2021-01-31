@@ -313,8 +313,10 @@ const useStyles = makeStyles((theme) => ({
         // left: 20,
         // right: 20,
         // bottom: 0,
-        marginLeft: 20,
-        marginRight: 20,
+    },
+    BottomNavigationBox: {
+        height: 20,
+        width: 200,
     },
     BottomNavigationAction: {
         // width: 30,
@@ -589,24 +591,24 @@ const DialogAll = inject('store')(observer((props) => {
                         <Scrollbars style={{ width: 230, height: window.innerHeight - 64 }}>
                             <>
                                 <Typography className={classes.menuTypography}> Настройки Пользователя </Typography>
-                                <Button onClick={() => props.store.setDialogMenuItem(0)} className={clsx(classes.menuButton, {[classes.menuButtonClicked]: props.store.dialogMenuItem === 0,})}>
+                                <Button onClick={() => props.store.setDialogMenuItem(0)} className={clsx(classes.menuButton, { [classes.menuButtonClicked]: props.store.dialogMenuItem === 0, })}>
                                     <Typography className={classes.buttonLabel}> Учётная запись </Typography>
                                 </Button>
-                                <Button onClick={() => props.store.setDialogMenuItem(1)} className={clsx(classes.menuButton, {[classes.menuButtonClicked]: props.store.dialogMenuItem === 1,})}>
+                                <Button onClick={() => props.store.setDialogMenuItem(1)} className={clsx(classes.menuButton, { [classes.menuButtonClicked]: props.store.dialogMenuItem === 1, })}>
                                     <Typography className={classes.buttonLabel}> Конфиденциальность </Typography>
                                 </Button>
-                                <Button onClick={() => props.store.setDialogMenuItem(2)} className={clsx(classes.menuButton, {[classes.menuButtonClicked]: props.store.dialogMenuItem === 2,})}>
+                                <Button onClick={() => props.store.setDialogMenuItem(2)} className={clsx(classes.menuButton, { [classes.menuButtonClicked]: props.store.dialogMenuItem === 2, })}>
                                     <Typography className={classes.buttonLabel}> Boost Effect </Typography>
                                 </Button>
                                 <Divider className={classes.divider} />
                                 <Typography className={classes.menuTypography}> Настройки Приложения </Typography>
-                                <Button onClick={() => props.store.setDialogMenuItem(3)} className={clsx(classes.menuButton, {[classes.menuButtonClicked]: props.store.dialogMenuItem === 3,})}>
+                                <Button onClick={() => props.store.setDialogMenuItem(3)} className={clsx(classes.menuButton, { [classes.menuButtonClicked]: props.store.dialogMenuItem === 3, })}>
                                     <Typography className={classes.buttonLabel}> Внешний вид </Typography>
                                 </Button>
-                                <Button onClick={() => props.store.setDialogMenuItem(4)} className={clsx(classes.menuButton, {[classes.menuButtonClicked]: props.store.dialogMenuItem === 4,})}>
+                                <Button onClick={() => props.store.setDialogMenuItem(4)} className={clsx(classes.menuButton, { [classes.menuButtonClicked]: props.store.dialogMenuItem === 4, })}>
                                     <Typography className={classes.buttonLabel}> Уведомления </Typography>
                                 </Button>
-                                <Button onClick={() => props.store.setDialogMenuItem(5)} className={clsx(classes.menuButton, {[classes.menuButtonClicked]: props.store.dialogMenuItem === 5,})}>
+                                <Button onClick={() => props.store.setDialogMenuItem(5)} className={clsx(classes.menuButton, { [classes.menuButtonClicked]: props.store.dialogMenuItem === 5, })}>
                                     <Typography className={classes.buttonLabel}> Язык </Typography>
                                 </Button>
                                 <Divider className={classes.divider} />
@@ -635,7 +637,7 @@ const DialogAll = inject('store')(observer((props) => {
                             2
                         </div>}
                         {props.store.dialogMenuItem === 3 && <div className={classes.content}>
-                            <Castomize/>
+                            <Castomize />
                         </div>}
                         {props.store.dialogMenuItem === 4 && <div className={classes.content}>
                             4
@@ -748,9 +750,9 @@ const ToolbarAll = inject('store')(observer((props) => {
                 {/* Аватарка-ссылка на профиль. (Отображается в мобильной версии) */}
                 <Hidden smUp>
                     {/* <Link href="" className={classes.linkMobile}> */}
-                        <ListItemIcon className={classes.imageAvatarMobile}>
-                            <img alt="Ваш Аватар" src={files?.source || defaultSrc} className={classes.avatarMobile} />
-                        </ListItemIcon>
+                    <ListItemIcon className={classes.imageAvatarMobile}>
+                        <img alt="Ваш Аватар" src={files?.source || defaultSrc} className={classes.avatarMobile} />
+                    </ListItemIcon>
                     {/* </Link> */}
                 </Hidden>
             </Grid >
@@ -926,9 +928,11 @@ const NavigationAll = inject('store')(observer((props) => {
                 <AppBar position="fixed" className={classes.appBarBottom}>
                     <Divider className={classes.dividerBottom} />
                     <BottomNavigation value={value} onChange={handleChange} className={classes.BottomNavigation} showLabels>
+                        <BottomNavigationAction className={classes.BottomNavigationBox} />
                         {menulist.map((obj) => (
                             <BottomNavigationAction onClick={() => pushMobileMenuButton(obj.way)} key={obj.name} className={classes.BottomNavigationAction} value={obj.value} label={<Typography className={classes.label}>{obj.label}</Typography>} icon={obj.logo} />
                         ))}
+                        <BottomNavigationAction className={classes.BottomNavigationBox} />
                     </BottomNavigation>
                 </AppBar>
             </Hidden>

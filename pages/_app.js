@@ -90,7 +90,7 @@ const MyApp = (observer(({ Component, pageProps }) => {
           Ξ Effect
         </title> */}
         <meta name="Keywords" content="Образованиие, Эффект, Кси Эффект, Xi Effect, Effect" />
-        <meta name="viewport" content="width=device-width, initial-scale=0.86, maximum-scale=3.2, minimum-scale=0.8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3.2, minimum-scale=0.8" />
         <meta
           name="description"
           content="Всё, что нужно для вашего Образования."
