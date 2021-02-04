@@ -9,7 +9,7 @@ import Background from '../../components/app/help/background/background'
 import { inject, observer } from 'mobx-react'
 import NavigationAll from '../../components/app/Menu/NavigationAll'
 import MainLinks from '../../components/app/MainPage/MainLinks'
-import LearningCenter from '../../components/app/MainPage/learningCenter'
+import LearningCenter from '../../components/app/MainPage/LearningCenter'
 
 
 const useStyles = makeStyles((theme) => ({
