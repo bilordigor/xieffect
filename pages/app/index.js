@@ -9,6 +9,7 @@ import Background from '../../components/app/help/background/background'
 import { inject, observer } from 'mobx-react'
 import NavigationAll from '../../components/app/Menu/NavigationAll'
 import MainLinks from '../../components/app/MainPage/MainLinks'
+import LearningCenter from '../../components/app/MainPage/learningCenter'
 
 
 const useStyles = makeStyles((theme) => ({
@@ -23,16 +24,14 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: '5px',
   },
   divider: {
-    [theme.breakpoints.only('xs')]: {
-      marginTop: theme.spacing(7),
-      marginBottom: 0,
-    },
-    [theme.breakpoints.only('sm')]: {
-      marginTop: theme.spacing(7),
-      marginBottom: 0,
-    },
-    marginBottom: 32,
-    marginTop: -25,
+    // [theme.breakpoints.only('xs')]: {
+    //   marginTop: theme.spacing(7),
+    // },
+    // [theme.breakpoints.only('sm')]: {
+    //   marginTop: theme.spacing(7),
+    // },
+    marginBottom: 8,
+    marginTop: 4,
     height: '1px',
     width: 'auto',
     marginRight: 0,
@@ -55,6 +54,14 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.only('xs')]: {
       marginTop: 10
     },
+  },
+  learningCenter: {
+    marginTop: 8,
+    marginBottom: 8,
+  },
+  mainApp: {
+    marginTop: 8,
+    marginBottom: 8,
   }
 
 }));
@@ -73,16 +80,19 @@ const Home = inject('store')(observer((props) => {
         {/* <Page loader={"bar"} color={"#4452b8"} size={16}> */}
         {props.store.userData.isBackgroundImageInMain && <Background src="/wallpapers/hp4.jpg" />}
         <Grid container direction="column" className={classes.main}>
-          <Grid item>
+          <Grid item className={classes.helloTittle}>
             <HelloTittle />
           </Grid>
           <Divider className={classes.divider} />
-          <Grid item>
+          <Grid item className={classes.learningCenter}>
+            <LearningCenter/>
+          </Grid>
+          <Grid item className={classes.mainApp}>
             <MainApp />
           </Grid>
-          <Grid item className={classes.mainLinks}>
+          {/* <Grid item className={classes.mainLinks}>
             <MainLinks/>
-          </Grid>
+          </Grid> */}
           <Box className={classes.space}>
 
           </Box>

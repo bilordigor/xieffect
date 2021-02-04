@@ -11,32 +11,33 @@ const useStyles = makeStyles((theme) => ({
         zIndex: 999,
     },
     gridTypographyGetDaysPart: {
+        width: 220,
         zIndex: 999,
+    },
+    gridTypographyDate: {
+        //width: 220,
+        zIndex: 999,
+        marginLeft: 'auto',
+        marginRight: 0,
     },
     typographyGetDaysPart: {
         cursor: 'default',
         zIndex: 999,
         //color: '#757575',
+        width: 220,
         color: theme.main.palette.content.text,
         marginTop: '4px',
-    },
-    typographyWeekday: {
-        cursor: 'default',
-        zIndex: 999,
-        position: 'absolute',
-        //color: '#9e9e9e',
-        color: theme.main.palette.content.text,
-        right: '170px',
-        marginTop: '20px',
     },
     typographyDate: {
         cursor: 'default',
         zIndex: 999,
-        position: 'absolute',
         //color: '#9e9e9e',
+        //width: 220,
         color: theme.main.palette.content.text,
-        right: '10px',
-        marginTop: '20px',
+        marginTop: '12px',
+        marginLeft: 'auto',
+        marginRight: 0,
+        
     },
     gridDividerUnderHelloTittle: {
         zIndex: 99,
@@ -86,12 +87,11 @@ const HelloTittle = () => {
     const theme = useTheme();
 
     return (
-        <Grid container justifyContent="flex-start" className={classes.root}>
-            <Grid item xs={12} sm={12} md={6} className={classes.gridTypographyGetDaysPart}>
+        <Grid container direction="row" justifyContent="flex-start" className={classes.root}>
+            <Grid item className={classes.gridTypographyGetDaysPart}>
                 <Typography className={classes.typographyGetDaysPart} variant="h4"> {getDaysPart() + ' '} </Typography>
             </Grid>
-            <Grid item xs={12} sm={12} md={6} className={classes.gridTypographyWeekday}>
-                {/* <Typography className={classes.typographyWeekday} variant="h4"> {getWeekDay() + ','} </Typography> */}
+            <Grid item className={classes.gridTypographyDate}>
                 <Typography className={classes.typographyDate} variant="h5"> {getWeekDay() + ',  ' + getDate() + ' ' + getMonth()} </Typography>
             </Grid>
         </Grid>

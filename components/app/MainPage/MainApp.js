@@ -42,13 +42,13 @@ const CustomButton = withStyles((theme) => ({
 
 const useStyles = makeStyles((theme) => ({
     root: {
-        [theme.breakpoints.only('xs')]: {
-            marginTop: theme.spacing(3),
-        },
-        [theme.breakpoints.only('sm')]: {
-            marginTop: theme.spacing(3),
-        },
-        marginTop: '-20px',
+        // [theme.breakpoints.only('xs')]: {
+        //     marginTop: theme.spacing(3),
+        // },
+        // [theme.breakpoints.only('sm')]: {
+        //     marginTop: theme.spacing(3),
+        // },
+        // marginTop: '-20px',
         //width: '100%',
         //backgroundColor: 'blue',
         zIndex: 100,
@@ -69,7 +69,7 @@ const useStyles = makeStyles((theme) => ({
         // marginTop: theme.spacing(8),
         height: 'auto',
         transition: '0.3s',
-        width: '99%',
+        width: '100%',
         overflow: 'initial',
         background: theme.main.palette.content.background,
         // width: '98%',
@@ -123,7 +123,7 @@ const useStyles = makeStyles((theme) => ({
     gridTask: {
         borderRadius: 4,
         height: 74,
-        width: '99%',
+        width: '100%',
         margin: 4,
         //backgroundColor: '#37474f',
         //backgroundColor: theme.main.palette.content.text,
@@ -184,7 +184,19 @@ const useStyles = makeStyles((theme) => ({
     },
     rootGridLastActive: {
         margin: 2,
-    }
+    },
+    gridExpandMoreIcon: {
+        color: theme.main.palette.content.text,
+    },
+    gridDeleteIcon: {
+        color: theme.main.palette.content.text,
+    },
+    gridAddTaskIcon: {
+        color: theme.main.palette.content.text,
+    },
+    gridOpenInFullIcon: {
+        color: theme.main.palette.content.text,
+    },
 
 }));
 
@@ -206,10 +218,10 @@ const ToDo = inject('store')(observer((props) => {
                     <Typography className={classes.TodoHeader}> Планировщик </Typography>
                 </Grid>
                 <Grid item xs container justifyContent="flex-end">
-                    <Button>
+                    <Button className={classes.gridAddTaskIcon}>
                         <AddTaskIcon className={classes.icons} />
                     </Button>
-                    <Button>
+                    <Button className={classes.gridOpenInFullIcon}>
                         <OpenInFullIcon className={classes.icons} />
                     </Button>
                 </Grid>
@@ -253,12 +265,12 @@ const ToDo = inject('store')(observer((props) => {
                             className={classes.gridButtom}
                         >
                             <Grid>
-                                <Button>
+                                <Button className={classes.gridDeleteIcon}>
                                     <DeleteIcon className={classes.icons} />
                                 </Button>
                             </Grid>
                             <Grid>
-                                <Button>
+                                <Button className={classes.gridExpandMoreIcon}>
                                     <ExpandMoreIcon className={classes.icons} />
                                 </Button>
                             </Grid>
@@ -290,7 +302,7 @@ const useStylesLastActive = makeStyles((theme) => ({
         // marginTop: theme.spacing(8),
         height: 'auto',
         transition: '0.3s',
-        width: '99%',
+        width: '100%',
         overflow: 'initial',
         background: theme.main.palette.content.background,
     },
@@ -380,7 +392,7 @@ const useStylesLastActive = makeStyles((theme) => ({
     gridLastActive: {
         //borderRadius: 37,
         height: 74,
-        width: '99%',
+        width: '100%',
         margin: 4,
         //backgroundColor: '#37474f',
         //backgroundColor: theme.main.palette.content.text,
@@ -388,7 +400,10 @@ const useStylesLastActive = makeStyles((theme) => ({
     },
     rootGridLastActive: {
         margin: 2,
-    }
+    },
+    gridOpenInFullIcon: {
+        color: theme.main.palette.content.text,
+    },
 }));
 
 const LastActive = inject('store')(observer((props) => {
@@ -407,7 +422,7 @@ const LastActive = inject('store')(observer((props) => {
                     <Typography className={classes.LastActiveHeader}> Последняя активность </Typography>
                 </Grid>
                 <Grid item container xs justifyContent="flex-end">
-                    <Button>
+                    <Button className={classes.gridOpenInFullIcon}>
                         <OpenInFullIcon className={classes.icons} />
                     </Button>
                 </Grid>
@@ -465,7 +480,7 @@ const useStylesNotifications = makeStyles((theme) => ({
         // marginTop: theme.spacing(8),
         height: 'auto',
         transition: '0.3s',
-        width: '99%',
+        width: '100%',
         overflow: 'initial',
         background: theme.main.palette.content.background,
     },
@@ -493,7 +508,7 @@ const useStylesNotifications = makeStyles((theme) => ({
     gridNote: {
         //borderRadius: 37,
         height: 74,
-        width: '99%',
+        width: '100%',
         margin: 4,
         //backgroundColor: '#37474f',
         //backgroundColor: theme.main.palette.content.text,
@@ -569,7 +584,10 @@ const useStylesNotifications = makeStyles((theme) => ({
     },
     rootGridLastActive: {
         margin: 2,
-    }
+    },
+    gridOpenInFullIcon: {
+        color: theme.main.palette.content.text,
+    },
 }));
 
 const Notifications = inject('store')(observer((props) => {
@@ -588,7 +606,7 @@ const Notifications = inject('store')(observer((props) => {
                     <Typography className={classes.NotificationsHeader}> Уведомления </Typography>
                 </Grid>
                 <Grid item container xs justifyContent="flex-end">
-                    <Button>
+                    <Button className={classes.gridOpenInFullIcon}>
                         <OpenInFullIcon className={classes.icons} />
                     </Button>
                 </Grid>
