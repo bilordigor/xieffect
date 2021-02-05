@@ -118,6 +118,8 @@ const useStyles = makeStyles((theme) => ({
         backgroundColor: '#CFD5DA',
     },
     icons: {
+        height: 24,
+        width: 24,
         color: theme.main.palette.content.icon,
     },
     gridTask: {
@@ -150,6 +152,7 @@ const useStyles = makeStyles((theme) => ({
 
     },
     taskTime: {
+        fontSize: 20,
         color: theme.main.palette.content.text,
     },
     gridButtom: {
@@ -341,6 +344,8 @@ const useStylesLastActive = makeStyles((theme) => ({
         }
     },
     icons: {
+        height: 24,
+        width: 24,
         color: theme.main.palette.content.icon,
     },
     gridButtom: {
@@ -503,6 +508,8 @@ const useStylesNotifications = makeStyles((theme) => ({
         backgroundColor: '#CFD5DA',
     },
     icons: {
+        height: 24,
+        width: 24,
         color: theme.main.palette.content.icon,
     },
     gridNote: {

@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
+import Link from "next/link";
+
 import cx from 'clsx';
 import axios from 'axios';
 import { Divider, IconButton, CardMedia, Avatar, CardContent, CardHeader, Menu, MenuItem, Button, Card, CardActions, Grid, Box, Typography, makeStyles, useTheme } from '@material-ui/core';
@@ -210,7 +212,7 @@ const CoursesList = inject('store')(observer(({ store }) => {
     // });
 
     useEffect(() => {
-        
+
         if (window.location.href.includes('local')) {
             fetch("http://localhost:4200/courses")
                 .then((response) => response.json())
@@ -220,14 +222,14 @@ const CoursesList = inject('store')(observer(({ store }) => {
         }
         else {
             const list = [
-                { key: '1', id: '1', nameCourse: 'Английский язык', secondNameCourse: 'Школьный курс', courseAvatar: "/education/bigben1.jpg", createrName: 'Ξ Effect', createrAvatar: 'Ξ' },
-                { key: '2', id: '2', nameCourse: 'История', secondNameCourse: 'ЕГЭ', courseAvatar: "/education/historyEGE.jpeg", createrName: 'Ξ Effect', createrAvatar: 'Ξ' },
-                { key: '3', id: '3', nameCourse: 'Цифровая Культура', secondNameCourse: 'Школьный курс', courseAvatar: "/education/internetculture.jpg", createrName: 'Ξ Effect', createrAvatar: 'Ξ' },
-                { key: '4', id: '4', nameCourse: 'История', secondNameCourse: 'Школьный курс', createrName: 'Ξ Effect', courseAvatar: "/education/historyjpg.jpg", createrAvatar: 'Ξ' },
-                { key: '5', id: '5', nameCourse: 'Литература', secondNameCourse: 'Школьный курс', courseAvatar: "/education/literature.jpg", createrName: 'Ξ Effect', createrAvatar: 'Ξ' },
-                { key: "6", id: "6", nameCourse: "Робототехника", secondNameCourse: "Кружок ", courseAvatar: "/education/robotechnik.jpg", createrName: "Ξ Effect", createrAvatar: "Ξ" },
-                { key: "7", id: "7", nameCourse: "Профильная Математика", secondNameCourse: "ЕГЭ", courseAvatar: "/education/math.jpg", createrName: "Ξ Effect", createrAvatar: "Ξ" },
-                { key: "8", id: "8", nameCourse: "Веб Дизайн", secondNameCourse: "Кружок", courseAvatar: "/education/webdesign.jpg", createrName: "Ξ Effect", createrAvatar: "Ξ" }
+                { key: '1', id: '62461354', nameCourse: 'Английский язык', secondNameCourse: 'Школьный курс', courseAvatar: "/education/bigben1.jpg", createrName: 'Ξ Effect', createrAvatar: 'Ξ' },
+                { key: '2', id: '21245676', nameCourse: 'История', secondNameCourse: 'ЕГЭ', courseAvatar: "/education/historyEGE.jpeg", createrName: 'Ξ Effect', createrAvatar: 'Ξ' },
+                { key: '3', id: '31135789', nameCourse: 'Цифровая Культура', secondNameCourse: 'Школьный курс', courseAvatar: "/education/internetculture.jpg", createrName: 'Ξ Effect', createrAvatar: 'Ξ' },
+                { key: '4', id: '42345613', nameCourse: 'История', secondNameCourse: 'Школьный курс', createrName: 'Ξ Effect', courseAvatar: "/education/historyjpg.jpg", createrAvatar: 'Ξ' },
+                { key: '5', id: '51114563', nameCourse: 'Литература', secondNameCourse: 'Школьный курс', courseAvatar: "/education/literature.jpg", createrName: 'Ξ Effect', createrAvatar: 'Ξ' },
+                { key: "6", id: "69831442", nameCourse: "Робототехника", secondNameCourse: "Кружок ", courseAvatar: "/education/robotechnik.jpg", createrName: "Ξ Effect", createrAvatar: "Ξ" },
+                { key: "7", id: "71269341", nameCourse: "Профильная Математика", secondNameCourse: "ЕГЭ", courseAvatar: "/education/math.jpg", createrName: "Ξ Effect", createrAvatar: "Ξ" },
+                { key: "8", id: "88832561", nameCourse: "Веб Дизайн", secondNameCourse: "Кружок", courseAvatar: "/education/webdesign.jpg", createrName: "Ξ Effect", createrAvatar: "Ξ" }
             ]
             store.setCourseList(list)
         }
@@ -312,9 +314,11 @@ const CoursesList = inject('store')(observer(({ store }) => {
                             <CardActions>
                                 <Grid spacing={1} container justifyContent="center" className={classes.CardActions}>
                                     <Grid>
-                                        <Button variant="contained" color="primary" className={classes.CardActionsCenterButton}>
-                                            <Typography variant="subtitle1">Приступить к курсу</Typography>
-                                        </Button>
+                                        <Link as={`/app/education/courses/${course.id}`} href="/app/education/courses/[id]">
+                                            <Button variant="contained" color="primary" className={classes.CardActionsCenterButton}>
+                                                <Typography variant="subtitle1">Приступить к курсу</Typography>
+                                            </Button>
+                                        </Link>
                                     </Grid>
                                 </Grid>
                             </CardActions>

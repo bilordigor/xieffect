@@ -147,8 +147,10 @@ const useStyles = makeStyles((theme) => ({
         color: '#000000'
     },
     typographyEffect: {
+        fontSize: 32,
         cursor: 'pointer',
-        width: '200px',
+        width: '300px',
+        //height: '70px',
         marginRight: 0,
         marginLeft: "auto",
     },
@@ -179,6 +181,9 @@ const useStyles = makeStyles((theme) => ({
     ImageText: {
         marginLeft: '10px',
         color: theme.main.palette.navbar.text,
+    },
+    ImageTextTypography: {
+        fontSize: 18,
     },
     dividerBottom: {
         backgroundColor: theme.main.palette.navbar.secondary,
@@ -264,6 +269,7 @@ const useStyles = makeStyles((theme) => ({
         marginTop: '-5px'
     },
     imageAvatarText: {
+        fontSize: 20,
         fontWeight: 'bolder',
         marginLeft: '10px',
         color: theme.main.palette.navbar.text,
@@ -558,7 +564,7 @@ const DialogAll = inject('store')(observer((props) => {
     const theme = useTheme();
 
     const goBack = () => {
-        setTimeout(props.store.setDialogMenu, 1000)
+        setTimeout(props.store.setDialogMenu, 500)
     }
 
     return (
@@ -569,8 +575,8 @@ const DialogAll = inject('store')(observer((props) => {
         //onClose={props.store.setDialogMenu}
         //TransitionComponent={Transition}
         >
-            {props.store.userData.isDarkMode && <UseAnimations onClick={goBack} className={classes.goBackButton} strokeColor={'#e0e0e0'} animation={arrowLeftCircle} size={64} style={{}} speed={1} />}
-            {!props.store.userData.isDarkMode && <UseAnimations onClick={goBack} className={classes.goBackButton} strokeColor={'#424242'} animation={arrowLeftCircle} size={64} style={{}} speed={1} />}
+            {props.store.userData.isDarkMode && <UseAnimations onClick={goBack} className={classes.goBackButton} strokeColor={'#e0e0e0'} animation={arrowLeftCircle} size={64} style={{}} speed={2} />}
+            {!props.store.userData.isDarkMode && <UseAnimations onClick={goBack} className={classes.goBackButton} strokeColor={'#424242'} animation={arrowLeftCircle} size={64} style={{}} speed={2} />}
 
             <Grid
                 item
@@ -693,7 +699,7 @@ const ToolbarAll = inject('store')(observer((props) => {
             </Hidden >
             {/* Основное название сайта. (Отображается всегда) */}
             < Link href="/" >
-                <Typography variant="h4" display='inline' className={classes.typographyEffect}>
+                <Typography display='inline' className={classes.typographyEffect}>
                     Ξ Effect
                 </Typography>
             </Link >
@@ -911,7 +917,7 @@ const NavigationAll = inject('store')(observer((props) => {
                                         <ListItemIcon className={classes.Image}>
                                             {obj.logo}
                                         </ListItemIcon>
-                                        {props.store.openMenu && <ListItemText primary={obj.name} className={classes.ImageText} />}
+                                        {props.store.openMenu && <ListItemText primary={<Typography className={classes.ImageTextTypography}>{obj.name}</Typography>} className={classes.ImageText} />}
                                         {router.pathname === obj.way && <Divider orientation="vertical" className={classes.nowPageDivider} />}
                                     </ListItem>
                                 </Link>

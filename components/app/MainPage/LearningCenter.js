@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Tooltip, Divider, Grid, makeStyles, Typography, useTheme } from '@material-ui/core';
+import { Dialog, DialogTitle, Button, Tooltip, Divider, Grid, makeStyles, Typography, useTheme } from '@material-ui/core';
 import Image from 'next/image'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
@@ -29,7 +29,7 @@ const useStyles = makeStyles((theme) => ({
     },
     label: {
         maxWidth: 450,
-        cursor: 'default',
+        cursor: 'pointer',
         fontSize: 32,
         color: theme.main.palette.content.text,
     },
@@ -66,10 +66,63 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
+const useStylesSimpleDialog = makeStyles((theme) => ({
+    Dialog: {
+        color: theme.main.palette.content.background,
+    },
+    gridDialog: {
+        backgroundColor: theme.main.palette.content.background,
+    },
+    DialogTitle: {
+        cursor: 'default',
+        color: theme.main.palette.content.text,
+    },
+    divider :{
+        backgroundColor: theme.main.palette.content.text,
+    },
+    typography: {
+        cursor: 'default',
+        padding: 8,
+        color: theme.main.palette.content.text,
+    }
+}));
+
+
+function SimpleDialog(props) {
+    const classes = useStylesSimpleDialog();
+    const { onClose, open } = props;
+
+    const handleClose = () => {
+        onClose();
+    };
+
+
+    return (
+        <Dialog className={classes.Dialog} onClose={handleClose} aria-labelledby="simple-dialog-title" open={open}>
+            <Grid className={classes.gridDialog}>
+                <DialogTitle className={classes.DialogTitle} id="simple-dialog-title">Школа 641</DialogTitle>
+                <Divider className={classes.divider} />
+                <Typography className={classes.typography}> ГБОУ СОШ №641 </Typography>
+            </Grid>
+
+        </Dialog>
+    );
+}
+
 
 const LearningCenter = () => {
     const classes = useStyles();
     const theme = useTheme();
+
+    const [open, setOpen] = React.useState(false);
+
+    const handleClickOpen = () => {
+        setOpen(true);
+    };
+
+    const handleClose = (value) => {
+        setOpen(false);
+    };
 
     return (
         <Grid
@@ -80,9 +133,11 @@ const LearningCenter = () => {
         >
             <Grid container direction="row" alignItems="center" justifyContent="flex-start" className={classes.root}>
                 <Grid item xs zeroMinWidth className={classes.gridTypography}>
-                    {/* <Tooltip title="Школа 641" arrow placement="bottom-start" className={classes.TooltipTypography}> */}
-                        <Typography className={classes.label} noWrap={true}> Школа 641 </Typography>
-                    {/* </Tooltip> */}
+                    <Typography onClick={handleClickOpen} className={classes.label} noWrap={true}> Школа 641 </Typography>
+                    <SimpleDialog
+                        open={open}
+                        onClose={handleClose}
+                    />
                 </Grid>
                 <Grid item className={classes.gridButton}>
                     <Tooltip title="Учебный процесс" arrow>

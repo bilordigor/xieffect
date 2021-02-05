@@ -2,7 +2,7 @@
     "courses": [
         {
             "key": "1",
-            "id": "1",
+            "id": "62461354",
             "nameCourse": "Английский язык",
             "secondNameCourse": "Школьный курс",
             "courseAvatar": "/education/bigben1.jpg",
@@ -11,7 +11,7 @@
         },
         {
             "key": "2",
-            "id": "2",
+            "id": "21245676",
             "nameCourse": "История",
             "secondNameCourse": "ЕГЭ",
             "courseAvatar": "/education/historyEGE.jpeg",
@@ -20,7 +20,7 @@
         },
         {
             "key": "3",
-            "id": "3",
+            "id": "31135789",
             "nameCourse": "Цифровая Культура",
             "secondNameCourse": "Школьный курс",
             "courseAvatar": "/education/internetculture.jpg",
@@ -29,7 +29,7 @@
         },
         {
             "key": "4",
-            "id": "4",
+            "id": "42345613",
             "nameCourse": "История",
             "secondNameCourse": "Школьный курс",
             "courseAvatar": "/education/historyjpg.jpg",
@@ -38,7 +38,7 @@
         },
         {
             "key": "5",
-            "id": "5",
+            "id": "51114563",
             "nameCourse": "Литература",
             "secondNameCourse": "Школьный курс",
             "courseAvatar": "/education/literature.jpg",
@@ -47,7 +47,7 @@
         },
         {
             "key": "6",
-            "id": "6",
+            "id": "69831442",
             "nameCourse": "Робототехника",
             "secondNameCourse": "Кружок ",
             "courseAvatar": "/education/robotechnik.jpg",
@@ -56,7 +56,7 @@
         },
         {
             "key": "7",
-            "id": "7",
+            "id": "71269341",
             "nameCourse": "Профильная Математика",
             "secondNameCourse": "ЕГЭ",
             "courseAvatar": "/education/math.jpg",
@@ -65,7 +65,7 @@
         },
         {
             "key": "8",
-            "id": "8",
+            "id": "88832561",
             "nameCourse": "Веб Дизайн",
             "secondNameCourse": "Кружок ",
             "courseAvatar": "/education/webdesign.jpg",

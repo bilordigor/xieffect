@@ -122,20 +122,5 @@ const Education = inject('store')(observer(({ store }) => {
   )
 }))
 
-// export async function getStaticProps(context) {
-//   //const res = await fetch('https://jsonplaceholder.typicode.com/todos/1')
-//   const res = await fetch(`http://localhost:4200/courses`)
-//   const data = await res.json()
-//   console.log(data)
-//   if (!data) {
-//     return {
-//       notFound: true,
-//     }
-//   }
-//   console.log(data)
-//   return {
-//     props: { data }, // will be passed to the page component as props
-//   }
-// }
 
 export default Education

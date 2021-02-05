@@ -24,7 +24,8 @@ const useStyles = makeStyles((theme) => ({
         cursor: 'default',
         zIndex: 999,
         //color: '#757575',
-        width: 220,
+        fontSize: 32,
+        width: 230,
         color: theme.main.palette.content.text,
         marginTop: '4px',
     },
@@ -37,6 +38,12 @@ const useStyles = makeStyles((theme) => ({
         marginTop: '12px',
         marginLeft: 'auto',
         marginRight: 0,
+        [theme.breakpoints.only('xs')]: {
+            fontSize: 18,
+            marginTop: '20px',
+        },
+        fontSize: 24,
+
         
     },
     gridDividerUnderHelloTittle: {
@@ -89,10 +96,10 @@ const HelloTittle = () => {
     return (
         <Grid container direction="row" justifyContent="flex-start" className={classes.root}>
             <Grid item className={classes.gridTypographyGetDaysPart}>
-                <Typography className={classes.typographyGetDaysPart} variant="h4"> {getDaysPart() + ' '} </Typography>
+                <Typography className={classes.typographyGetDaysPart}> {getDaysPart() + ' '} </Typography>
             </Grid>
             <Grid item className={classes.gridTypographyDate}>
-                <Typography className={classes.typographyDate} variant="h5"> {getWeekDay() + ',  ' + getDate() + ' ' + getMonth()} </Typography>
+                <Typography className={classes.typographyDate}> {getWeekDay() + ',  ' + getDate() + ' ' + getMonth()} </Typography>
             </Grid>
         </Grid>
     )
