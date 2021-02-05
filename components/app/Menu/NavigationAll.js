@@ -830,7 +830,14 @@ const NavigationAll = inject('store')(observer((props) => {
 
     const pushMobileMenuButton = (way) => {
         Router.push(way)
+        //window.scrollTo(0, 0)
+        while (Math.max(document.body.scrollTop, document.documentElement.scrollTop) > 0) {
+            window.scrollBy(0, -100)
+
+        }
     }
+
+
 
     const router = useRouter()
 
