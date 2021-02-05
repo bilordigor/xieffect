@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, FormHelperText, TextField, NativeSelect, InputBase, Select, InputLabel, MenuItem, FormControl, withStyles, Button, Divider, Grid, makeStyles, Typography, useTheme } from '@material-ui/core';
+import { Box, FormHelperText, TextField, NativeSelect, InputBase, Select, InputLabel, MenuItem, FormControl, withStyles, Button, Divider, Grid, makeStyles, Typography, useTheme, Tooltip } from '@material-ui/core';
 import Moment from "react-moment";
 import NavigateBeforeIcon from '@material-ui/icons/NavigateBefore';
 import NavigateNextIcon from '@material-ui/icons/NavigateNext';
@@ -160,10 +160,13 @@ const useStyles = makeStyles((theme) => ({
         paddingRight: 4,
     },
     taskLabel: {
+        cursor: 'default',
         color: theme.main.palette.content.text,
         fontSize: 22,
+        width: 200,
     },
     infoLabel: {
+        cursor: 'default',
         color: theme.main.palette.content.text,
         fontSize: 18,
     },
@@ -254,19 +257,11 @@ const ToDo = inject('store')(observer((props) => {
                                 {obj.done && <DoneIcon className={classes.DoneIcon} />}
                             </Button>
                         </Grid>
-                        <Grid
-                            item
-
-                            className={classes.gridLabel}
-                        >
+                        <Grid item className={classes.gridLabel}>
                             <Typography className={classes.taskLabel}>{obj.task}</Typography>
                             <Typography className={classes.infoLabel}>{obj.info}</Typography>
                         </Grid>
-                        <Grid
-                            item
-
-                            className={classes.gridButtom}
-                        >
+                        <Grid item className={classes.gridButtom}>
                             <Grid>
                                 <Button className={classes.gridDeleteIcon}>
                                     <DeleteIcon className={classes.icons} />
@@ -353,23 +348,32 @@ const useStylesLastActive = makeStyles((theme) => ({
         paddingRight: 4,
     },
     taskLabel: {
+        cursor: 'default',
         color: theme.main.palette.content.text,
         fontSize: 18,
-        //width: '100%',
-        padding: 0,
-        margin: 0,
-        //wordBreak: 'break-all',
-    },
-    infoLabel: {
-        color: theme.main.palette.content.text,
-        fontSize: 18,
+        maxWidth: 400,
+        [theme.breakpoints.up('md')]: {
+            maxWidth: 600,
+        },
+        marginTop: 16,
+        marginLeft: 4,
+        // width: 'auto',
+        // marginLeft: 0,
+        // marginRight: 0,
+        // //width: '100%',
+        // padding: 0,
+        // margin: 0,
+        // //wordBreak: 'break-all',
     },
     gridLabel: {
-        margin: 4,
-        //paddingRight: 30,
-        padding: 0,
-        width: '70%',
-        marginTop: 8,
+        // margin: 4,
+        // width: 'auto',
+        // marginLeft: 0,
+        // marginRight: 0,
+        // //paddingRight: 30,
+        // padding: 0,
+        // width: '70%',
+        // marginTop: 8,
     },
     DeleteForeverIcon: {
         height: 36,
@@ -407,6 +411,15 @@ const useStylesLastActive = makeStyles((theme) => ({
         margin: 2,
     },
     gridOpenInFullIcon: {
+        color: theme.main.palette.content.text,
+    },
+    gridTaskTime: {
+        margin: 5,
+        marginTop: 16,
+
+    },
+    taskTime: {
+        fontSize: 20,
         color: theme.main.palette.content.text,
     },
 }));
@@ -448,15 +461,20 @@ const LastActive = inject('store')(observer((props) => {
             >
                 {props.store.lastActiveList.map((obj) => (
                     < Grid key={obj.key} container direction="row" className={classes.gridLastActive} >
+                        <Grid item className={classes.gridTaskTime}>
+                            <Typography className={classes.taskTime}> {obj.time} </Typography>
+                        </Grid>
                         <Grid item className={classes.gridLastActiveIcon}>
                             {/* onClick={() => setIcon(obj.key)} */}
                             <Button className={classes.buttonLastActiveIcon} >
                                 <HistoryIcon className={classes.DeleteForeverIcon} />
                             </Button>
                         </Grid>
-                        <Grid item className={classes.gridLabel}>
-                            <Typography noWrap={false} className={classes.taskLabel}>{obj.label}</Typography>
-                            {/* <Typography className={classes.infoLabel}>{obj.info}</Typography> */}
+                        <Grid item xs zeroMinWidth className={classes.gridLabel}>
+                            {obj.label.length > 20 && <Tooltip placement="bottom-start" title={obj.label} arrow>
+                                <Typography noWrap={true} className={classes.taskLabel}>{obj.label}</Typography>
+                            </Tooltip>}
+                            {obj.label.length <= 20 && <Typography noWrap={true} className={classes.taskLabel}>{obj.label}</Typography>}
                         </Grid>
                         <Grid item className={classes.gridButtonEnd}>
                             {props.store.userData.isDarkMode && <UseAnimations className={classes.UseAnimations} strokeColor={'#e0e0e0'} animation={arrowRightCircle} size={48} style={{}} speed={1} />}
@@ -548,23 +566,32 @@ const useStylesNotifications = makeStyles((theme) => ({
         paddingRight: 4,
     },
     taskLabel: {
+        cursor: 'default',
         color: theme.main.palette.content.text,
         fontSize: 18,
-        //width: '100%',
-        padding: 0,
-        margin: 0,
-        //wordBreak: 'break-all',
-    },
-    infoLabel: {
-        color: theme.main.palette.content.text,
-        fontSize: 18,
+        maxWidth: 400,
+        [theme.breakpoints.up('md')]: {
+            maxWidth: 600,
+        },
+        marginTop: 16,
+        marginLeft: 4,
+        // width: 'auto',
+        // marginLeft: 0,
+        // marginRight: 0,
+        // //width: '100%',
+        // padding: 0,
+        // margin: 0,
+        // //wordBreak: 'break-all',
     },
     gridLabel: {
-        margin: 4,
-        //paddingRight: 30,
-        padding: 0,
-        width: '70%',
-        marginTop: 8,
+        // margin: 4,
+        // width: 'auto',
+        // marginLeft: 0,
+        // marginRight: 0,
+        // //paddingRight: 30,
+        // padding: 0,
+        // width: '70%',
+        // marginTop: 8,
     },
     DeleteForeverIcon: {
         height: 36,
@@ -593,6 +620,15 @@ const useStylesNotifications = makeStyles((theme) => ({
         margin: 2,
     },
     gridOpenInFullIcon: {
+        color: theme.main.palette.content.text,
+    },
+    gridTaskTime: {
+        margin: 5,
+        marginTop: 16,
+
+    },
+    taskTime: {
+        fontSize: 20,
         color: theme.main.palette.content.text,
     },
 }));
@@ -634,14 +670,19 @@ const Notifications = inject('store')(observer((props) => {
             >
                 {props.store.NoteList.map((obj) => (
                     <Grid key={obj.key} container direction="row" className={classes.gridNote}>
+                        <Grid item className={classes.gridTaskTime}>
+                            <Typography className={classes.taskTime}> {obj.time} </Typography>
+                        </Grid>
                         <Grid item className={classes.gridNoteIcon}>
                             <Button className={classes.buttonNoteIcon} onClick={() => setIcon(obj.key)}>
                                 <DeleteForeverIcon className={classes.DeleteForeverIcon} />
                             </Button>
                         </Grid>
-                        <Grid item className={classes.gridLabel}>
-                            <Typography noWrap={false} className={classes.taskLabel}>{obj.label}</Typography>
-                            {/* <Typography className={classes.infoLabel}>{obj.info}</Typography> */}
+                        <Grid item xs zeroMinWidth className={classes.gridLabel}>
+                            {obj.label.length > 20 && <Tooltip placement="bottom-start" title={obj.label} arrow>
+                                <Typography noWrap={true} className={classes.taskLabel}>{obj.label}</Typography>
+                            </Tooltip>}
+                            {obj.label.length <= 20 && <Typography noWrap={true} className={classes.taskLabel}>{obj.label}</Typography>}
                         </Grid>
                         <Grid item className={classes.gridButtonEnd}>
                             {props.store.userData.isDarkMode && <UseAnimations className={classes.UseAnimations} strokeColor={'#e0e0e0'} animation={arrowRightCircle} size={48} style={{}} speed={1} />}
