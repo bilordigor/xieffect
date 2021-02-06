@@ -78,8 +78,8 @@ const useStyles = makeStyles((theme) => ({
         color: 'rgb(142,146,151)',
 
     },
-    outlinedInput: {
-
+    OutlinedInput: {
+        color: theme.main.palette.content.text,
     },
     textFieldTypography: {
         marginTop: -4,
@@ -125,6 +125,10 @@ const useStyles = makeStyles((theme) => ({
     forgotRegistration: {
         color: 'rgb(142,146,151)',
         cursor: "pointer",
+    },
+    ErrorLabel: {
+        fontSize: 16,
+        color: theme.main.palette.help.red,
     }
 }));
 
@@ -134,6 +138,7 @@ const Login = inject('store')(observer((props) => {
         email: '',
         password: '',
         showPassword: false,
+        error: true,
     });
 
     const handleChange = (prop) => (event) => {
@@ -201,17 +206,17 @@ const Login = inject('store')(observer((props) => {
         }
     });
 
-    const wallpapers = () => {
-        let count = Math.floor(Math.random() * (Math.floor(5) - Math.ceil(1))) + Math.ceil(1)
-        return "/wallpapers/hp" + count.toString() + ".jpg"
-    }
+    // const wallpapers = () => {
+    //     let count = Math.floor(Math.random() * (Math.floor(5) - Math.ceil(1))) + Math.ceil(1)
+    //     return "/wallpapers/hp" + count.toString() + ".jpg"
+    // }
 
     return (
         <>
             <Head>
                 <title>Ξ Авторизация</title>
             </Head>
-            <Background src={wallpapers()} />
+            <Background src="/wallpapers/hp4.jpg" />
             <Grid container direction="column" justifyContent="center" alignItems="center" className={classes.root}>
                 <Grid className={classes.gridTittle}>
                     <Link href="/">
@@ -231,11 +236,10 @@ const Login = inject('store')(observer((props) => {
                                 <FormControl className={classes.textField} variant="outlined">
                                     <InputLabel className={classes.inputLabel} htmlFor="outlined-adornment-password"> <Typography className={classes.textFieldTypography}>Адрес Электронной почты </Typography></InputLabel>
                                     <OutlinedInput
-                                        className={classes.outlinedInput}
-                                        
+                                        className={classes.OutlinedInput}
                                         type='text'
                                         value={values.email}
-                                        onChange={handleChange('password')}
+                                        onChange={handleChange('email')}
                                         endAdornment={
                                             <InputAdornment position="end">
                                                 <IconButton
@@ -256,7 +260,7 @@ const Login = inject('store')(observer((props) => {
                                 <FormControl className={classes.textField} variant="outlined">
                                     <InputLabel className={classes.inputLabel} htmlFor="outlined-adornment-password"> <Typography className={classes.textFieldTypography}>Пароль</Typography> </InputLabel>
                                     <OutlinedInput
-                                        
+                                        className={classes.OutlinedInput}
                                         type={values.showPassword ? 'text' : 'password'}
                                         value={values.password}
                                         onChange={handleChange('password')}
@@ -276,6 +280,9 @@ const Login = inject('store')(observer((props) => {
                                     />
                                 </FormControl>
                             </Grid>
+                            { values.error && <Grid item container direction="column" justifyContent="center" alignItems="flex-start" className={classes.gridForgotPassword}>
+                                <Typography className={classes.ErrorLabel}> Неправильное имя пользователя или пароль </Typography>
+                            </Grid>} 
                             <Grid item container direction="column" justifyContent="center" alignItems="flex-start" className={classes.gridForgotPassword}>
                                 <LinkUI className={classes.forgotPassword} href="#" onClick={gotoForgotPassword}>
                                     Забыли пароль?

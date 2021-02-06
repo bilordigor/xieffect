@@ -30,6 +30,27 @@ class Store {
     makeObservable(this)
   }
 
+  //Регистрация
+
+  @observable registrationValues = {
+    email: '',
+    password: '',
+    showPassword: false,
+    error: false,
+    errorEmail: false,
+    errorPasswordLength: false,
+    errorSymbols: false,
+  }
+
+  @action setRegistrationValues = (name, value) => {
+    this.registrationValues[name] = value
+  }
+
+  @action setRegistrationValuesFalse = () => {
+    this.registrationValues.errorEmail = false
+    this.registrationValues.errorPasswordLength = false
+    this.registrationValues.errorSymbols = false
+  }
 
   //Интерфейс
 
@@ -135,20 +156,20 @@ class Store {
 
   @observable lastActiveList = [
     { key: 0, time: '08:10', label: 'Физика. Общий школьный курс' },
-    { key: 1, time: '12:30',  label: 'Кружок по Олимпиадной Биологии' },
-    { key: 2, time: '14:00',  label: 'Коворкинг в Сообществе \"Кефир\" ' },
-    { key: 3, time: '17:30',  label: 'Спортивная секция. Волейбол'},
-    { key: 4, time: '19:50',  label: 'Кружок Информатики' },
-    { key: 5, time: '22:30',  label: 'Трансляция лекции по дисциплине Цифровая культура' },
+    { key: 1, time: '12:30', label: 'Кружок по Олимпиадной Биологии' },
+    { key: 2, time: '14:00', label: 'Коворкинг в Сообществе \"Кефир\" ' },
+    { key: 3, time: '17:30', label: 'Спортивная секция. Волейбол' },
+    { key: 4, time: '19:50', label: 'Кружок Информатики' },
+    { key: 5, time: '22:30', label: 'Трансляция лекции по дисциплине Цифровая культура' },
   ]
 
   @observable NoteList = [
-    { key: 0, time: '09:30',  label: 'Вы получили 2 по предмету Физика' },
-    { key: 1, time: '11:40',  label: 'На завтра нужно сделать ЭССЕ по предмету История' },
-    { key: 2, time: '13:30',  label: 'Сегодня в столовой блины!' },
-    { key: 3, time: '15:10',  label: 'Не забываем о концерте к 1 Мая © Алёна Алексеевна'},
-    { key: 4, time: '16:20',  label: 'Кружок Информатики ведёт набор!' },
-    { key: 5, time: '20:80',  label: ' Котики, пора дочитать Войну и Мир. - Ваша ЛН' },
+    { key: 0, time: '09:30', label: 'Вы получили 2 по предмету Физика' },
+    { key: 1, time: '11:40', label: 'На завтра нужно сделать ЭССЕ по предмету История' },
+    { key: 2, time: '13:30', label: 'Сегодня в столовой блины!' },
+    { key: 3, time: '15:10', label: 'Не забываем о концерте к 1 Мая © Алёна Алексеевна' },
+    { key: 4, time: '16:20', label: 'Кружок Информатики ведёт набор!' },
+    { key: 5, time: '20:80', label: ' Котики, пора дочитать Войну и Мир. - Ваша ЛН' },
   ]
 
   @action setIsIcon = (key) => {

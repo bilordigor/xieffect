@@ -123,23 +123,29 @@ const useStyles = makeStyles((theme) => ({
     forgotRegistration: {
         color: 'rgb(142,146,151)',
     },
+    OutlinedInput: {
+        color: theme.main.palette.content.text,
+    },
+    ErrorLabel: {
+        fontSize: 16,
+        color: theme.main.palette.help.red,
+    },
+    AboutLabel: {
+        fontSize: 12,
+        color: theme.main.palette.content.border,
+    }
 }));
 
 
 
 const Registration = inject('store')(observer((props) => {
     const classes = useStyles();
-    const [values, setValues] = React.useState({
-        email: '',
-        password: '',
-        showPassword: false,
-    });
-
     const handleChange = (prop) => (event) => {
-        setValues({ ...values, [prop]: event.target.value });
+        props.store.setRegistrationValues(prop, event.target.value)
+        //setValues({ ...values, [prop]: event.target.value });
     };
     const handleClickShowPassword = () => {
-        setValues({ ...values, showPassword: !values.showPassword });
+        props.store.setRegistrationValues("showPassword", !props.store.registrationValues.showPassword)
     };
 
     const handleMouseDownPassword = (event) => {
@@ -155,6 +161,35 @@ const Registration = inject('store')(observer((props) => {
     const wallpapers = () => {
         let count = Math.floor(Math.random() * (Math.floor(5) - Math.ceil(1))) + Math.ceil(1)
         return "/wallpapers/hp" + count.toString() + ".jpg"
+    }
+
+    const onRegistrationButtonClick = () => {
+        props.store.setRegistrationValuesFalse()
+        //console.log(props.store.registrationValues)
+        let sym = '1234567890qwertyuiopasdfghjklzxcvbnm_'
+        //console.log(values.email.length < 5)
+        if (!props.store.registrationValues.email.includes('@') || !props.store.registrationValues.email.includes('.') || props.store.registrationValues.email.length < 5) {
+            props.store.setRegistrationValues("errorEmail", true)
+            //console.log('email error')
+        }
+        //console.log(props.store.registrationValues.password.length)
+        if (props.store.registrationValues.password.length < 6) {
+            props.store.setRegistrationValues("errorPasswordLength", true)
+            //console.log('length error')
+        }
+        for (let i = 0; i < props.store.registrationValues.password.length; i++) {
+            if (sym.includes(props.store.registrationValues.password[i].toLowerCase())) continue
+            else {
+                props.store.setRegistrationValues("errorSymbols", true)
+                //console.log('sym error')
+                break
+            }
+        }
+        if (!props.store.registrationValues.errorPasswordLength && !props.store.registrationValues.errorSymbols && !props.store.registrationValues.errorEmail) {
+            const router = Router
+            router.push('/registration/step/email')
+        }
+        //console.log(props.store.registrationValues)
     }
 
     return (
@@ -180,10 +215,10 @@ const Registration = inject('store')(observer((props) => {
                                 <FormControl className={classes.textField} variant="outlined">
                                     <InputLabel className={classes.inputLabel} htmlFor="outlined-adornment-password"> <Typography className={classes.textFieldTypography}>Адрес Электронной почты</Typography></InputLabel>
                                     <OutlinedInput
-                                        
+                                        className={classes.OutlinedInput}
                                         type='text'
-                                        value={values.email}
-                                        onChange={handleChange('password')}
+                                        value={props.store.registrationValues.email}
+                                        onChange={handleChange('email')}
                                         endAdornment={
                                             <InputAdornment position="end">
                                                 <IconButton
@@ -200,13 +235,16 @@ const Registration = inject('store')(observer((props) => {
                                     />
                                 </FormControl>
                             </Grid>
+                            {props.store.registrationValues.errorEmail && <Grid item container direction="column" justifyContent="center" alignItems="flex-start" className={classes.gridForgotPassword}>
+                                <Typography className={classes.ErrorLabel}> Некорректное имя почты </Typography>
+                            </Grid>}
                             <Grid item container direction="column" justifyContent="center" alignItems="flex-start" className={classes.gridTextField}>
                                 <FormControl className={classes.textField} variant="outlined">
                                     <InputLabel className={classes.inputLabel} htmlFor="outlined-adornment-password"> <Typography className={classes.textFieldTypography}>Пароль</Typography> </InputLabel>
                                     <OutlinedInput
-                                        
-                                        type={values.showPassword ? 'text' : 'password'}
-                                        value={values.password}
+                                        className={classes.OutlinedInput}
+                                        type={props.store.registrationValues.showPassword ? 'text' : 'password'}
+                                        value={props.store.registrationValues.password}
                                         onChange={handleChange('password')}
                                         endAdornment={
                                             <InputAdornment position="end">
@@ -216,7 +254,7 @@ const Registration = inject('store')(observer((props) => {
                                                     onMouseDown={handleMouseDownPassword}
                                                     edge="end"
                                                 >
-                                                    {values.showPassword ? <Visibility className={classes.icons} /> : <VisibilityOff className={classes.icons} />}
+                                                    {props.store.registrationValues.showPassword ? <Visibility className={classes.icons} /> : <VisibilityOff className={classes.icons} />}
                                                 </IconButton>
                                             </InputAdornment>
                                         }
@@ -224,17 +262,29 @@ const Registration = inject('store')(observer((props) => {
                                     />
                                 </FormControl>
                             </Grid>
+                            <Grid item container direction="column" justifyContent="center" alignItems="flex-start" className={classes.gridForgotPassword}>
+                                <Typography className={classes.AboutLabel}> Минимальная длина: 6 символов. Используйте латинские буквы, цифры и знак нижнего подчёркивания.</Typography>
+                            </Grid>
+                            {props.store.registrationValues.errorPasswordLength && <Grid item container direction="column" justifyContent="center" alignItems="flex-start" className={classes.gridForgotPassword}>
+                                <Typography className={classes.ErrorLabel}> Недопустим пароль менее 6 символов </Typography>
+                            </Grid>}
+                            {props.store.registrationValues.errorSymbols && <Grid item container direction="column" justifyContent="center" alignItems="flex-start" className={classes.gridForgotPassword}>
+                                <Typography className={classes.ErrorLabel}> Недопустимые символы в пароле </Typography>
+                            </Grid>}
+                            {/* { values.error && <Grid item container direction="column" justifyContent="center" alignItems="flex-start" className={classes.gridForgotPassword}>
+                                <Typography className={classes.ErrorLabel}> Неправильное имя пользователя или пароль </Typography>
+                            </Grid>}  */}
                             {/* <Grid item container direction="column" justifyContent="center" alignItems="flex-start" className={classes.gridForgotPassword}>
                                 <LinkUI className={classes.forgotPassword} href="#" onClick={preventDefault}>
                                     Забыли пароль?
                                 </LinkUI>
                             </Grid> */}
                             <Grid item container direction="column" justifyContent="center" alignItems="center" className={classes.gridEnterButtom}>
-                                <Link href="/registration/step/email">
-                                    <Button onClick={props.store.setReadyAuth} variant="contained" color="primary" className={classes.enterButtom}>
-                                        Регистрация
+                                {/* <Link href="/registration/step/email"> */}
+                                <Button onClick={onRegistrationButtonClick} variant="contained" color="primary" className={classes.enterButtom}>
+                                    Регистрация
                                     </Button>
-                                </Link >
+                                {/* </Link > */}
                             </Grid>
                             <Grid item container direction="column" justifyContent="center" alignItems="flex-start" className={classes.gridForgotRegistration}>
 
@@ -243,12 +293,6 @@ const Registration = inject('store')(observer((props) => {
                                 </LinkUI>
 
                             </Grid>
-
-
-
-
-
-
                         </Grid>
 
                     </Paper>

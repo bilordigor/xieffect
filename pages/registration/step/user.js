@@ -152,6 +152,9 @@ const useStyles = makeStyles((theme) => ({
     },
     Checkbox: {
       color: theme.main.palette.content.border,
+    },
+    OutlinedInput: {
+        color: theme.main.palette.content.text,
     }
 }));
 
@@ -160,9 +163,11 @@ const useStyles = makeStyles((theme) => ({
 const User = inject('store')(observer((props) => {
     const classes = useStyles();
     const [values, setValues] = React.useState({
-        email: '',
-        password: '',
-        showPassword: false,
+        firstName: '',
+        secondName: '',
+        nickname: '',
+        role: '',
+        isShowName: false,
     });
 
     const handleChange = (prop) => (event) => {
@@ -248,10 +253,10 @@ const User = inject('store')(observer((props) => {
                                 <FormControl className={classes.textField} variant="outlined">
                                     <InputLabel className={classes.inputLabel} htmlFor="outlined-adornment-password"> <Typography className={classes.textFieldTypography}>Имя</Typography></InputLabel>
                                     <OutlinedInput
-                                        
+                                        className={classes.OutlinedInput}
                                         type='text'
-                                        value={values.email}
-                                        onChange={handleChange('password')}
+                                        value={values.firstName}
+                                        onChange={handleChange('firstName')}
                                     />
                                 </FormControl>
                             </Grid>
@@ -259,10 +264,10 @@ const User = inject('store')(observer((props) => {
                                 <FormControl className={classes.textField} variant="outlined">
                                     <InputLabel className={classes.inputLabel} htmlFor="outlined-adornment-password"> <Typography className={classes.textFieldTypography}>Фамилия</Typography> </InputLabel>
                                     <OutlinedInput
-                                        
+                                        className={classes.OutlinedInput}
                                         type='text'
-                                        value={values.password}
-                                        onChange={handleChange('password')}
+                                        value={values.secondName}
+                                        onChange={handleChange('secondName')}
                                         labelWidth={70}
                                     />
                                 </FormControl>
@@ -271,10 +276,10 @@ const User = inject('store')(observer((props) => {
                                 <FormControl className={classes.textField} variant="outlined">
                                     <InputLabel className={classes.inputLabel} htmlFor="outlined-adornment-password"> <Typography className={classes.textFieldTypography}>Никнейм</Typography> </InputLabel>
                                     <OutlinedInput
-                                        
+                                        className={classes.OutlinedInput}
                                         type='text'
-                                        value={values.password}
-                                        onChange={handleChange('password')}
+                                        value={values.nickname}
+                                        onChange={handleChange('nickname')}
                                         labelWidth={70}
                                     />
                                 </FormControl>

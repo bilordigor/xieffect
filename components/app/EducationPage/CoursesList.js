@@ -227,9 +227,9 @@ const CoursesList = inject('store')(observer(({ store }) => {
                 { key: '3', id: '31135789', nameCourse: 'Цифровая Культура', secondNameCourse: 'Школьный курс', courseAvatar: "/education/internetculture.jpg", createrName: 'Ξ Effect', createrAvatar: 'Ξ' },
                 { key: '4', id: '42345613', nameCourse: 'История', secondNameCourse: 'Школьный курс', createrName: 'Ξ Effect', courseAvatar: "/education/historyjpg.jpg", createrAvatar: 'Ξ' },
                 { key: '5', id: '51114563', nameCourse: 'Литература', secondNameCourse: 'Школьный курс', courseAvatar: "/education/literature.jpg", createrName: 'Ξ Effect', createrAvatar: 'Ξ' },
-                { key: "6", id: "69831442", nameCourse: "Робототехника", secondNameCourse: "Кружок ", courseAvatar: "/education/robotechnik.jpg", createrName: "Ξ Effect", createrAvatar: "Ξ" },
+                { key: "6", id: "69831442", nameCourse: "Робототехника", secondNameCourse: "Курс сообщества", courseAvatar: "/education/robotechnik.jpg", createrName: "Ξ Effect", createrAvatar: "Ξ" },
                 { key: "7", id: "71269341", nameCourse: "Профильная Математика", secondNameCourse: "ЕГЭ", courseAvatar: "/education/math.jpg", createrName: "Ξ Effect", createrAvatar: "Ξ" },
-                { key: "8", id: "88832561", nameCourse: "Веб Дизайн", secondNameCourse: "Кружок", courseAvatar: "/education/webdesign.jpg", createrName: "Ξ Effect", createrAvatar: "Ξ" }
+                { key: "8", id: "88832561", nameCourse: "Веб Дизайн", secondNameCourse: "Курс сообщества", courseAvatar: "/education/webdesign.jpg", createrName: "Ξ Effect", createrAvatar: "Ξ" }
             ]
             store.setCourseList(list)
         }
