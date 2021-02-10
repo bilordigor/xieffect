@@ -100,6 +100,10 @@ const useStyles = makeStyles((theme) => ({
         paddingLeft: 20,
 
     },
+    gridError: {
+        marginTop: 4,
+        paddingLeft: 20,
+    },
     forgotPassword: {
         color: 'rgb(142,146,151)',
     },
@@ -122,6 +126,10 @@ const useStyles = makeStyles((theme) => ({
     forgotRegistration: {
         color: 'rgb(142,146,151)',
     },
+    ErrorLabel: {
+        fontSize: 16,
+        color: theme.main.palette.help.red,
+    },
 }));
 
 
@@ -139,6 +147,10 @@ const Email = inject('store')(observer((props) => {
     const wallpapers = () => {
         let count = Math.floor(Math.random() * (Math.floor(5) - Math.ceil(1))) + Math.ceil(1)
         return "/wallpapers/hp" + count.toString() + ".jpg"
+    }
+
+    const clickedNext = () => {
+        
     }
 
     return (
@@ -217,12 +229,15 @@ const Email = inject('store')(observer((props) => {
                                 </LinkUI>
                             </Grid> */}
                             <Grid item container direction="column" justifyContent="center" alignItems="center" className={classes.gridEnterButtom}>
-                                <Link href="/registration/step/user">
-                                    <Button onClick={props.store.setReadyAuth} variant="contained" color="primary" className={classes.enterButtom}>
+                                {/* <Link href="/registration/step/user"> */}
+                                    <Button onClick={clickedNext} variant="contained" color="primary" className={classes.enterButtom}>
                                         Далее
                                     </Button>
-                                </Link >
+                                {/* </Link > */}
                             </Grid>
+                            {props.store.registrationValues.isTrueEmail && <Grid item container direction="column" justifyContent="center" alignItems="flex-start" className={classes.gridError}>
+                                <Typography className={classes.ErrorLabel}> Подтвердите вашу почту! Перейдите по ссылке в письме, которое мы отправили вам на почту.</Typography>
+                            </Grid>}
                             <Grid item container direction="column" justifyContent="center" alignItems="flex-start" className={classes.gridForgotRegistration}>
                                 <LinkUI className={classes.forgotRegistration} href="#" onClick={gotoAuth}>
                                     Уже есть учётная запись? Войти!

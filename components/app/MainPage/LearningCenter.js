@@ -133,7 +133,7 @@ const LearningCenter = () => {
         >
             <Grid container direction="row" alignItems="center" justifyContent="flex-start" className={classes.root}>
                 <Grid item xs zeroMinWidth className={classes.gridTypography}>
-                    <Typography onClick={handleClickOpen} className={classes.label} noWrap={true}> Школа 641 </Typography>
+                    <Typography onClick={handleClickOpen} className={classes.label} noWrap={true}> Школа 461 </Typography>
                     <SimpleDialog
                         open={open}
                         onClose={handleClose}

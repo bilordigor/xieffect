@@ -138,7 +138,7 @@ const Login = inject('store')(observer((props) => {
         email: '',
         password: '',
         showPassword: false,
-        error: true,
+        error: false,
     });
 
     const handleChange = (prop) => (event) => {
@@ -211,6 +211,24 @@ const Login = inject('store')(observer((props) => {
     //     return "/wallpapers/hp" + count.toString() + ".jpg"
     // }
 
+    React.useEffect(() => {
+        fetch('https://jsonplaceholder.typicode.com/users')
+        .then(response => response.json())
+        .then(data => console.log(data))
+
+        fetch('https://jsonplaceholder.typicode.com/users', {
+            method: 'POST',
+            body: JSON.stringify({
+                username: 'Elon Mask',
+                email: 'elonmusk@yandex.ru',
+                userId: 1
+            }),
+            headers: { "Content-Type": "application/json; charset=utf-8" }
+        })
+        .then(response => response.json())
+        .then(data => console.log(data))
+    }, [])
+
     return (
         <>
             <Head>
@@ -280,9 +298,9 @@ const Login = inject('store')(observer((props) => {
                                     />
                                 </FormControl>
                             </Grid>
-                            { values.error && <Grid item container direction="column" justifyContent="center" alignItems="flex-start" className={classes.gridForgotPassword}>
+                            {values.error && <Grid item container direction="column" justifyContent="center" alignItems="flex-start" className={classes.gridForgotPassword}>
                                 <Typography className={classes.ErrorLabel}> Неправильное имя пользователя или пароль </Typography>
-                            </Grid>} 
+                            </Grid>}
                             <Grid item container direction="column" justifyContent="center" alignItems="flex-start" className={classes.gridForgotPassword}>
                                 <LinkUI className={classes.forgotPassword} href="#" onClick={gotoForgotPassword}>
                                     Забыли пароль?

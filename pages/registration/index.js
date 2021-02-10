@@ -163,6 +163,24 @@ const Registration = inject('store')(observer((props) => {
         return "/wallpapers/hp" + count.toString() + ".jpg"
     }
 
+    async function postData(url = '', data = {}) {
+        // Default options are marked with *
+        const response = await fetch(url, {
+            method: 'POST', // *GET, POST, PUT, DELETE, etc.
+            mode: 'cors', // no-cors, *cors, same-origin
+            cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+            credentials: 'same-origin', // include, *same-origin, omit
+            headers: {
+                'Content-Type': 'application/json'
+                // 'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            redirect: 'follow', // manual, *follow, error
+            referrerPolicy: 'no-referrer', // no-referrer, *client
+            body: JSON.stringify(data) // body data type must match "Content-Type" header
+        });
+        return await response.json(); // parses JSON response into native JavaScript objects
+    }
+
     const onRegistrationButtonClick = () => {
         props.store.setRegistrationValuesFalse()
         //console.log(props.store.registrationValues)
@@ -186,6 +204,14 @@ const Registration = inject('store')(observer((props) => {
             }
         }
         if (!props.store.registrationValues.errorPasswordLength && !props.store.registrationValues.errorSymbols && !props.store.registrationValues.errorEmail) {
+
+            props.store.goToHex()
+
+            // postData('https://example.com/answer', { email: props.store.registrationValues.email, password:  })
+            // .then((data) => {
+            //     console.log(data); // JSON data parsed by `response.json()` call
+            // });
+
             const router = Router
             router.push('/registration/step/email')
         }
@@ -237,6 +263,9 @@ const Registration = inject('store')(observer((props) => {
                             </Grid>
                             {props.store.registrationValues.errorEmail && <Grid item container direction="column" justifyContent="center" alignItems="flex-start" className={classes.gridForgotPassword}>
                                 <Typography className={classes.ErrorLabel}> Некорректное имя почты </Typography>
+                            </Grid>}
+                            {props.store.registrationValues.emailAlreadyUsed && <Grid item container direction="column" justifyContent="center" alignItems="flex-start" className={classes.gridForgotPassword}>
+                                <Typography className={classes.ErrorLabel}> Данный адрес электронной почты уже используется </Typography>
                             </Grid>}
                             <Grid item container direction="column" justifyContent="center" alignItems="flex-start" className={classes.gridTextField}>
                                 <FormControl className={classes.textField} variant="outlined">
