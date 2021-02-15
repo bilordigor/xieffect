@@ -1,6 +1,6 @@
 import React from 'react';
 import { makeStyles, useTheme } from '@material-ui/core';
-
+import Image from 'next/image'
 
 
 const Background = ({ src, alt = 'background' }) => {
@@ -29,7 +29,8 @@ const Background = ({ src, alt = 'background' }) => {
   }));
   const classes = useStyles();
   const theme = useTheme();
-  return <img alt={alt} src={src} className={classes.background} />;
+  //return <img alt={alt} src={src} className={classes.background} />;
+  return <Image className={classes.background} src={src} alt={alt} layout="fill" objectFit="cover"/>;
 };
 
 export default Background;

@@ -33,10 +33,68 @@ class Store {
 
   //      ИНТЕРФЕЙС
 
+  // Вход и глобальные данные приложения //login.js
 
-  // Страница Регистрации //login.js
+  @observable loginValues = {
+    jwt: '',
+    email: '',
+    password: '',
+    passwordHash: '',
+    showPassword: false,
+    errorEmail: false,
+    errorPassword: false,
+
+  }
+
+  @action setLoginValues = (name, value) => {
+    this.loginValues[name] = value
+  }
+
+  @action setLoginValuesFalse = () => {
+    this.loginValues.errorEmail = false
+    this.loginValues.errorPassword = false
+
+  }
+
+  @action goToHexLogin = () => {
+    this.loginValues.passwordHash = Crypto.SHA384(this.loginValues.password).toString()
+    // console.log(this.registrationValues.passwordHash)
+    // console.log(this.registrationValues.passwordHash.length)
+  }
+
+
+  //Чтобы браузеры могли отправлять запрос с учётными данными (даже для cross-origin запросов),
+  //добавьте credentials: 'include' в объект init, передаваемый вами в метод fetch():
+  //Если вы хотите отправлять запрос с учетными данными только если URL принадлежит одному источнику (origin)
+  //что и вызывающий его скрипт, добавьте credentials: 'same-origin'.
+  //Напротив, чтобы быть уверенным, что учётные данные не передаются с запросом, используйте credentials: 'omit':
+
+  @action async postData(url = '', data = {},) { // mode, cache, credentials, redirect, referrerPolicy
+    // Default options are marked with *
+    try {
+      const response = await fetch(url, {
+        method: 'POST', // *GET, POST, PUT, DELETE, etc.
+        mode: 'no-cors', // no-cors, *cors, same-origin
+        // cache, // *default, no-cache, reload, force-cache, only-if-cached
+        credentials: 'same-origin', // include, *same-origin, omit
+        headers: {
+          'Content-Type': 'application/json'
+          // 'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        // redirect, // manual, *follow, error
+        // referrerPolicy, // no-referrer, *client
+        body: JSON.stringify(data) // body data type must match "Content-Type" header
+      });
+      return await response.json(); // parses JSON response into native JavaScript objects
+    } catch (error) {
+      console.log('Возникла проблема с вашим fetch запросом: ', error.message);
+    }
+  }
+
+  // Страница Регистрации //registarion
 
   @observable registrationValues = {
+    jwt: '',
     email: '',
     isTrueEmail: true,
     password: '',
@@ -62,14 +120,16 @@ class Store {
 
   @action goToHex = () => {
     this.registrationValues.passwordHash = Crypto.SHA384(this.registrationValues.password).toString()
-    console.log(this.registrationValues.passwordHash)
-    console.log(this.registrationValues.passwordHash.length)
+    this.loginValues.passwordHash = Crypto.SHA384(this.loginValues.password).toString()
+
+    // console.log(this.registrationValues.passwordHash)
+    // console.log(this.registrationValues.passwordHash.length)
 
   }
 
 
 
-  
+
   // Главная страница 
 
   @observable todoList = [

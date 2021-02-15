@@ -66,7 +66,7 @@ const useStyles = makeStyles((theme) => ({
     },
     rightMenu: {
         height: '100%',
-        width: 220,
+        width: 320,
         zIndex: 1000,
         color: theme.main.palette.header.text,
         backgroundColor: theme.main.palette.header.main,
@@ -93,6 +93,7 @@ const useStyles = makeStyles((theme) => ({
         zIndex: 999,
     },
     menuLinkRight: {
+        fontSize: 24,
         color: theme.main.palette.header.text,
         cursor: 'pointer',
         zIndex: 999,
@@ -102,7 +103,7 @@ const useStyles = makeStyles((theme) => ({
         paddingLeft: 10,
         paddingRight: 10,
         backgroundColor: theme.main.palette.header.text,
-        width: '200px',
+        width: '300px',
     }
 }));
 

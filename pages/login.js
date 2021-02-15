@@ -65,8 +65,10 @@ const useStyles = makeStyles((theme) => ({
         zIndex: 999,
         color: 'rgb(255,255,255)',
         fontWeight: 'bold',
+        fontSize: 32,
     },
     typographyMainly: {
+        fontSize: 22,
         zIndex: 999,
         color: 'rgb(142,146,151)',
     },
@@ -134,18 +136,12 @@ const useStyles = makeStyles((theme) => ({
 
 const Login = inject('store')(observer((props) => {
     const classes = useStyles();
-    const [values, setValues] = React.useState({
-        email: '',
-        password: '',
-        showPassword: false,
-        error: false,
-    });
-
     const handleChange = (prop) => (event) => {
-        setValues({ ...values, [prop]: event.target.value });
+        props.store.setLoginValues(prop, event.target.value)
+        //setValues({ ...values, [prop]: event.target.value });
     };
     const handleClickShowPassword = () => {
-        setValues({ ...values, showPassword: !values.showPassword });
+        props.store.setLoginValues("showPassword", !props.store.loginValues.showPassword)
     };
 
     const handleMouseDownPassword = (event) => {
@@ -165,56 +161,10 @@ const Login = inject('store')(observer((props) => {
         router.push('/registration')
     }
 
-    let isFirstVisit = null
-    React.useEffect(() => {
-        console.log('Hi!')
-        function setCookie(name, value, expires, path, domain, secure) {
-            document.cookie = name + "=" + escape(value) +
-                ((expires) ? "; expires=" + expires : "") +
-                ((path) ? "; path=" + path : "") +
-                ((domain) ? "; domain=" + domain : "") +
-                ((secure) ? "; secure" : "");
-        }
-
-        function getCookie(name) {
-            let cookie = " " + document.cookie;
-            let search = " " + name + "=";
-            let setStr = null;
-            let offset = 0;
-            let end = 0;
-            if (cookie.length > 0) {
-                offset = cookie.indexOf(search);
-                if (offset != -1) {
-                    offset += search.length;
-                    end = cookie.indexOf(";", offset)
-                    if (end == -1) {
-                        end = cookie.length;
-                    }
-                    setStr = unescape(cookie.substring(offset, end));
-                }
-            }
-            return (setStr);
-        }
-        if (getCookie('firstVisit') === null) {
-            setCookie('firstVisit', 'true')
-            isFirstVisit = true
-            console.log('Hi! True')
-        }
-        else {
-            isFirstVisit = false
-            console.log('Hi! False')
-        }
-    });
-
-    // const wallpapers = () => {
-    //     let count = Math.floor(Math.random() * (Math.floor(5) - Math.ceil(1))) + Math.ceil(1)
-    //     return "/wallpapers/hp" + count.toString() + ".jpg"
-    // }
-
     React.useEffect(() => {
         fetch('https://jsonplaceholder.typicode.com/users')
-        .then(response => response.json())
-        .then(data => console.log(data))
+            .then(response => response.json())
+            .then(data => console.log(data))
 
         fetch('https://jsonplaceholder.typicode.com/users', {
             method: 'POST',
@@ -225,9 +175,25 @@ const Login = inject('store')(observer((props) => {
             }),
             headers: { "Content-Type": "application/json; charset=utf-8" }
         })
-        .then(response => response.json())
-        .then(data => console.log(data))
+            .then(response => response.json())
+            .then(data => console.log(data))
     }, [])
+
+    const clickEnterButton = () => {
+        props.store.goToHexLogin()
+        props.store.postData('https://example.com/answer', { "email": props.store.loginValues.email, "password": props.store.loginValues.passwordHash })
+            .then((data) => {
+                console.log(data); // JSON data parsed by `response.json()` call
+            });
+        console.log(props.store.loginValues.email)
+        console.log(props.store.loginValues.passwordHash)
+
+        if (!props.store.loginValues.errorEmail && !props.store.loginValues.errorPassword) {
+            const router = Router
+            router.push('/app')
+        }
+
+    }
 
     return (
         <>
@@ -245,10 +211,12 @@ const Login = inject('store')(observer((props) => {
                     <Paper variant="outlined" className={classes.Paper}>
                         <Grid container direction="column" justifyContent="center" alignItems="center" className={classes.gridPaper}>
                             <Grid item container direction="column" justifyContent="center" alignItems="center" className={classes.gridTypography}>
-                                {isFirstVisit && <Typography variant='h5' className={classes.typographyMain}> Добро пожаловать! </Typography>}
+                                <Typography className={classes.typographyMain}> Добро пожаловать! </Typography>
+                                <Typography className={classes.typographyMainly}> Вас привела жажда знаний, не так ли? </Typography>
+                                {/* {isFirstVisit && <Typography variant='h5' className={classes.typographyMain}> Добро пожаловать! </Typography>}
                                 {isFirstVisit && <Typography variant='h6' className={classes.typographyMainly}> Вас привела жажда знаний, не так ли? </Typography>}
                                 {!isFirstVisit && <Typography variant='h5' className={classes.typographyMain}> С возвращением! </Typography>}
-                                {!isFirstVisit && <Typography variant='h6' className={classes.typographyMainly}> Мы так рады видеть вас снова! </Typography>}
+                                {!isFirstVisit && <Typography variant='h6' className={classes.typographyMainly}> Мы так рады видеть вас снова! </Typography>} */}
                             </Grid>
                             <Grid item container direction="column" justifyContent="center" alignItems="flex-start" className={classes.gridTextField}>
                                 <FormControl className={classes.textField} variant="outlined">
@@ -256,7 +224,7 @@ const Login = inject('store')(observer((props) => {
                                     <OutlinedInput
                                         className={classes.OutlinedInput}
                                         type='text'
-                                        value={values.email}
+                                        value={props.store.loginValues.email}
                                         onChange={handleChange('email')}
                                         endAdornment={
                                             <InputAdornment position="end">
@@ -274,13 +242,16 @@ const Login = inject('store')(observer((props) => {
                                     />
                                 </FormControl>
                             </Grid>
+                            {props.store.loginValues.errorEmail && <Grid item container direction="column" justifyContent="center" alignItems="flex-start" className={classes.gridForgotPassword}>
+                                <Typography className={classes.ErrorLabel}> Пользователя с таким именем почты не существует </Typography>
+                            </Grid>}
                             <Grid item container direction="column" justifyContent="center" alignItems="flex-start" className={classes.gridTextField}>
                                 <FormControl className={classes.textField} variant="outlined">
                                     <InputLabel className={classes.inputLabel} htmlFor="outlined-adornment-password"> <Typography className={classes.textFieldTypography}>Пароль</Typography> </InputLabel>
                                     <OutlinedInput
                                         className={classes.OutlinedInput}
-                                        type={values.showPassword ? 'text' : 'password'}
-                                        value={values.password}
+                                        type={props.store.loginValues.showPassword ? 'text' : 'password'}
+                                        value={props.store.loginValues.password}
                                         onChange={handleChange('password')}
                                         endAdornment={
                                             <InputAdornment position="end">
@@ -290,7 +261,7 @@ const Login = inject('store')(observer((props) => {
                                                     onMouseDown={handleMouseDownPassword}
                                                     edge="end"
                                                 >
-                                                    {values.showPassword ? <Visibility className={classes.icons} /> : <VisibilityOff className={classes.icons} />}
+                                                    {props.store.loginValues.showPassword ? <Visibility className={classes.icons} /> : <VisibilityOff className={classes.icons} />}
                                                 </IconButton>
                                             </InputAdornment>
                                         }
@@ -298,8 +269,8 @@ const Login = inject('store')(observer((props) => {
                                     />
                                 </FormControl>
                             </Grid>
-                            {values.error && <Grid item container direction="column" justifyContent="center" alignItems="flex-start" className={classes.gridForgotPassword}>
-                                <Typography className={classes.ErrorLabel}> Неправильное имя пользователя или пароль </Typography>
+                            {props.store.loginValues.errorPassword && <Grid item container direction="column" justifyContent="center" alignItems="flex-start" className={classes.gridForgotPassword}>
+                                <Typography className={classes.ErrorLabel}> Неправильный пароль </Typography>
                             </Grid>}
                             <Grid item container direction="column" justifyContent="center" alignItems="flex-start" className={classes.gridForgotPassword}>
                                 <LinkUI className={classes.forgotPassword} href="#" onClick={gotoForgotPassword}>
@@ -307,11 +278,9 @@ const Login = inject('store')(observer((props) => {
                                 </LinkUI>
                             </Grid>
                             <Grid item container direction="column" justifyContent="center" alignItems="center" className={classes.gridEnterButtom}>
-                                <Link href="/app">
-                                    <Button onClick={props.store.setReadyAuth} variant="contained" color="primary" className={classes.enterButtom}>
-                                        Вход
-                                    </Button>
-                                </Link >
+                                <Button onClick={clickEnterButton} variant="contained" color="primary" className={classes.enterButtom}>
+                                    Вход
+                                </Button>
                             </Grid>
                             <Grid item container direction="column" justifyContent="center" alignItems="flex-start" className={classes.gridForgotRegistration}>
 
