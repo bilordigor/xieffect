@@ -18,6 +18,7 @@ const Background = ({ src, alt = 'background' }) => {
       zIndex: 100,
       filter: 'grayscale(45%) opacity(90%)',
       mixBlendMode: 'multiply',
+      backgroundColor: theme.main.palette.content.main,
       //overflowY: 'hidden',
       // backgroundAttachment: 'fixed',
       // backgroundSize: 'cover',
