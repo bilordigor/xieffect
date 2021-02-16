@@ -18,13 +18,14 @@ import EmailIcon from '@material-ui/icons/Email';
 
 const useStyles = makeStyles((theme) => ({
     root: {
-        width: '100%',
-        height: '100%',
-        position: 'absolute',
+        width: "100vw",
+        height: "100vh",
+        //position: 'absolute',
         top: 0,
         left: 0,
         overflow: 'auto',
-        zIndex: 999,
+        backgroundColor: '#2c2c2c',
+        zIndex: 90,
     },
     gridTittle: {
         position: 'absolute',
@@ -45,6 +46,9 @@ const useStyles = makeStyles((theme) => ({
         fontSize: 32,
         zIndex: 999,
         color: 'white',
+    },
+    gridUnderPaper: {
+        zIndex: 999,
     },
     Paper: {
         zIndex: 999,
@@ -150,7 +154,17 @@ const Email = inject('store')(observer((props) => {
     }
 
     const clickedNext = () => {
-        
+        props.store.postData('https://example.com/answer', { "email": props.store.loginValues.email, "password": props.store.loginValues.passwordHash })
+            .then((data) => {
+                console.log(data); // JSON data parsed by `response.json()` call
+            });
+        // console.log(props.store.loginValues.email)
+        // console.log(props.store.loginValues.passwordHash)
+
+        if (props.store.registrationValues.isTrueEmail) {
+            const router = Router
+            router.push('/registration/step/user')
+        }
     }
 
     return (
@@ -165,7 +179,7 @@ const Email = inject('store')(observer((props) => {
                         <Typography variant="h3" className={classes.tittle}> Ξ Effect </Typography>
                     </Link >
                 </Grid>
-                <Grid item>
+                <Grid item className={classes.gridUnderPaper}>
                     <Paper variant="outlined" className={classes.Paper}>
                         <Grid container direction="column" justifyContent="center" alignItems="center" className={classes.gridPaper}>
                             <Grid item container direction="column" justifyContent="center" alignItems="center" className={classes.gridTypography}>
@@ -235,7 +249,7 @@ const Email = inject('store')(observer((props) => {
                                     </Button>
                                 {/* </Link > */}
                             </Grid>
-                            {props.store.registrationValues.isTrueEmail && <Grid item container direction="column" justifyContent="center" alignItems="flex-start" className={classes.gridError}>
+                            {!props.store.registrationValues.isTrueEmail && <Grid item container direction="column" justifyContent="center" alignItems="flex-start" className={classes.gridError}>
                                 <Typography className={classes.ErrorLabel}> Подтвердите вашу почту! Перейдите по ссылке в письме, которое мы отправили вам на почту.</Typography>
                             </Grid>}
                             <Grid item container direction="column" justifyContent="center" alignItems="flex-start" className={classes.gridForgotRegistration}>

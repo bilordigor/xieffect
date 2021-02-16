@@ -18,7 +18,6 @@ const Background = ({ src, alt = 'background' }) => {
       zIndex: 100,
       filter: 'grayscale(45%) opacity(90%)',
       mixBlendMode: 'multiply',
-      backgroundColor: theme.main.palette.content.main,
       //overflowY: 'hidden',
       // backgroundAttachment: 'fixed',
       // backgroundSize: 'cover',
@@ -31,7 +30,7 @@ const Background = ({ src, alt = 'background' }) => {
   const classes = useStyles();
   const theme = useTheme();
   //return <img alt={alt} src={src} className={classes.background} />;
-  return <Image className={classes.background} src={src} alt={alt} layout="fill" objectFit="cover"/>;
+  return <Image className={classes.background} src={src} alt={alt} priority="true" layout="fill" objectFit="cover"/>;
 };
 
 export default Background;

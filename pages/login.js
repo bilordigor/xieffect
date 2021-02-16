@@ -17,13 +17,15 @@ import { withStyles, makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
     root: {
-        width: '100%',
-        height: '100%',
-        position: 'absolute',
+        width: "100vw",
+        height: "100vh",
+        //position: 'absolute',
         top: 0,
         left: 0,
         overflow: 'auto',
-        zIndex: 999,
+        backgroundColor: '#2c2c2c',
+        zIndex: 90,
+
     },
     gridTittle: {
         position: 'absolute',
@@ -45,8 +47,10 @@ const useStyles = makeStyles((theme) => ({
         zIndex: 999,
         color: 'white',
     },
-    Paper: {
+    gridUnderPaper: {
         zIndex: 999,
+    },
+    Paper: {
         borderRadius: 4,
         width: 500,
         [theme.breakpoints.only('xs')]: {
@@ -59,6 +63,7 @@ const useStyles = makeStyles((theme) => ({
             // background: 'linear-gradient(-90deg, rgb(80,151,136, 0.5), rgb(4,40,75, 0.5))',
             backgroundColor: 'rgb(54,57,63, 0.85)',
         },
+        zIndex: 999,
 
     },
     typographyMain: {
@@ -73,42 +78,52 @@ const useStyles = makeStyles((theme) => ({
         color: 'rgb(142,146,151)',
     },
     gridPaper: {
+        zIndex: 999,
         margin: 8,
         marginTop: 24,
     },
     inputLabel: {
+        zIndex: 999,
         color: 'rgb(142,146,151)',
 
     },
     OutlinedInput: {
+        zIndex: 999,
         color: theme.main.palette.content.text,
     },
     textFieldTypography: {
+        zIndex: 999,
         marginTop: -4,
         color: 'rgb(142,146,151)',
     },
     gridTextField: {
+        zIndex: 999,
         marginTop: 16,
         paddingLeft: 16,
         paddingRight: 32,
         width: '100%',
     },
     textField: {
+        zIndex: 999,
         width: '100%',
         backgroundColor: 'rgb(49,51,57)',
     },
     icons: {
+        zIndex: 999,
         color: 'rgb(142,146,151)',
     },
     gridForgotPassword: {
+        zIndex: 999,
         marginTop: 4,
         paddingLeft: 20,
 
     },
     forgotPassword: {
+        zIndex: 999,
         color: 'rgb(142,146,151)',
     },
     gridEnterButtom: {
+        zIndex: 999,
         marginTop: 16,
         paddingLeft: 16,
         paddingRight: 32,
@@ -116,19 +131,23 @@ const useStyles = makeStyles((theme) => ({
         width: '100%',
     },
     enterButtom: {
+        zIndex: 999,
         width: '100%',
     },
     gridForgotRegistration: {
+        zIndex: 999,
         marginTop: 4,
         paddingLeft: 20,
         paddingBottom: 20,
 
     },
     forgotRegistration: {
+        zIndex: 999,
         color: 'rgb(142,146,151)',
         cursor: "pointer",
     },
     ErrorLabel: {
+        zIndex: 999,
         fontSize: 16,
         color: theme.main.palette.help.red,
     }
@@ -207,7 +226,7 @@ const Login = inject('store')(observer((props) => {
                         <Typography variant="h3" className={classes.tittle}> Ξ Effect </Typography>
                     </Link>
                 </Grid>
-                <Grid item>
+                <Grid item className={classes.gridUnderPaper}>
                     <Paper variant="outlined" className={classes.Paper}>
                         <Grid container direction="column" justifyContent="center" alignItems="center" className={classes.gridPaper}>
                             <Grid item container direction="column" justifyContent="center" alignItems="center" className={classes.gridTypography}>
