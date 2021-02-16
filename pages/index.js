@@ -13,7 +13,6 @@ import Navigation from '../components/main/Menu/Navigation';
 
 import Background from '../components/app/help/background/background';
 import { WallpaperSharp } from '@material-ui/icons';
-import LoadingPage from '../components/app/help/background/loadingPage';
 
 
 const useStyles = makeStyles((theme) => ({
