@@ -18,14 +18,11 @@ const options = ['Участник', 'Ученик', 'Преподаватель
 
 const useStyles = makeStyles((theme) => ({
     root: {
-        width: "100vw",
-        height: "100vh",
-        //position: 'absolute',
-        top: 0,
-        left: 0,
-        overflow: 'auto',
-        backgroundColor: '#2c2c2c',
-        zIndex: 90,
+        backgroundColor: '#2b2b2b',
+        position: 'fixed',
+        height: '100vh',
+        width: '100vw',
+        zIndex: '-1',
     },
     gridTittle: {
         position: 'absolute',
@@ -48,6 +45,7 @@ const useStyles = makeStyles((theme) => ({
         color: 'white',
     },
     gridUnderPaper: {
+        paddingTop: 150,
         zIndex: 999,
     },
     Paper: {
@@ -67,11 +65,13 @@ const useStyles = makeStyles((theme) => ({
 
     },
     typographyMain: {
+        cursor: "default",
         zIndex: 999,
         color: 'rgb(255,255,255)',
         fontWeight: 'bold',
     },
     typographyMainly: {
+        cursor: "default",
         zIndex: 999,
         color: 'rgb(142,146,151)',
     },
@@ -155,7 +155,7 @@ const useStyles = makeStyles((theme) => ({
         color: 'rgb(142,146,151)',
     },
     Checkbox: {
-      color: theme.main.palette.content.border,
+        color: theme.main.palette.content.border,
     },
     OutlinedInput: {
         color: theme.main.palette.content.text,
@@ -239,132 +239,134 @@ const User = inject('store')(observer((props) => {
             <Head>
                 <title>Ξ Регистрация</title>
             </Head>
-            <Background src="/wallpapers/hp3.jpg" />
-            <Grid container direction="column" justifyContent="center" alignItems="center" className={classes.root}>
-                <Grid className={classes.gridTittle}>
-                    <Link href="/">
-                        <Typography variant="h3" className={classes.tittle}> Ξ Effect </Typography>
-                    </Link >
-                </Grid>
-                <Grid item className={classes.gridUnderPaper}> 
-                    <Paper variant="outlined" className={classes.Paper}>
-                        <Grid container direction="column" justifyContent="center" alignItems="center" className={classes.gridPaper}>
-                            <Grid item container direction="column" justifyContent="center" alignItems="center" className={classes.gridTypography}>
-                                <Typography variant='h5' className={classes.typographyMain}> Давайте знакомиться! </Typography>
-                                <Typography variant='h7' className={classes.typographyMainly}> Расскажите нам о себе! </Typography>
-                            </Grid>
-                            <Grid item container direction="column" justifyContent="center" alignItems="flex-start" className={classes.gridTextField}>
-                                <FormControl className={classes.textField} variant="outlined">
-                                    <InputLabel className={classes.inputLabel} htmlFor="outlined-adornment-password"> <Typography className={classes.textFieldTypography}>Имя</Typography></InputLabel>
-                                    <OutlinedInput
-                                        className={classes.OutlinedInput}
-                                        type='text'
-                                        value={values.firstName}
-                                        onChange={handleChange('firstName')}
-                                    />
-                                </FormControl>
-                            </Grid>
-                            <Grid item container direction="column" justifyContent="center" alignItems="flex-start" className={classes.gridTextField}>
-                                <FormControl className={classes.textField} variant="outlined">
-                                    <InputLabel className={classes.inputLabel} htmlFor="outlined-adornment-password"> <Typography className={classes.textFieldTypography}>Фамилия</Typography> </InputLabel>
-                                    <OutlinedInput
-                                        className={classes.OutlinedInput}
-                                        type='text'
-                                        value={values.secondName}
-                                        onChange={handleChange('secondName')}
-                                        labelWidth={70}
-                                    />
-                                </FormControl>
-                            </Grid>
-                            <Grid item container direction="column" justifyContent="center" alignItems="flex-start" className={classes.gridTextField}>
-                                <FormControl className={classes.textField} variant="outlined">
-                                    <InputLabel className={classes.inputLabel} htmlFor="outlined-adornment-password"> <Typography className={classes.textFieldTypography}>Никнейм</Typography> </InputLabel>
-                                    <OutlinedInput
-                                        className={classes.OutlinedInput}
-                                        type='text'
-                                        value={values.nickname}
-                                        onChange={handleChange('nickname')}
-                                        labelWidth={70}
-                                    />
-                                </FormControl>
-                            </Grid>
-                            <Grid item container direction="column" justifyContent="center" alignItems="flex-start" className={classes.gridTextField}>
-                                <ButtonGroup variant="contained" color="primary" ref={anchorRef} aria-label="split button">
-                                    <Button onClick={handleClick}>{options[selectedIndex]}</Button>
-                                    <Button
-                                        color="primary"
-                                        size="small"
-                                        aria-controls={open ? 'split-button-menu' : undefined}
-                                        aria-expanded={open ? 'true' : undefined}
-                                        aria-label="select merge strategy"
-                                        aria-haspopup="menu"
-                                        onClick={handleToggle}
-                                    >
-                                        <ArrowDropDownIcon />
-                                    </Button>
-                                </ButtonGroup>
-                                <Popper open={open} anchorEl={anchorRef.current} role={undefined} transition disablePortal className={classes.popper}>
-                                    {({ TransitionProps, placement }) => (
-                                        <Grow
-                                            {...TransitionProps}
-                                            style={{
-                                                transformOrigin: placement === 'bottom' ? 'center top' : 'center bottom',
-                                            }}
+            <div className={classes.root}>
+                <Background src="/wallpapers/hp3.jpg" />
+                <Grid container direction="column" justifyContent="center" alignItems="center" className={classes.main}>
+                    <Grid item className={classes.gridTittle}>
+                        <Link href="/">
+                            <Typography variant="h3" className={classes.tittle}> Ξ Effect </Typography>
+                        </Link >
+                    </Grid>
+                    <Grid item className={classes.gridUnderPaper}>
+                        <Paper variant="outlined" className={classes.Paper}>
+                            <Grid container direction="column" justifyContent="center" alignItems="center" className={classes.gridPaper}>
+                                <Grid item container direction="column" justifyContent="center" alignItems="center" className={classes.gridTypography}>
+                                    <Typography variant='h5' className={classes.typographyMain}> Давайте знакомиться! </Typography>
+                                    <Typography variant='h7' className={classes.typographyMainly}> Расскажите нам о себе! </Typography>
+                                </Grid>
+                                <Grid item container direction="column" justifyContent="center" alignItems="flex-start" className={classes.gridTextField}>
+                                    <FormControl className={classes.textField} variant="outlined">
+                                        <InputLabel className={classes.inputLabel} htmlFor="outlined-adornment-password"> <Typography className={classes.textFieldTypography}>Имя</Typography></InputLabel>
+                                        <OutlinedInput
+                                            className={classes.OutlinedInput}
+                                            type='text'
+                                            value={values.firstName}
+                                            onChange={handleChange('firstName')}
+                                        />
+                                    </FormControl>
+                                </Grid>
+                                <Grid item container direction="column" justifyContent="center" alignItems="flex-start" className={classes.gridTextField}>
+                                    <FormControl className={classes.textField} variant="outlined">
+                                        <InputLabel className={classes.inputLabel} htmlFor="outlined-adornment-password"> <Typography className={classes.textFieldTypography}>Фамилия</Typography> </InputLabel>
+                                        <OutlinedInput
+                                            className={classes.OutlinedInput}
+                                            type='text'
+                                            value={values.secondName}
+                                            onChange={handleChange('secondName')}
+                                            labelWidth={70}
+                                        />
+                                    </FormControl>
+                                </Grid>
+                                <Grid item container direction="column" justifyContent="center" alignItems="flex-start" className={classes.gridTextField}>
+                                    <FormControl className={classes.textField} variant="outlined">
+                                        <InputLabel className={classes.inputLabel} htmlFor="outlined-adornment-password"> <Typography className={classes.textFieldTypography}>Никнейм</Typography> </InputLabel>
+                                        <OutlinedInput
+                                            className={classes.OutlinedInput}
+                                            type='text'
+                                            value={values.nickname}
+                                            onChange={handleChange('nickname')}
+                                            labelWidth={70}
+                                        />
+                                    </FormControl>
+                                </Grid>
+                                <Grid item container direction="column" justifyContent="center" alignItems="flex-start" className={classes.gridTextField}>
+                                    <ButtonGroup variant="contained" color="primary" ref={anchorRef} aria-label="split button">
+                                        <Button onClick={handleClick}>{options[selectedIndex]}</Button>
+                                        <Button
+                                            color="primary"
+                                            size="small"
+                                            aria-controls={open ? 'split-button-menu' : undefined}
+                                            aria-expanded={open ? 'true' : undefined}
+                                            aria-label="select merge strategy"
+                                            aria-haspopup="menu"
+                                            onClick={handleToggle}
                                         >
-                                            <Paper className={classes.paper}>
-                                                <ClickAwayListener onClickAway={handleClose}>
-                                                    <MenuList id="split-button-menu">
-                                                        {options.map((option, index) => (
-                                                            <MenuItem
-                                                                key={option}
-                                                                // disabled={index === 2}
-                                                                selected={index === selectedIndex}
-                                                                onClick={(event) => handleMenuItemClick(event, index)}
-                                                            >
-                                                                {option}
-                                                            </MenuItem>
-                                                        ))}
-                                                    </MenuList>
-                                                </ClickAwayListener>
-                                            </Paper>
-                                        </Grow>
-                                    )}
-                                </Popper>
-                            </Grid>
-                            <Grid item container direction="row" justifyContent="flex-start" alignItems="flex-start" className={classes.gridCheckbox}>
-                                <FormControlLabel
-                                    control={<Checkbox className={classes.Checkbox} color="primary" checked={state.checkedA} onChange={handleChangeCheckbox} name="checkedA" />}
-                                    label={<Typography className={classes.checkboxTypography}> Скрыть Имя и Фамилию </Typography>}
-                                />
-                                <Tooltip className={classes.tooltip} title={<Typography className={classes.tooltipTypography}>Скрыть Имя и Фамилию от незнакомых пользоватлей. Показывать им только ваш Никнейм.</Typography>} arrow>
-                                    <HelpOutlineIcon className={classes.iconHelp} />
-                                </Tooltip>
+                                            <ArrowDropDownIcon />
+                                        </Button>
+                                    </ButtonGroup>
+                                    <Popper open={open} anchorEl={anchorRef.current} role={undefined} transition disablePortal className={classes.popper}>
+                                        {({ TransitionProps, placement }) => (
+                                            <Grow
+                                                {...TransitionProps}
+                                                style={{
+                                                    transformOrigin: placement === 'bottom' ? 'center top' : 'center bottom',
+                                                }}
+                                            >
+                                                <Paper className={classes.paper}>
+                                                    <ClickAwayListener onClickAway={handleClose}>
+                                                        <MenuList id="split-button-menu">
+                                                            {options.map((option, index) => (
+                                                                <MenuItem
+                                                                    key={option}
+                                                                    // disabled={index === 2}
+                                                                    selected={index === selectedIndex}
+                                                                    onClick={(event) => handleMenuItemClick(event, index)}
+                                                                >
+                                                                    {option}
+                                                                </MenuItem>
+                                                            ))}
+                                                        </MenuList>
+                                                    </ClickAwayListener>
+                                                </Paper>
+                                            </Grow>
+                                        )}
+                                    </Popper>
+                                </Grid>
+                                <Grid item container direction="row" justifyContent="flex-start" alignItems="flex-start" className={classes.gridCheckbox}>
+                                    <FormControlLabel
+                                        control={<Checkbox className={classes.Checkbox} color="primary" checked={state.checkedA} onChange={handleChangeCheckbox} name="checkedA" />}
+                                        label={<Typography className={classes.checkboxTypography}> Скрыть Имя и Фамилию </Typography>}
+                                    />
+                                    <Tooltip className={classes.tooltip} title={<Typography className={classes.tooltipTypography}>Скрыть Имя и Фамилию от незнакомых пользоватлей. Показывать им только ваш Никнейм.</Typography>} arrow>
+                                        <HelpOutlineIcon className={classes.iconHelp} />
+                                    </Tooltip>
 
-                            </Grid>
-                            <Grid item container direction="column" justifyContent="center" alignItems="center" className={classes.gridEnterButtom}>
-                                <Link href="/login">
-                                    <Button onClick={props.store.setReadyAuth} variant="contained" color="primary" className={classes.enterButtom}>
-                                        Завершить Регистрацию
+                                </Grid>
+                                <Grid item container direction="column" justifyContent="center" alignItems="center" className={classes.gridEnterButtom}>
+                                    <Link href="/login">
+                                        <Button onClick={props.store.setReadyAuth} variant="contained" color="primary" className={classes.enterButtom}>
+                                            Завершить Регистрацию
                                     </Button>
-                                </Link >
-                            </Grid>
-                            <Grid item container direction="column" justifyContent="center" alignItems="flex-start" className={classes.gridForgotRegistration}>
+                                    </Link >
+                                </Grid>
+                                <Grid item container direction="column" justifyContent="center" alignItems="flex-start" className={classes.gridForgotRegistration}>
 
-                                <LinkUI className={classes.forgotRegistration} href="#" onClick={gotoAuth}>
-                                    Уже есть учётная запись? Войти!
+                                    <LinkUI className={classes.forgotRegistration} href="#" onClick={gotoAuth}>
+                                        Уже есть учётная запись? Войти!
                                 </LinkUI>
+                                </Grid>
+
+
+
+
+
+
                             </Grid>
 
-
-
-
-
-
-                        </Grid>
-
-                    </Paper>
+                        </Paper>
+                    </Grid>
                 </Grid>
-            </Grid>
+            </div>
         </>
     )
 }))

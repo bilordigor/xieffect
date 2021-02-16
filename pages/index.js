@@ -13,40 +13,19 @@ import Navigation from '../components/main/Menu/Navigation';
 
 import Background from '../components/app/help/background/background';
 import { WallpaperSharp } from '@material-ui/icons';
+import LoadingPage from '../components/app/help/background/loadingPage';
 
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    //boxSizing: 'border-box',
-    // position: 'absolute',
-    backgroundColor: '#2c2c2c',
-    // backgroundColor: theme.main.palette.content.background,
-    // top: 0,
-    // left: 0,
-    // right: 0,
-    // bottom: 0,
-    // overflowX: 'auto',
-    // overflowY: 'none',
-    width: '100%',
-    height: '100%',
-    margin: 0,
-    padding: 0,
-    zIndex: 90,
-    overFlow: 'hidden'
+    backgroundColor: '#2b2b2b',
+    position: 'fixed',
+    height: '100vh',
+    width: '100vw',
+    zIndex: '-1',
   },
   main: {
-    //boxSizing: 'border-box',
-    // position: 'static',
-    // top: 0,
-    // left: 0,
-    // right: 0,
-    // bottom: 0,
-    // width: '100%',
-    width: '100%',
-    height: '100%',
-    margin: 0,
-    padding: 0,
-    overFlow: 'hidden'
+    zIndex: 999,
   },
   gridTypographyMain: {
     paddingRight: 96,
@@ -130,7 +109,7 @@ const useStyles = makeStyles((theme) => ({
   },
   gridButtons: {
     marginTop: 64,
-    paddingBottom: '185px',
+    //paddingBottom: '185px',
   },
   paperMenu: {
     backgroundColor: '#424242',
@@ -196,7 +175,7 @@ const useStyles = makeStyles((theme) => ({
   },
   gridButtonsSmall: {
     marginTop: 64,
-    paddingBottom: '185px',
+    //paddingBottom: '185px',
   },
   dowloadButtomSmall: {
     color: theme.main.palette.header.text,
@@ -219,6 +198,9 @@ const Home = ({ data }) => {
   const classes = useStyles();
   const theme = useTheme();
 
+
+  const [isLoading, setIsLoading] = React.useState(true)
+
   const wallpapers = () => {
     // console.log(data)
     let count = Math.floor(Math.random() * (Math.floor(5) - Math.ceil(1))) + Math.ceil(1)
@@ -238,6 +220,10 @@ const Home = ({ data }) => {
     event.preventDefault();
   }
 
+  // React.useEffect(() => {
+  //   setTimeout(setIsLoading(false), 20000);
+  // }, [])
+
   return (
     <>
       <Head>
@@ -245,7 +231,7 @@ const Home = ({ data }) => {
           Ξ Effect
         </title>
       </Head>
-
+      {/* {isLoading && <LoadingPage />} */}
       <div className={classes.root}>
         <Background src={wallpapers()} />
         <Grid container direction="column" justifyContent="flex-start" alignItems="center" className={classes.main}>
@@ -256,38 +242,30 @@ const Home = ({ data }) => {
           <Grid container direction="row" justifyContent="center" alignItems="center" className={classes.gridLabelSecondary}>
             <Typography className={classes.labelSecondary}> Ξ Effect - платформа, где можно делиться знаниями и получать их так, как вам будет удобнее.</Typography>
           </Grid>
-          {/* <Grid container direction="row" justifyContent="center" alignItems="center" className={classes.gridLabelSecondarytwo}>
-          <Typography className={classes.labelSecondarytwo}> И ещё куча возможностей для образования ;) </Typography>
-        </Grid> */}
           <Hidden mdDown>
             <Grid container direction="row" justifyContent="center" alignItems="center" className={classes.gridButtons}>
               <Button variant="contained" className={classes.dowloadButtom}>
                 <UseAnimations onClick={gotoDownload} strokeColor={theme.main.palette.header.text} animation={download} size={56} style={{}} />
-            Загрузить
-            </Button>
+              Загрузить
+              </Button>
               <Button onClick={gotoAuth} variant="contained" className={classes.openInBroweser}>
                 <UseAnimations strokeColor={theme.main.palette.header.text} animation={activity} size={56} style={{}} speed={0.5} />
-            Открыть в Браузере
-            </Button>
+              Открыть в Браузере
+              </Button>
             </Grid>
           </Hidden>
           <Hidden mdUp>
             <Grid container direction="column" justifyContent="center" alignItems="center" className={classes.gridButtonsSmall}>
               <Button onClick={gotoDownload} variant="contained" className={classes.dowloadButtomSmall}>
                 <UseAnimations strokeColor={theme.main.palette.header.text} animation={download} size={32} style={{}} />
-            Загрузить
-            </Button>
+              Загрузить
+              </Button>
               <Button onClick={gotoAuth} variant="contained" className={classes.openInBroweserSmall}>
                 <UseAnimations strokeColor={theme.main.palette.header.text} animation={activity} size={32} style={{}} speed={0.5} />
-            Открыть в Браузере
-            </Button>
+              Открыть в Браузере
+              </Button>
             </Grid>
           </Hidden>
-          <Grid className={classes.gridDivider}>
-            <Divider className={classes.divider} />
-          </Grid>
-          <Grid container direction="row" justifyContent="center" alignItems="center">
-          </Grid>
         </Grid>
       </div>
 

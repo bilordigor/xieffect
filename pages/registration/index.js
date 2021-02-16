@@ -19,18 +19,19 @@ import EmailIcon from '@material-ui/icons/Email'
 
 const useStyles = makeStyles((theme) => ({
     root: {
-        width: "100vw",
-        height: "100vh",
-        //position: 'absolute',
-        top: 0,
-        left: 0,
-        overflow: 'auto',
-        backgroundColor: '#2c2c2c',
-        zIndex: 90,
+        backgroundColor: '#2b2b2b',
+        position: 'fixed',
+        height: '100vh',
+        width: '100vw',
+        zIndex: '-1',
+    },
+    main: {
+        zIndex: 999,
     },
     gridTittle: {
         zIndex: 999,
         position: 'absolute',
+        cursor: 'pointer',
         top: 16,
         [theme.breakpoints.up('lg')]: {
             left: 64,
@@ -41,20 +42,18 @@ const useStyles = makeStyles((theme) => ({
         [theme.breakpoints.down('lg')]: {
             left: 16,
         },
-        zIndex: 999,
     },
     tittle: {
         zIndex: 999,
         cursor: 'pointer',
         fontSize: 32,
-        zIndex: 999,
         color: 'white',
     },
     gridUnderPaper: {
+        paddingTop: 150,
         zIndex: 999,
     },
     Paper: {
-        
         zIndex: 999,
         borderRadius: 4,
         width: 500,
@@ -71,11 +70,15 @@ const useStyles = makeStyles((theme) => ({
 
     },
     typographyMain: {
+        cursor: "default",
         zIndex: 999,
         color: 'rgb(255,255,255)',
         fontWeight: 'bold',
+        fontSize: 32,
     },
     typographyMainly: {
+        cursor: "default",
+        fontSize: 14,
         zIndex: 999,
         color: 'rgb(142,146,151)',
     },
@@ -113,6 +116,7 @@ const useStyles = makeStyles((theme) => ({
         zIndex: 999,
         marginTop: 4,
         paddingLeft: 20,
+        paddingRight: 20,
 
     },
     forgotPassword: {
@@ -245,110 +249,112 @@ const Registration = inject('store')(observer((props) => {
             <Head>
                 <title>Ξ Регистрация</title>
             </Head>
-            <Background src="/wallpapers/hp1.jpg" />
-            <Grid container direction="column" justifyContent="center" alignItems="center" className={classes.root}>
-                <Grid className={classes.gridTittle}>
-                    <Link href="/">
-                        <Typography variant="h3" className={classes.tittle}> Ξ Effect </Typography>
-                    </Link >
-                </Grid>
-                <Grid item className={classes.gridUnderPaper}>
-                    <Paper variant="outlined" className={classes.Paper}>
-                        <Grid container direction="column" justifyContent="center" alignItems="center" className={classes.gridPaper}>
-                            <Grid item container direction="column" justifyContent="center" alignItems="center" className={classes.gridTypography}>
-                                <Typography variant='h5' className={classes.typographyMain}> Регистрация </Typography>
-                                <Typography variant='h7' className={classes.typographyMainly}> Начните свой путь в цифровом образовании! </Typography>
-                            </Grid>
-                            <Grid item container direction="column" justifyContent="center" alignItems="flex-start" className={classes.gridTextField}>
-                                <FormControl className={classes.textField} variant="outlined">
-                                    <InputLabel className={classes.inputLabel} htmlFor="outlined-adornment-password"> <Typography className={classes.textFieldTypography}>Адрес Электронной почты</Typography></InputLabel>
-                                    <OutlinedInput
-                                        className={classes.OutlinedInput}
-                                        type='text'
-                                        value={props.store.registrationValues.email}
-                                        onChange={handleChange('email')}
-                                        endAdornment={
-                                            <InputAdornment position="end">
-                                                <IconButton
-                                                    aria-label="toggle password visibility"
-                                                    // onClick={handleClickShowPassword}
-                                                    // onMouseDown={handleMouseDownPassword}
-                                                    edge="end"
-                                                >
-                                                    <EmailIcon className={classes.icons} />
-                                                </IconButton>
-                                            </InputAdornment>
-                                        }
-                                        labelWidth={210}
-                                    />
-                                </FormControl>
-                            </Grid>
-                            {props.store.registrationValues.errorEmail && <Grid item container direction="column" justifyContent="center" alignItems="flex-start" className={classes.gridForgotPassword}>
-                                <Typography className={classes.ErrorLabel}> Некорректное имя почты </Typography>
-                            </Grid>}
-                            {props.store.registrationValues.emailAlreadyUsed && <Grid item container direction="column" justifyContent="center" alignItems="flex-start" className={classes.gridForgotPassword}>
-                                <Typography className={classes.ErrorLabel}> Данный адрес электронной почты уже используется </Typography>
-                            </Grid>}
-                            <Grid item container direction="column" justifyContent="center" alignItems="flex-start" className={classes.gridTextField}>
-                                <FormControl className={classes.textField} variant="outlined">
-                                    <InputLabel className={classes.inputLabel} htmlFor="outlined-adornment-password"> <Typography className={classes.textFieldTypography}>Пароль</Typography> </InputLabel>
-                                    <OutlinedInput
-                                        className={classes.OutlinedInput}
-                                        type={props.store.registrationValues.showPassword ? 'text' : 'password'}
-                                        value={props.store.registrationValues.password}
-                                        onChange={handleChange('password')}
-                                        endAdornment={
-                                            <InputAdornment position="end">
-                                                <IconButton
-                                                    aria-label="toggle password visibility"
-                                                    onClick={handleClickShowPassword}
-                                                    onMouseDown={handleMouseDownPassword}
-                                                    edge="end"
-                                                >
-                                                    {props.store.registrationValues.showPassword ? <Visibility className={classes.icons} /> : <VisibilityOff className={classes.icons} />}
-                                                </IconButton>
-                                            </InputAdornment>
-                                        }
-                                        labelWidth={70}
-                                    />
-                                </FormControl>
-                            </Grid>
-                            <Grid item container direction="column" justifyContent="center" alignItems="flex-start" className={classes.gridForgotPassword}>
-                                <Typography className={classes.AboutLabel}> Минимальная длина: 6 символов. Используйте латинские буквы, цифры и знак нижнего подчёркивания.</Typography>
-                            </Grid>
-                            {props.store.registrationValues.errorPasswordLength && <Grid item container direction="column" justifyContent="center" alignItems="flex-start" className={classes.gridForgotPassword}>
-                                <Typography className={classes.ErrorLabel}> Недопустим пароль менее 6 символов </Typography>
-                            </Grid>}
-                            {props.store.registrationValues.errorSymbols && <Grid item container direction="column" justifyContent="center" alignItems="flex-start" className={classes.gridForgotPassword}>
-                                <Typography className={classes.ErrorLabel}> Недопустимые символы в пароле </Typography>
-                            </Grid>}
-                            {/* { values.error && <Grid item container direction="column" justifyContent="center" alignItems="flex-start" className={classes.gridForgotPassword}>
+            <div className={classes.root}>
+                <Background src="/wallpapers/hp1.jpg" />
+                <Grid container direction="column" justifyContent="center" alignItems="center" className={classes.main}>
+                    <Grid item className={classes.gridTittle}>
+                        <Link href="/">
+                            <Typography variant="h3" className={classes.tittle}> Ξ Effect </Typography>
+                        </Link >
+                    </Grid>
+                    <Grid item className={classes.gridUnderPaper}>
+                        <Paper variant="outlined" className={classes.Paper}>
+                            <Grid container direction="column" justifyContent="center" alignItems="center" className={classes.gridPaper}>
+                                <Grid item container direction="column" justifyContent="center" alignItems="center" className={classes.gridTypography}>
+                                    <Typography className={classes.typographyMain}> Регистрация </Typography>
+                                    <Typography className={classes.typographyMainly}> Начните свой путь в цифровом образовании! </Typography>
+                                </Grid>
+                                <Grid item container direction="column" justifyContent="center" alignItems="flex-start" className={classes.gridTextField}>
+                                    <FormControl className={classes.textField} variant="outlined">
+                                        <InputLabel className={classes.inputLabel} htmlFor="outlined-adornment-password"> <Typography className={classes.textFieldTypography}>Адрес Электронной почты</Typography></InputLabel>
+                                        <OutlinedInput
+                                            className={classes.OutlinedInput}
+                                            type='text'
+                                            value={props.store.registrationValues.email}
+                                            onChange={handleChange('email')}
+                                            endAdornment={
+                                                <InputAdornment position="end">
+                                                    <IconButton
+                                                        aria-label="toggle password visibility"
+                                                        // onClick={handleClickShowPassword}
+                                                        // onMouseDown={handleMouseDownPassword}
+                                                        edge="end"
+                                                    >
+                                                        <EmailIcon className={classes.icons} />
+                                                    </IconButton>
+                                                </InputAdornment>
+                                            }
+                                            labelWidth={210}
+                                        />
+                                    </FormControl>
+                                </Grid>
+                                {props.store.registrationValues.errorEmail && <Grid item container direction="column" justifyContent="center" alignItems="flex-start" className={classes.gridForgotPassword}>
+                                    <Typography className={classes.ErrorLabel}> Некорректное имя почты </Typography>
+                                </Grid>}
+                                {props.store.registrationValues.emailAlreadyUsed && <Grid item container direction="column" justifyContent="center" alignItems="flex-start" className={classes.gridForgotPassword}>
+                                    <Typography className={classes.ErrorLabel}> Данный адрес электронной почты уже используется </Typography>
+                                </Grid>}
+                                <Grid item container direction="column" justifyContent="center" alignItems="flex-start" className={classes.gridTextField}>
+                                    <FormControl className={classes.textField} variant="outlined">
+                                        <InputLabel className={classes.inputLabel} htmlFor="outlined-adornment-password"> <Typography className={classes.textFieldTypography}>Пароль</Typography> </InputLabel>
+                                        <OutlinedInput
+                                            className={classes.OutlinedInput}
+                                            type={props.store.registrationValues.showPassword ? 'text' : 'password'}
+                                            value={props.store.registrationValues.password}
+                                            onChange={handleChange('password')}
+                                            endAdornment={
+                                                <InputAdornment position="end">
+                                                    <IconButton
+                                                        aria-label="toggle password visibility"
+                                                        onClick={handleClickShowPassword}
+                                                        onMouseDown={handleMouseDownPassword}
+                                                        edge="end"
+                                                    >
+                                                        {props.store.registrationValues.showPassword ? <Visibility className={classes.icons} /> : <VisibilityOff className={classes.icons} />}
+                                                    </IconButton>
+                                                </InputAdornment>
+                                            }
+                                            labelWidth={70}
+                                        />
+                                    </FormControl>
+                                </Grid>
+                                <Grid item container direction="column" justifyContent="center" alignItems="flex-start" className={classes.gridForgotPassword}>
+                                    <Typography className={classes.AboutLabel}> Минимальная длина: 6 символов. Используйте латинские буквы, цифры и знак нижнего подчёркивания.</Typography>
+                                </Grid>
+                                {props.store.registrationValues.errorPasswordLength && <Grid item container direction="column" justifyContent="center" alignItems="flex-start" className={classes.gridForgotPassword}>
+                                    <Typography className={classes.ErrorLabel}> Недопустим пароль менее 6 символов </Typography>
+                                </Grid>}
+                                {props.store.registrationValues.errorSymbols && <Grid item container direction="column" justifyContent="center" alignItems="flex-start" className={classes.gridForgotPassword}>
+                                    <Typography className={classes.ErrorLabel}> Недопустимые символы в пароле </Typography>
+                                </Grid>}
+                                {/* { values.error && <Grid item container direction="column" justifyContent="center" alignItems="flex-start" className={classes.gridForgotPassword}>
                                 <Typography className={classes.ErrorLabel}> Неправильное имя пользователя или пароль </Typography>
                             </Grid>}  */}
-                            {/* <Grid item container direction="column" justifyContent="center" alignItems="flex-start" className={classes.gridForgotPassword}>
+                                {/* <Grid item container direction="column" justifyContent="center" alignItems="flex-start" className={classes.gridForgotPassword}>
                                 <LinkUI className={classes.forgotPassword} href="#" onClick={preventDefault}>
                                     Забыли пароль?
                                 </LinkUI>
                             </Grid> */}
-                            <Grid item container direction="column" justifyContent="center" alignItems="center" className={classes.gridEnterButtom}>
-                                {/* <Link href="/registration/step/email"> */}
-                                <Button onClick={onRegistrationButtonClick} variant="contained" color="primary" className={classes.enterButtom}>
-                                    Регистрация
+                                <Grid item container direction="column" justifyContent="center" alignItems="center" className={classes.gridEnterButtom}>
+                                    {/* <Link href="/registration/step/email"> */}
+                                    <Button onClick={onRegistrationButtonClick} variant="contained" color="primary" className={classes.enterButtom}>
+                                        Регистрация
                                     </Button>
-                                {/* </Link > */}
-                            </Grid>
-                            <Grid item container direction="column" justifyContent="center" alignItems="flex-start" className={classes.gridForgotRegistration}>
+                                    {/* </Link > */}
+                                </Grid>
+                                <Grid item container direction="column" justifyContent="center" alignItems="flex-start" className={classes.gridForgotRegistration}>
 
-                                <LinkUI className={classes.forgotRegistration} href="#" onClick={gotoAuth}>
-                                    Уже есть учётная запись? Войти!
+                                    <LinkUI className={classes.forgotRegistration} href="#" onClick={gotoAuth}>
+                                        Уже есть учётная запись? Войти!
                                 </LinkUI>
 
+                                </Grid>
                             </Grid>
-                        </Grid>
 
-                    </Paper>
+                        </Paper>
+                    </Grid>
                 </Grid>
-            </Grid>
+            </div>
         </>
     )
 }))

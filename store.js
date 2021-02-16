@@ -56,6 +56,12 @@ class Store {
 
   }
 
+  @action setLoginValuesClear = () => {
+    this.loginValues.email = ''
+    this.loginValues.password = ''
+    this.loginValues.passwordHash = ''
+  }
+
   @action goToHexLogin = () => {
     this.loginValues.passwordHash = Crypto.SHA384(this.loginValues.password).toString()
     // console.log(this.registrationValues.passwordHash)
@@ -120,11 +126,12 @@ class Store {
 
   @action goToHex = () => {
     this.registrationValues.passwordHash = Crypto.SHA384(this.registrationValues.password).toString()
-    this.loginValues.passwordHash = Crypto.SHA384(this.loginValues.password).toString()
+  }
 
-    // console.log(this.registrationValues.passwordHash)
-    // console.log(this.registrationValues.passwordHash.length)
-
+  @action setRegistrationValuesClear = () => {
+    this.registrationValues.email = ''
+    this.registrationValues.password = ''
+    this.registrationValues.passwordHash = ''
   }
 
 

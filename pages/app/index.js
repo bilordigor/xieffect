@@ -71,6 +71,10 @@ const Home = inject('store')(observer((props) => {
   const classes = useStyles();
   const theme = useTheme();
 
+  React.useEffect(() => {
+    props.store.setLoginValuesClear()
+  }, [])
+
   return (
     <>
       <Head>
@@ -85,7 +89,7 @@ const Home = inject('store')(observer((props) => {
           </Grid>
           <Divider className={classes.divider} />
           <Grid item className={classes.learningCenter}>
-            <LearningCenter/>
+            <LearningCenter />
           </Grid>
           <Grid item className={classes.mainApp}>
             <MainApp />

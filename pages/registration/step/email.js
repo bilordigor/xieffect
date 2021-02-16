@@ -18,14 +18,14 @@ import EmailIcon from '@material-ui/icons/Email';
 
 const useStyles = makeStyles((theme) => ({
     root: {
-        width: "100vw",
-        height: "100vh",
-        //position: 'absolute',
-        top: 0,
-        left: 0,
-        overflow: 'auto',
-        backgroundColor: '#2c2c2c',
-        zIndex: 90,
+        backgroundColor: '#2b2b2b',
+        position: 'fixed',
+        height: '100vh',
+        width: '100vw',
+        zIndex: '-1',
+    },
+    main: {
+        zIndex: 999,
     },
     gridTittle: {
         position: 'absolute',
@@ -48,6 +48,7 @@ const useStyles = makeStyles((theme) => ({
         color: 'white',
     },
     gridUnderPaper: {
+        paddingTop: 150,
         zIndex: 999,
     },
     Paper: {
@@ -67,11 +68,13 @@ const useStyles = makeStyles((theme) => ({
 
     },
     typographyMain: {
+        cursor: "default",
         zIndex: 999,
         color: 'rgb(255,255,255)',
         fontWeight: 'bold',
     },
     typographyMainly: {
+        cursor: "default",
         zIndex: 999,
         color: 'rgb(142,146,151)',
     },
@@ -141,6 +144,9 @@ const useStyles = makeStyles((theme) => ({
 const Email = inject('store')(observer((props) => {
     const classes = useStyles();
 
+    React.useEffect(() => {
+        props.store.setRegistrationValuesClear()
+    }, [])
 
     const gotoAuth = (event) => {
         const router = Router
@@ -172,24 +178,25 @@ const Email = inject('store')(observer((props) => {
             <Head>
                 <title>Ξ Регистрация</title>
             </Head>
-            <Background src="/wallpapers/hp2.jpg" />
-            <Grid container direction="column" justifyContent="center" alignItems="center" className={classes.root}>
-                <Grid className={classes.gridTittle}>
-                    <Link href="/">
-                        <Typography variant="h3" className={classes.tittle}> Ξ Effect </Typography>
-                    </Link >
-                </Grid>
-                <Grid item className={classes.gridUnderPaper}>
-                    <Paper variant="outlined" className={classes.Paper}>
-                        <Grid container direction="column" justifyContent="center" alignItems="center" className={classes.gridPaper}>
-                            <Grid item container direction="column" justifyContent="center" alignItems="center" className={classes.gridTypography}>
-                                <Typography variant='h5' className={classes.typographyMain}> Почта </Typography>
-                                <Typography variant='h7' className={classes.typographyMainly}> Мы отправили письмо вам на почту </Typography>
-                                <Typography variant='h7' className={classes.typographyMainly}> Откройте письмо </Typography>
-                                <Typography variant='h7' className={classes.typographyMainly}> Перейдите по ссылке, прикреплённой в письме </Typography>
-                                <Typography variant='h7' className={classes.typographyMainly}> Произойдёт автоматическая авторизация </Typography>
-                            </Grid>
-                            {/* <Grid item container direction="column" justifyContent="center" alignItems="flex-start" className={classes.gridTextField}>
+            <div className={classes.root}>
+                <Background src="/wallpapers/hp2.jpg" />
+                <Grid container direction="column" justifyContent="center" alignItems="center" className={classes.main}>
+                    <Grid item className={classes.gridTittle}>
+                        <Link href="/">
+                            <Typography variant="h3" className={classes.tittle}> Ξ Effect </Typography>
+                        </Link >
+                    </Grid>
+                    <Grid item className={classes.gridUnderPaper}>
+                        <Paper variant="outlined" className={classes.Paper}>
+                            <Grid container direction="column" justifyContent="center" alignItems="center" className={classes.gridPaper}>
+                                <Grid item container direction="column" justifyContent="center" alignItems="center" className={classes.gridTypography}>
+                                    <Typography variant='h5' className={classes.typographyMain}> Почта </Typography>
+                                    <Typography variant='h7' className={classes.typographyMainly}> Мы отправили письмо вам на почту </Typography>
+                                    <Typography variant='h7' className={classes.typographyMainly}> Откройте письмо </Typography>
+                                    <Typography variant='h7' className={classes.typographyMainly}> Перейдите по ссылке, прикреплённой в письме </Typography>
+                                    <Typography variant='h7' className={classes.typographyMainly}> Произойдёт автоматическая авторизация </Typography>
+                                </Grid>
+                                {/* <Grid item container direction="column" justifyContent="center" alignItems="flex-start" className={classes.gridTextField}>
                                 <FormControl className={classes.textField} variant="outlined">
                                     <InputLabel className={classes.inputLabel} htmlFor="outlined-adornment-password"> <Typography className={classes.textFieldTypography}>Адрес Электронной почты</Typography></InputLabel>
                                     <OutlinedInput
@@ -213,7 +220,7 @@ const Email = inject('store')(observer((props) => {
                                     />
                                 </FormControl>
                             </Grid> */}
-                            {/* <Grid item container direction="column" justifyContent="center" alignItems="flex-start" className={classes.gridTextField}>
+                                {/* <Grid item container direction="column" justifyContent="center" alignItems="flex-start" className={classes.gridTextField}>
                                 <FormControl className={classes.textField} variant="outlined">
                                     <InputLabel className={classes.inputLabel} htmlFor="outlined-adornment-password"> <Typography className={classes.textFieldTypography}>Пароль</Typography> </InputLabel>
                                     <OutlinedInput
@@ -237,37 +244,32 @@ const Email = inject('store')(observer((props) => {
                                     />
                                 </FormControl>
                             </Grid> */}
-                            {/* <Grid item container direction="column" justifyContent="center" alignItems="flex-start" className={classes.gridForgotPassword}>
+                                {/* <Grid item container direction="column" justifyContent="center" alignItems="flex-start" className={classes.gridForgotPassword}>
                                 <LinkUI className={classes.forgotPassword} href="#" onClick={preventDefault}>
                                     Забыли пароль?
                                 </LinkUI>
                             </Grid> */}
-                            <Grid item container direction="column" justifyContent="center" alignItems="center" className={classes.gridEnterButtom}>
-                                {/* <Link href="/registration/step/user"> */}
+                                <Grid item container direction="column" justifyContent="center" alignItems="center" className={classes.gridEnterButtom}>
+                                    {/* <Link href="/registration/step/user"> */}
                                     <Button onClick={clickedNext} variant="contained" color="primary" className={classes.enterButtom}>
                                         Далее
                                     </Button>
-                                {/* </Link > */}
-                            </Grid>
-                            {!props.store.registrationValues.isTrueEmail && <Grid item container direction="column" justifyContent="center" alignItems="flex-start" className={classes.gridError}>
-                                <Typography className={classes.ErrorLabel}> Подтвердите вашу почту! Перейдите по ссылке в письме, которое мы отправили вам на почту.</Typography>
-                            </Grid>}
-                            <Grid item container direction="column" justifyContent="center" alignItems="flex-start" className={classes.gridForgotRegistration}>
-                                <LinkUI className={classes.forgotRegistration} href="#" onClick={gotoAuth}>
-                                    Уже есть учётная запись? Войти!
+                                    {/* </Link > */}
+                                </Grid>
+                                {!props.store.registrationValues.isTrueEmail && <Grid item container direction="column" justifyContent="center" alignItems="flex-start" className={classes.gridError}>
+                                    <Typography className={classes.ErrorLabel}> Подтвердите вашу почту! Перейдите по ссылке в письме, которое мы отправили вам на почту.</Typography>
+                                </Grid>}
+                                <Grid item container direction="column" justifyContent="center" alignItems="flex-start" className={classes.gridForgotRegistration}>
+                                    <LinkUI className={classes.forgotRegistration} href="#" onClick={gotoAuth}>
+                                        Уже есть учётная запись? Войти!
                                 </LinkUI>
+                                </Grid>
                             </Grid>
 
-
-
-
-
-
-                        </Grid>
-
-                    </Paper>
+                        </Paper>
+                    </Grid>
                 </Grid>
-            </Grid>
+            </div>
         </>
     )
 }))
