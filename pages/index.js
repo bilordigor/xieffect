@@ -198,9 +198,6 @@ const Home = ({ data }) => {
   const classes = useStyles();
   const theme = useTheme();
 
-
-  const [isLoading, setIsLoading] = React.useState(true)
-
   const wallpapers = () => {
     // console.log(data)
     let count = Math.floor(Math.random() * (Math.floor(5) - Math.ceil(1))) + Math.ceil(1)
@@ -231,7 +228,6 @@ const Home = ({ data }) => {
           Ξ Effect
         </title>
       </Head>
-      {/* {isLoading && <LoadingPage />} */}
       <div className={classes.root}>
         <Background src={wallpapers()} />
         <Grid container direction="column" justifyContent="flex-start" alignItems="center" className={classes.main}>
