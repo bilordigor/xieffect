@@ -17,57 +17,67 @@ const MyApp = (observer(({ Component, pageProps }) => {
 
   const store = useStore(pageProps.initialState)
   const [files, selectFiles] = useFileUpload()
+  let dark = store.userData.isDarkMode
+
+  // const theme = createMuiTheme({
+  //   palette: {
+  //     mode: dark ? 'dark' : 'light'
+  //   }
+  // })
 
   const theme = createMuiTheme({
+    palette: {
+      mode: dark ? 'dark' : 'light'
+    },
     main: {
       palette: {
         main: {
-          main: store.userData.isDarkMode ? '#3f50b5' : '#3f50b5',
-          background: store.userData.isDarkMode ? '#121212' : '#fafafa',
+          main: dark ? '#3f50b5' : '#3f50b5',
+          background: dark ? '#121212' : '#fafafa',
         },
         header: {
-          main: store.userData.isDarkMode ? '#373737' : '#3f50b5',
-          secondary: store.userData.isDarkMode ? '#3f50b5' : '#3f50b5',
-          text: store.userData.isDarkMode ? '#e0e0e0' : '#424242',
-          icon: store.userData.isDarkMode ? '#e0e0e0' : '#424242',
-          background: store.userData.isDarkMode ? '#373737' : '#3f50b5',
-          border: store.userData.isDarkMode ? '#9e9e9e' : '#e0e0e0',
+          main: dark ? '#373737' : '#3f50b5',
+          secondary: dark ? '#3f50b5' : '#3f50b5',
+          text: dark ? '#e0e0e0' : '#424242',
+          icon: dark ? '#e0e0e0' : '#424242',
+          background: dark ? '#373737' : '#3f50b5',
+          border: dark ? '#9e9e9e' : '#e0e0e0',
         },
         navbar: {
-          main: store.userData.isDarkMode ? '#323232' : '#eeeeee',
-          secondary: store.userData.isDarkMode ? '#3f50b5' : '#3f50b5',
-          text: store.userData.isDarkMode ? '#e0e0e0' : '#424242',
-          icon: store.userData.isDarkMode ? '#e0e0e0' : '#424242',
-          iconMenu: store.userData.isDarkMode ? '#e0e0e0' : '#e0e0e0',
-          background: store.userData.isDarkMode ? '#323232' : '#eeeeee',
-          border: store.userData.isDarkMode ? '#9e9e9e' : '#e0e0e0',
+          main: dark ? '#323232' : '#eeeeee',
+          secondary: dark ? '#3f50b5' : '#3f50b5',
+          text: dark ? '#e0e0e0' : '#424242',
+          icon: dark ? '#e0e0e0' : '#424242',
+          iconMenu: dark ? '#e0e0e0' : '#e0e0e0',
+          background: dark ? '#323232' : '#eeeeee',
+          border: dark ? '#9e9e9e' : '#e0e0e0',
         },
         content: {
-          main: store.userData.isDarkMode ? '#2c2c2c' : '#f5f5f5',
-          secondary: store.userData.isDarkMode ? '#3f50b5' : '#3f50b5',
-          text: store.userData.isDarkMode ? '#e0e0e0' : '#424242',
-          reverseText: store.userData.isDarkMode ? '#424242' : '#e0e0e0',
-          icon: store.userData.isDarkMode ? '#e0e0e0' : '#424242',
-          background: store.userData.isDarkMode ? '#2c2c2c' : '#eeeeee',
-          border: store.userData.isDarkMode ? '#9e9e9e' : '#e0e0e0',
+          main: dark ? '#2c2c2c' : '#f5f5f5',
+          secondary: dark ? '#3f50b5' : '#3f50b5',
+          text: dark ? '#e0e0e0' : '#424242',
+          reverseText: dark ? '#424242' : '#e0e0e0',
+          icon: dark ? '#e0e0e0' : '#424242',
+          background: dark ? '#2c2c2c' : '#eeeeee',
+          border: dark ? '#9e9e9e' : '#e0e0e0',
         },
         buttons: {
-          main: store.userData.isDarkMode ? '#212121' : '#f5f5f5',
-          secondary: store.userData.isDarkMode ? '#3f50b5' : '#3f50b5',
-          text: store.userData.isDarkMode ? '#e0e0e0' : '#424242',
-          icon: store.userData.isDarkMode ? '#e0e0e0' : '#424242',
-          background: store.userData.isDarkMode ? '#212121' : '#9e9e9e',
+          main: dark ? '#212121' : '#f5f5f5',
+          secondary: dark ? '#3f50b5' : '#3f50b5',
+          text: dark ? '#e0e0e0' : '#424242',
+          icon: dark ? '#e0e0e0' : '#424242',
+          background: dark ? '#212121' : '#9e9e9e',
         },
         textaria: {
-          main: store.userData.isDarkMode ? '#212121' : '#f5f5f5',
-          text: store.userData.isDarkMode ? '#e0e0e0' : '#424242',
-          icon: store.userData.isDarkMode ? '#e0e0e0' : '#424242',
-          secondary: store.userData.isDarkMode ? '#3f50b5' : '#3f50b5',
-          background: store.userData.isDarkMode ? 'rgb(49,51,57)' : '##bdbdbd',
+          main: dark ? '#212121' : '#f5f5f5',
+          text: dark ? '#e0e0e0' : '#424242',
+          icon: dark ? '#e0e0e0' : '#424242',
+          secondary: dark ? '#3f50b5' : '#3f50b5',
+          background: dark ? 'rgb(49,51,57)' : '##bdbdbd',
         },
-        help :{
-          red: store.userData.isDarkMode ? '#b71c1c' : '#e57373',
-          redbackground:  store.userData.isDarkMode ? 'rgb(183, 28, 28, .2)' : 'rgb(229, 115, 115, .2)',
+        help: {
+          red: dark ? '#b71c1c' : '#e57373',
+          redbackground: dark ? 'rgb(183, 28, 28, .2)' : 'rgb(229, 115, 115, .2)',
         }
       }
     }
@@ -101,8 +111,8 @@ const MyApp = (observer(({ Component, pageProps }) => {
         <Provider store={store}>
           <ThemeProvider theme={theme}>
             {/* <MenuLayout> */}
-              <CssBaseline />
-              <Component {...pageProps} />
+            <CssBaseline />
+            <Component {...pageProps} />
             {/* </MenuLayout> */}
           </ThemeProvider>
         </Provider>

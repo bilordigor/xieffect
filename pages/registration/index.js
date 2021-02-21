@@ -244,6 +244,45 @@ const Registration = inject('store')(observer((props) => {
         //console.log(props.store.registrationValues)
     }
 
+    const clickRegistartionButton = () => {
+        props.store.setRegistrationValuesFalse()
+        //console.log(props.store.registrationValues)
+        let sym = '1234567890qwertyuiopasdfghjklzxcvbnm_'
+        //console.log(values.email.length < 5)
+        if (!props.store.registrationValues.email.includes('@') || !props.store.registrationValues.email.includes('.') || props.store.registrationValues.email.length < 5) {
+            props.store.setRegistrationValues("errorEmail", true)
+            //console.log('email error')
+        }
+        //console.log(props.store.registrationValues.password.length)
+        if (props.store.registrationValues.password.length < 6) {
+            props.store.setRegistrationValues("errorPasswordLength", true)
+            //console.log('length error')
+        }
+        for (let i = 0; i < props.store.registrationValues.password.length; i++) {
+            if (sym.includes(props.store.registrationValues.password[i].toLowerCase())) continue
+            else {
+                props.store.setRegistrationValues("errorSymbols", true)
+                //console.log('sym error')
+                break
+            }
+        }
+        if (!props.store.registrationValues.errorPasswordLength && !props.store.registrationValues.errorSymbols && !props.store.registrationValues.errorEmail) {
+
+            props.store.goToHex()
+
+            props.store.postData(`${props.store.url}/reg/${props.store.registrationValues.emailHash}`, {}) ///registration/newemail
+                .then((data) => {
+                    if (data.a === true) { //true
+                        const router = Router
+                        router.push('/registration/step/email')
+                    } else if (data.a === false) { //false
+                        props.store.setRegistrationValues("emailAlreadyUsed", true)
+                    }
+                });
+
+        }
+    }
+
     return (
         <>
             <Head>
@@ -337,7 +376,7 @@ const Registration = inject('store')(observer((props) => {
                             </Grid> */}
                                 <Grid item container direction="column" justifyContent="center" alignItems="center" className={classes.gridEnterButtom}>
                                     {/* <Link href="/registration/step/email"> */}
-                                    <Button onClick={onRegistrationButtonClick} variant="contained" color="primary" className={classes.enterButtom}>
+                                    <Button onClick={clickRegistartionButton} variant="contained" color="primary" className={classes.enterButtom}>
                                         Регистрация
                                     </Button>
                                     {/* </Link > */}

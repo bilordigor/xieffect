@@ -1,7 +1,8 @@
 import Head from 'next/head'
 import Link from 'next/link'
+import { useRouter } from 'next/router'
 import * as React from 'react';
-import { Divider, Paper, Grid, AppBar, Toolbar, Typography, CssBaseline, useScrollTrigger, Box, Container, Fab, Zoom, Button } from '@material-ui/core';
+import { CircularProgress, Divider, Paper, Grid, AppBar, Toolbar, Typography, CssBaseline, useScrollTrigger, Box, Container, Fab, Zoom, Button } from '@material-ui/core';
 import { makeStyles, useTheme } from '@material-ui/core/styles'
 
 import { inject, observer } from 'mobx-react'
@@ -69,12 +70,33 @@ const useStyles = makeStyles((theme) => ({
         // marginRight: '10px',
         backgroundColor: theme.main.palette.content.text,
     },
+    circularProgress: {
+        color: theme.main.palette.header.text,
+    }
 }));
 
 
-const Download = inject('store')(observer((props) => {
+const Email = inject('store')(observer((props) => {
     const classes = useStyles();
     const theme = useTheme();
+
+    const router = useRouter()
+    const { id } = router.query
+    // console.log(id)
+    // console.log(typeof(id))
+    React.useEffect(() => {
+        props.store.postData(`${props.store.url}/reg/confirm`, { "code": id })
+            .then((data) => {
+                if (data.a === true) { //"Success"
+                     props.store.setEmailCheckValues("serverAnswer", true)
+                }
+                // } else if (data.a === "User doesn't exist") { //"User doesn't exist"
+                //     props.store.setLoginValues("errorEmail", true)
+                // } else if (data.a === "Wrong password") { //
+                //     props.store.setLoginValues("errorPassword", true)
+                // }
+            });
+    }, [])
 
     const wallpapers = () => {
         let count = Math.floor(Math.random() * (Math.floor(5) - Math.ceil(1))) + Math.ceil(1)
@@ -85,26 +107,25 @@ const Download = inject('store')(observer((props) => {
         <>
             <Head>
                 <title>
-                    Ξ Загрузка
+                    Ξ Регистрация
                 </title>
             </Head>
             <div className={classes.root}>
                 <Background src={wallpapers()} />
                 <Grid container direction="column" justifyContent="flex-start" alignItems="center" className={classes.main}>
-                    <Navigation />
                     <Grid container direction="row" justifyContent="center" alignItems="center" className={classes.gridLabelMain}>
-                        <Typography className={classes.labelMain}> Загрузка </Typography>
+                        <Typography className={classes.labelMain}> Подтверждение почты </Typography>
                     </Grid>
-                    <Grid container direction="row" justifyContent="center" alignItems="center" className={classes.gridLabelSecondary}>
-                        <Typography className={classes.labelSecondary}> Скоро Ξ Effect будет доступен на множестве платформ: Windows, MacOS, Linux, Android, IOS. А пока можно воспользоваться браузерной версией.</Typography>
-                    </Grid>
-                </Grid>
-                <Grid className={classes.gridDivider}>
-                    <Divider className={classes.divider} />
+                    {!props.store.emailCheck.serverAnswer && <Grid container direction="row" justifyContent="center" alignItems="center" className={classes.gridLabelSecondary}>
+                        <CircularProgress className={classes.circularProgress} />
+                    </Grid>}
+                    {props.store.emailCheck.serverAnswer && <Grid container direction="row" justifyContent="center" alignItems="center" className={classes.gridLabelSecondary}>
+                        <Typography className={classes.labelSecondary}> Ваша почта успешно подтверждена. С этой страницы можно уходить.</Typography>
+                    </Grid>}
                 </Grid>
             </div>
         </>
     );
 }))
 
-export default Download
+export default Email

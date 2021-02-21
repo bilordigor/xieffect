@@ -141,7 +141,7 @@ const useStyles = makeStyles((theme) => ({
 
 
 
-const Email = inject('store')(observer((props) => {
+const EmailReg = inject('store')(observer((props) => {
     const classes = useStyles();
 
     React.useEffect(() => {
@@ -160,17 +160,19 @@ const Email = inject('store')(observer((props) => {
     }
 
     const clickedNext = () => {
-        props.store.postData('https://example.com/answer', { "email": props.store.loginValues.email, "password": props.store.loginValues.passwordHash })
+        props.store.setRegistrationValuesFalse()
+        props.store.getData(`${props.store.url}/reg/${props.store.registrationValues.emailHash}`)
             .then((data) => {
-                console.log(data); // JSON data parsed by `response.json()` call
+                if (data.a === true) {
+                    const router = Router
+                    router.push('/registration/step/user')
+                } else if (data.a === false) {
+                    props.store.setRegistrationValues("isCheckedEmail", false)
+                }
             });
-        // console.log(props.store.loginValues.email)
-        // console.log(props.store.loginValues.passwordHash)
 
-        if (props.store.registrationValues.isTrueEmail) {
-            const router = Router
-            router.push('/registration/step/user')
-        }
+
+        
     }
 
     return (
@@ -196,59 +198,6 @@ const Email = inject('store')(observer((props) => {
                                     <Typography variant='h7' className={classes.typographyMainly}> Перейдите по ссылке, прикреплённой в письме </Typography>
                                     <Typography variant='h7' className={classes.typographyMainly}> Произойдёт автоматическая авторизация </Typography>
                                 </Grid>
-                                {/* <Grid item container direction="column" justifyContent="center" alignItems="flex-start" className={classes.gridTextField}>
-                                <FormControl className={classes.textField} variant="outlined">
-                                    <InputLabel className={classes.inputLabel} htmlFor="outlined-adornment-password"> <Typography className={classes.textFieldTypography}>Адрес Электронной почты</Typography></InputLabel>
-                                    <OutlinedInput
-                                        id="outlined-adornment-password"
-                                        type='text'
-                                        value={values.email}
-                                        onChange={handleChange('password')}
-                                        endAdornment={
-                                            <InputAdornment position="end">
-                                                <IconButton
-                                                    aria-label="toggle password visibility"
-                                                    // onClick={handleClickShowPassword}
-                                                    // onMouseDown={handleMouseDownPassword}
-                                                    edge="end"
-                                                >
-                                                    <EmailIcon className={classes.icons} />
-                                                </IconButton>
-                                            </InputAdornment>
-                                        }
-                                        labelWidth={210}
-                                    />
-                                </FormControl>
-                            </Grid> */}
-                                {/* <Grid item container direction="column" justifyContent="center" alignItems="flex-start" className={classes.gridTextField}>
-                                <FormControl className={classes.textField} variant="outlined">
-                                    <InputLabel className={classes.inputLabel} htmlFor="outlined-adornment-password"> <Typography className={classes.textFieldTypography}>Пароль</Typography> </InputLabel>
-                                    <OutlinedInput
-                                        id="outlined-adornment-password"
-                                        type={values.showPassword ? 'text' : 'password'}
-                                        value={values.password}
-                                        onChange={handleChange('password')}
-                                        endAdornment={
-                                            <InputAdornment position="end">
-                                                <IconButton
-                                                    aria-label="toggle password visibility"
-                                                    onClick={handleClickShowPassword}
-                                                    onMouseDown={handleMouseDownPassword}
-                                                    edge="end"
-                                                >
-                                                    {values.showPassword ? <Visibility className={classes.icons} /> : <VisibilityOff className={classes.icons} />}
-                                                </IconButton>
-                                            </InputAdornment>
-                                        }
-                                        labelWidth={70}
-                                    />
-                                </FormControl>
-                            </Grid> */}
-                                {/* <Grid item container direction="column" justifyContent="center" alignItems="flex-start" className={classes.gridForgotPassword}>
-                                <LinkUI className={classes.forgotPassword} href="#" onClick={preventDefault}>
-                                    Забыли пароль?
-                                </LinkUI>
-                            </Grid> */}
                                 <Grid item container direction="column" justifyContent="center" alignItems="center" className={classes.gridEnterButtom}>
                                     {/* <Link href="/registration/step/user"> */}
                                     <Button onClick={clickedNext} variant="contained" color="primary" className={classes.enterButtom}>
@@ -256,7 +205,7 @@ const Email = inject('store')(observer((props) => {
                                     </Button>
                                     {/* </Link > */}
                                 </Grid>
-                                {!props.store.registrationValues.isTrueEmail && <Grid item container direction="column" justifyContent="center" alignItems="flex-start" className={classes.gridError}>
+                                {props.store.registrationValues.isCheckedEmail && <Grid item container direction="column" justifyContent="center" alignItems="flex-start" className={classes.gridError}>
                                     <Typography className={classes.ErrorLabel}> Подтвердите вашу почту! Перейдите по ссылке в письме, которое мы отправили вам на почту.</Typography>
                                 </Grid>}
                                 <Grid item container direction="column" justifyContent="center" alignItems="flex-start" className={classes.gridForgotRegistration}>
@@ -274,4 +223,4 @@ const Email = inject('store')(observer((props) => {
     )
 }))
 
-export default Email;
+export default EmailReg;

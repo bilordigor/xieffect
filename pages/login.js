@@ -41,14 +41,14 @@ const useStyles = makeStyles((theme) => ({
         [theme.breakpoints.down('lg')]: {
             left: 16,
         },
-        
+
     },
     tittle: {
         zIndex: 999,
         cursor: 'pointer',
         fontSize: 32,
         color: 'white',
-    },  
+    },
     gridUnderPaper: {
         paddingTop: 150,
         zIndex: 999,
@@ -149,6 +149,7 @@ const useStyles = makeStyles((theme) => ({
         zIndex: 999,
         color: 'rgb(142,146,151)',
         cursor: "pointer",
+        fontSize: 16,
     },
     ErrorLabel: {
         zIndex: 999,
@@ -184,39 +185,46 @@ const Login = inject('store')(observer((props) => {
         router.push('/registration')
     }
 
-    React.useEffect(() => {
-        fetch('https://jsonplaceholder.typicode.com/users')
-            .then(response => response.json())
-            .then(data => console.log(data))
+    // React.useEffect(() => {
+    //     fetch('https://jsonplaceholder.typicode.com/users')
+    //         .then(response => response.json())
+    //         .then(data => console.log(data))
 
-        fetch('https://jsonplaceholder.typicode.com/users', {
-            method: 'POST',
-            body: JSON.stringify({
-                username: 'Elon Mask',
-                email: 'elonmusk@yandex.ru',
-                userId: 1
-            }),
-            headers: { "Content-Type": "application/json; charset=utf-8" }
-        })
-            .then(response => response.json())
-            .then(data => console.log(data))
-    }, [])
+    //     fetch('https://jsonplaceholder.typicode.com/users', {
+    //         method: 'POST',
+    //         body: JSON.stringify({
+    //             username: 'Elon Mask',
+    //             email: 'elonmusk@yandex.ru',
+    //             userId: 1
+    //         }),
+    //         headers: { "Content-Type": "application/json; charset=utf-8" }
+    //     })
+    //         .then(response => response.json())
+    //         .then(data => console.log(data))
+    // }, [])
 
     const clickEnterButton = () => {
-        props.store.goToHexLogin()
-        props.store.postData('https://example.com/answer', { "email": props.store.loginValues.email, "password": props.store.loginValues.passwordHash })
-            .then((data) => {
-                console.log(data); // JSON data parsed by `response.json()` call
-            });
-        console.log(props.store.loginValues.email)
-        console.log(props.store.loginValues.passwordHash)
-
-        if (!props.store.loginValues.errorEmail && !props.store.loginValues.errorPassword) {
-            const router = Router
-            router.push('/app')
-            //props.store.setLoginValuesClear()
+        if (props.store.loginValues.email.length > 0 && props.store.loginValues.password.length > 0) {
+            props.store.setLoginValuesFalse()
+            props.store.goToHexLogin()
+            props.store.getData(`${props.store.url}/todos/1`, { "email": props.store.loginValues.email, "password": props.store.loginValues.passwordHash }) // postData /auth
+                .then((data) => {
+                    console.log(data)
+                    if (data.a == "Success") { //userId //"Success"
+                        props.store.setLoginValuesFalse()
+                        props.store.setLoginValues("loginSuccess", true)
+                        const router = Router
+                        router.push('/app')
+                    } else if (data.a == "User doesn't exist") { //"User doesn't exist"
+                        props.store.setLoginValues("errorEmail", true)
+                    } else if (data.a == "Wrong password") { //
+                        props.store.setLoginValues("errorPassword", true)
+                    }
+                });
         }
-
+        else {
+            props.store.setLoginValues("error", true)
+        }
     }
 
     return (
@@ -297,6 +305,9 @@ const Login = inject('store')(observer((props) => {
                                 {props.store.loginValues.errorPassword && <Grid item container direction="column" justifyContent="center" alignItems="flex-start" className={classes.gridForgotPassword}>
                                     <Typography className={classes.ErrorLabel}> Неправильный пароль </Typography>
                                 </Grid>}
+                                {props.store.loginValues.error && <Grid item container direction="column" justifyContent="center" alignItems="flex-start" className={classes.gridForgotPassword}>
+                                    <Typography className={classes.ErrorLabel}> Нужно ввести адрес почты и пароль! </Typography>
+                                </Grid>}
                                 <Grid item container direction="column" justifyContent="center" alignItems="flex-start" className={classes.gridForgotPassword}>
                                     <LinkUI className={classes.forgotPassword} href="#" onClick={gotoForgotPassword}>
                                         Забыли пароль?
@@ -311,7 +322,7 @@ const Login = inject('store')(observer((props) => {
 
                                     <LinkUI className={classes.forgotRegistration} onClick={gotoRegistration}>
                                         Нужна учётная запись? Зарегистрироваться!
-                                </LinkUI>
+                                    </LinkUI>
 
                                 </Grid>
                             </Grid>

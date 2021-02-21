@@ -10,19 +10,14 @@ import { inject, observer } from 'mobx-react'
 
 const useStyles = makeStyles((theme) => ({
     root: {
-        //boxSizing: 'border-box',
-        // position: 'absolute',
-        backgroundColor: '#2c2c2c',
-        //backgroundColor: theme.main.palette.content.background,
-        // top: 0,
-        // left: 0,
-        // right: 0,
-        // bottom: 0,
-        width: '100%',
-        height: '100%',
-        margin: 0,
-        padding: 0,
-        zIndex: 90,
+        backgroundColor: '#2b2b2b',
+        position: 'fixed',
+        height: '100vh',
+        width: '100vw',
+        zIndex: '-1',
+    },
+    main: {
+        zIndex: 999,
     },
     gridLabelMain: {
         paddingLeft: 16,
@@ -111,7 +106,7 @@ const Support = inject('store')(observer((props) => {
             </Head>
             <div className={classes.root}>
                 <Background src={wallpapers()} />
-                <Grid container direction="column" justifyContent="flex-start" alignItems="center">
+                <Grid container direction="column" justifyContent="flex-start" alignItems="center" className={classes.main}>
                     <Navigation />
                     <Grid container direction="row" justifyContent="center" alignItems="center" className={classes.gridLabelMain}>
                         <Typography className={classes.labelMain}> Поддержка </Typography>

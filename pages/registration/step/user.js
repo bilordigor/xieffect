@@ -12,7 +12,7 @@ import clsx from 'clsx'
 import { inject, observer } from 'mobx-react'
 import HelpOutlineIcon from '@material-ui/icons/HelpOutline';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
-
+import HelpIcon from '@material-ui/icons/Help';
 const options = ['Участник', 'Ученик', 'Преподаватель', 'Автор', 'Родитель'];
 
 
@@ -166,23 +166,9 @@ const useStyles = makeStyles((theme) => ({
 
 const User = inject('store')(observer((props) => {
     const classes = useStyles();
-    const [values, setValues] = React.useState({
-        firstName: '',
-        secondName: '',
-        nickname: '',
-        role: '',
-        isShowName: false,
-    });
 
-    const handleChange = (prop) => (event) => {
-        setValues({ ...values, [prop]: event.target.value });
-    };
-    const handleClickShowPassword = () => {
-        setValues({ ...values, showPassword: !values.showPassword });
-    };
-
-    const handleMouseDownPassword = (event) => {
-        event.preventDefault();
+    const handleChange = (section, name) => (event) => {
+        props.store.setUserDataValues(section, name, event.target.value)
     };
 
     const gotoAuth = (event) => {
@@ -199,11 +185,12 @@ const User = inject('store')(observer((props) => {
     const [selectedIndex, setSelectedIndex] = React.useState(0);
 
     const handleClick = () => {
-        console.info(`You clicked ${options[selectedIndex]}`);
+        //console.info(`You clicked ${options[selectedIndex]}`);
     };
 
     const handleMenuItemClick = (event, index) => {
         setSelectedIndex(index);
+        props.store.setUserDataValues("userRole", options[index])
         setOpen(false);
     };
 
@@ -221,17 +208,75 @@ const User = inject('store')(observer((props) => {
 
     //Checkbox
 
-    const [state, setState] = React.useState({
-        checkedA: false,
-    });
+    // const [state, setState] = React.useState({
+    //     checkedA: false,
+    // });
 
-    const handleChangeCheckbox = (event) => {
-        setState({ ...state, [event.target.name]: event.target.checked });
-    };
+    // const handleChangeCheckbox = (event) => {
+    //     setState({ ...state, [event.target.name]: event.target.checked });
+    // };
 
     const wallpapers = () => {
         let count = Math.floor(Math.random() * (Math.floor(5) - Math.ceil(1))) + Math.ceil(1)
         return "/wallpapers/hp" + count.toString() + ".jpg"
+    }
+
+    const clickRegistartionButton = () => {
+        props.store.setUserRegValuesFalse()
+        //console.log(props.store.registrationValues)
+        let symNames = 'йцукенгшщзхъфывапролджэячсмитьбю-qwertyuiopasdfghjklzxcvbnm'
+        let symNick = 'qwertyuiopasdfghjklzxcvbnm_'
+
+        //console.log(values.email.length < 5)
+        if (props.store.userData.firstName.length == 0) {
+           props.store.setRegistrationValues("isFirstName", true)
+        }
+        if (props.store.userData.secondName.length == 0) {
+            props.store.setRegistrationValues("isSecondName", true)
+        }
+        if (props.store.userData.nickName.length == 0) {
+            props.store.setRegistrationValues("isNickName", true)
+        }
+        //console.log(props.store.registrationValues.password.length)
+        if (!props.store.registrationValues.isFirstName && !props.store.registrationValues.isSecondName && !props.store.registrationValues.isNickName) {
+            for (let i = 0; i < props.store.userData.firstName.length; i++) {
+                if (symNames.includes(props.store.userData.firstName[i].toLowerCase())) continue
+                else {
+                    props.store.setRegistrationValues("errorSymFirstName", true)
+                    break
+                }
+            }
+            for (let i = 0; i < props.store.userData.secondName.length; i++) {
+                if (symNames.includes(props.store.userData.secondName[i].toLowerCase())) continue
+                else {
+                    props.store.setRegistrationValues("errorSymSecondName", true)
+                    break
+                }
+            }
+            for (let i = 0; i < props.store.userData.nickName.length; i++) {
+                if (symNick.includes(props.store.userData.nickName[i].toLowerCase())) continue
+                else {
+                    props.store.setRegistrationValues("errorSymNickName", true)
+                    break
+                }
+            }
+        }
+        
+        if (!props.store.registrationValues.isFirstName && !props.store.registrationValues.isSecondName && !props.store.registrationValues.isNickName && !props.store.registrationValues.errorSymNickName && !props.store.registrationValues.errorSymSecondName && !props.store.registrationValues.errorSymFirstName) {
+
+            //props.store.goToHex()
+
+            props.store.postData(`${props.store.url}/reg`, {"email": props.store.registrationValues.emailHash, "password": props.store.registrationValues.passwordHash, "firstName": props.store.userDate.firstName, "secondName": props.store.userDate.secondName, "nickName": props.store.userDate.nickName, "userRole": props.store.userDate.userRole, "officialNamesHidden": props.store.userDate.officialNamesHidden}) ///registration/newemail
+                .then((data) => {
+                    if (data.a === true) { //true
+                        const router = Router
+                        router.push('/app')
+                    // } else if (data.a === false) { //false
+                    //     props.store.setRegistrationValues("emailAlreadyUsed", true)
+                    }
+                });
+
+        }
     }
 
     return (
@@ -260,35 +305,96 @@ const User = inject('store')(observer((props) => {
                                         <OutlinedInput
                                             className={classes.OutlinedInput}
                                             type='text'
-                                            value={values.firstName}
+                                            value={props.store.userData.firstName}
                                             onChange={handleChange('firstName')}
+                                            endAdornment={
+                                                <InputAdornment position="end">
+                                                    <IconButton
+                                                        aria-label="toggle password visibility"
+                                                        // onClick={handleClickShowPassword}
+                                                        // onMouseDown={handleMouseDownPassword}
+                                                        edge="end"
+                                                    >
+                                                        <Tooltip title="Ваше Имя, допускается как Кириллица, так и Латиница" arrow>
+                                                            <HelpIcon className={classes.icons} />
+                                                        </Tooltip>
+
+                                                    </IconButton>
+                                                </InputAdornment>
+                                            }
                                         />
                                     </FormControl>
                                 </Grid>
+                                {props.store.registrationValues.errorSymFirstName && <Grid item container direction="column" justifyContent="center" alignItems="flex-start" className={classes.gridError}>
+                                    <Typography className={classes.errorSymNickName}> Недопустимые символы! </Typography>
+                                </Grid>}
+                                {props.store.registrationValues.isFirstName && <Grid item container direction="column" justifyContent="center" alignItems="flex-start" className={classes.gridError}>
+                                    <Typography className={classes.ErrorLabel}> Это обязательное поле</Typography>
+                                </Grid>}
                                 <Grid item container direction="column" justifyContent="center" alignItems="flex-start" className={classes.gridTextField}>
                                     <FormControl className={classes.textField} variant="outlined">
                                         <InputLabel className={classes.inputLabel} htmlFor="outlined-adornment-password"> <Typography className={classes.textFieldTypography}>Фамилия</Typography> </InputLabel>
                                         <OutlinedInput
                                             className={classes.OutlinedInput}
                                             type='text'
-                                            value={values.secondName}
+                                            value={props.store.userData.secondName}
                                             onChange={handleChange('secondName')}
-                                            labelWidth={70}
+                                            //labelWidth={70}
+                                            endAdornment={
+                                                <InputAdornment position="end">
+                                                    <IconButton
+                                                        aria-label="toggle password visibility"
+                                                        // onClick={handleClickShowPassword}
+                                                        // onMouseDown={handleMouseDownPassword}
+                                                        edge="end"
+                                                    >
+                                                        <Tooltip title="Ваша Фамилия, допускается как Кириллица, так и Латиница" arrow>
+                                                            <HelpIcon className={classes.icons} />
+                                                        </Tooltip>
+                                                    </IconButton>
+                                                </InputAdornment>
+                                            }
                                         />
                                     </FormControl>
                                 </Grid>
+                                {props.store.registrationValues.errorSymSecondName && <Grid item container direction="column" justifyContent="center" alignItems="flex-start" className={classes.gridError}>
+                                    <Typography className={classes.errorSymNickName}> Недопустимые символы! </Typography>
+                                </Grid>}
+                                {props.store.registrationValues.isSecondName && <Grid item container direction="column" justifyContent="center" alignItems="flex-start" className={classes.gridError}>
+                                    <Typography className={classes.ErrorLabel}> Это обязательное поле</Typography>
+                                </Grid>}
                                 <Grid item container direction="column" justifyContent="center" alignItems="flex-start" className={classes.gridTextField}>
                                     <FormControl className={classes.textField} variant="outlined">
                                         <InputLabel className={classes.inputLabel} htmlFor="outlined-adornment-password"> <Typography className={classes.textFieldTypography}>Никнейм</Typography> </InputLabel>
                                         <OutlinedInput
                                             className={classes.OutlinedInput}
                                             type='text'
-                                            value={values.nickname}
-                                            onChange={handleChange('nickname')}
-                                            labelWidth={70}
+                                            value={props.store.userData.nickName}
+                                            onChange={handleChange('nickName')}
+                                            //labelWidth={70}
+                                            endAdornment={
+                                                <InputAdornment position="end">
+                                                    <IconButton
+                                                        aria-label="toggle password visibility"
+                                                        // onClick={handleClickShowPassword}
+                                                        // onMouseDown={handleMouseDownPassword}
+                                                        edge="end"
+                                                    >
+                                                        <Tooltip title="Придумайте себе никнейм, он может состоять только из латинских букв в верхнем и (или) нижнем регистре и знака нижнего подчёркивания" arrow>
+                                                            <HelpIcon className={classes.icons} />
+                                                        </Tooltip>
+                                                    </IconButton>
+                                                </InputAdornment>
+                                            }
                                         />
                                     </FormControl>
                                 </Grid>
+                                {props.store.registrationValues.isNickName && <Grid item container direction="column" justifyContent="center" alignItems="flex-start" className={classes.gridError}>
+                                    <Typography className={classes.errorSymNickName}> Недопустимые символы! </Typography>
+                                </Grid>}
+                                {props.store.registrationValues.isNickName && <Grid item container direction="column" justifyContent="center" alignItems="flex-start" className={classes.gridError}>
+                                    <Typography className={classes.ErrorLabel}> Это обязательное поле</Typography>
+                                </Grid>}
                                 <Grid item container direction="column" justifyContent="center" alignItems="flex-start" className={classes.gridTextField}>
                                     <ButtonGroup variant="contained" color="primary" ref={anchorRef} aria-label="split button">
                                         <Button onClick={handleClick}>{options[selectedIndex]}</Button>
@@ -334,7 +440,7 @@ const User = inject('store')(observer((props) => {
                                 </Grid>
                                 <Grid item container direction="row" justifyContent="flex-start" alignItems="flex-start" className={classes.gridCheckbox}>
                                     <FormControlLabel
-                                        control={<Checkbox className={classes.Checkbox} color="primary" checked={state.checkedA} onChange={handleChangeCheckbox} name="checkedA" />}
+                                        control={<Checkbox className={classes.Checkbox} color="primary" checked={props.store.userData.officialNamesHidden} onChange={() => props.store.setOfficialNamesHidden()} name="checkedA" />}
                                         label={<Typography className={classes.checkboxTypography}> Скрыть Имя и Фамилию </Typography>}
                                     />
                                     <Tooltip className={classes.tooltip} title={<Typography className={classes.tooltipTypography}>Скрыть Имя и Фамилию от незнакомых пользоватлей. Показывать им только ваш Никнейм.</Typography>} arrow>
@@ -344,7 +450,7 @@ const User = inject('store')(observer((props) => {
                                 </Grid>
                                 <Grid item container direction="column" justifyContent="center" alignItems="center" className={classes.gridEnterButtom}>
                                     <Link href="/login">
-                                        <Button onClick={props.store.setReadyAuth} variant="contained" color="primary" className={classes.enterButtom}>
+                                        <Button onClick={clickRegistartionButton} variant="contained" color="primary" className={classes.enterButtom}>
                                             Завершить Регистрацию
                                     </Button>
                                     </Link >

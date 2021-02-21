@@ -33,14 +33,40 @@ class Store {
 
   //      ИНТЕРФЕЙС
 
+  // LerningCenter
+
+
+  @observable dataTimeTable = [
+    { time: "9:00", lesson: "Математика", now: true, },
+    { time: "9:55", lesson: "География", now: true, },
+    { time: "11:00", lesson: "Русский язык", now: true, },
+    { time: "12:05", lesson: "Немецкий язык", now: true, },
+    { time: "13:00", lesson: "Биология", now: true, },
+  ]
+
+  @observable learningCenterValues = {
+    openExpandMore: false,
+
+  }
+
+  @action clickedExpandMoreIcon = () => {
+    this.learningCenterValues.openExpandMore = !this.learningCenterValues.openExpandMore
+  }
+
   // Вход и глобальные данные приложения //login.js
 
+  @observable url = 'https://jsonplaceholder.typicode.com'
+
+
   @observable loginValues = {
+    fetchRequestReady: false,
     jwt: '',
     email: '',
     password: '',
     passwordHash: '',
+    loginSuccess: false,
     showPassword: false,
+    error: false,
     errorEmail: false,
     errorPassword: false,
 
@@ -51,6 +77,7 @@ class Store {
   }
 
   @action setLoginValuesFalse = () => {
+    this.loginValues.error = false
     this.loginValues.errorEmail = false
     this.loginValues.errorPassword = false
 
@@ -75,11 +102,32 @@ class Store {
   //что и вызывающий его скрипт, добавьте credentials: 'same-origin'.
   //Напротив, чтобы быть уверенным, что учётные данные не передаются с запросом, используйте credentials: 'omit':
 
-  @action async postData(url = '', data = {},) { // mode, cache, credentials, redirect, referrerPolicy
+  @action async getData(url, data) { // mode, cache, credentials, redirect, referrerPolicy
     // Default options are marked with *
     try {
       const response = await fetch(url, {
-        method: 'POST', // *GET, POST, PUT, DELETE, etc.
+        method: "GET", // *GET, POST, PUT, DELETE, etc.
+        //mode: 'no-cors', // no-cors, *cors, same-origin
+        // cache, // *default, no-cache, reload, force-cache, only-if-cached
+        //credentials: 'same-origin', // include, *same-origin, omit
+        headers: {
+          'Content-Type': 'application/json'
+          //   // 'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        // redirect, // manual, *follow, error
+        // referrerPolicy, // no-referrer, *client
+      });
+      return response.json(); // parses JSON response into native JavaScript objects
+    } catch (error) {
+      console.log('Возникла проблема с вашим fetch запросом: ', error.message);
+    }
+  }
+
+  @action async postData(url, data) { // mode, cache, credentials, redirect, referrerPolicy
+    // Default options are marked with *
+    try {
+      const response = await fetch(url, {
+        method: "POST", // *GET, POST, PUT, DELETE, etc.
         mode: 'no-cors', // no-cors, *cors, same-origin
         // cache, // *default, no-cache, reload, force-cache, only-if-cached
         credentials: 'same-origin', // include, *same-origin, omit
@@ -102,40 +150,69 @@ class Store {
   @observable registrationValues = {
     jwt: '',
     email: '',
-    isTrueEmail: true,
+    emailHash: '',
     password: '',
     passwordHash: '',
+    isCheckedEmail: false,
     showPassword: false,
     error: false,
     errorEmail: false,
     emailAlreadyUsed: false,
     errorPasswordLength: false,
     errorSymbols: false,
+    //registration/step/user
+    isFirstName: false,
+    errorSymFirstName: false,
+    isSecondName: false,
+    errorSymSecondName: false,
+    isNickName: false,
+    errorSymNickName: false,
   }
-
 
   @action setRegistrationValues = (name, value) => {
     this.registrationValues[name] = value
   }
+  
+  @action setUserRegValuesFalse = () => {
+    this.registrationValues.isFirstName = false
+    this.registrationValues.errorSymFirstName = false
+    this.registrationValues.isSecondName = false
+    this.registrationValues.errorSymSecondName = false
+    this.registrationValues.isNickName = false
+    this.registrationValues.errorSymNickName = false
+  }
+
+
+  
 
   @action setRegistrationValuesFalse = () => {
     this.registrationValues.errorEmail = false
     this.registrationValues.errorPasswordLength = false
     this.registrationValues.errorSymbols = false
+    this.registrationValues.emailAlreadyUsed = false
   }
 
   @action goToHex = () => {
     this.registrationValues.passwordHash = Crypto.SHA384(this.registrationValues.password).toString()
+    this.registrationValues.emailHash = this.registrationValues.email
   }
 
   @action setRegistrationValuesClear = () => {
     this.registrationValues.email = ''
     this.registrationValues.password = ''
-    this.registrationValues.passwordHash = ''
+    //this.registrationValues.passwordHash = ''
   }
 
 
+  // Подтверждение почты 
 
+  @observable emailCheck = {
+    serverAnswer: false,
+  }
+
+  @action setEmailCheckValues = (name, value) => {
+    this.emailCheck[name] = value
+  }
 
   // Главная страница 
 
@@ -220,14 +297,23 @@ class Store {
   }
 
   @observable userData = {
+    //settings
     isBackgroundImageInMain: false,
     isBackgroundImageInEducation: false,
     isDarkMode: true,
     readyAuth: false,
-    name: 'Имя',
-    secondName: 'Фамилия',
-    nickName: 'Никнейм',
     officialNamesHidden: false,
+    //date
+    firstName: '',
+    secondName: '',
+    nickName: '',
+    userRole: 'Участник',
+
+  }
+
+  @action setUserDataValues = (name, value) => {
+    this.userData[name] = value
+    console.log(this.userData.userRole)
   }
 
 
@@ -242,6 +328,7 @@ class Store {
 
   @action setOfficialNamesHidden = () => {
     this.userData.officialNamesHidden = !this.userData.officialNamesHidden
+    console.log(this.userData.officialNamesHidden)
   }
 
   @observable step = 0
