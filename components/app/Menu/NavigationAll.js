@@ -11,7 +11,7 @@ import FireplaceIcon from '@material-ui/icons/Fireplace';
 import PublicIcon from '@material-ui/icons/Public';
 import MessageIcon from '@material-ui/icons/Message';
 
-import { Tabs, Tab, Dialog, TransitionProps, Slide, CssBaseline, Box, IconButton, InputBase, FormControlLabel, Switch, withStyles, Tooltip, Fab, BottomNavigation, BottomNavigationAction, Hidden, ClickAwayListener, AppBar, Toolbar, Typography, Drawer, List, Avatar, Grid, Paper, Button, Divider, ListItem, ListItemIcon, ListItemText, MenuItem, MenuList, Grow, Popper, makeStyles, useTheme } from '@material-ui/core';
+import { SwipeableDrawer, Tabs, Tab, Dialog, TransitionProps, Slide, CssBaseline, Box, IconButton, InputBase, FormControlLabel, Switch, withStyles, Tooltip, Fab, BottomNavigation, BottomNavigationAction, Hidden, ClickAwayListener, AppBar, Toolbar, Typography, Drawer, List, Avatar, Grid, Paper, Button, Divider, ListItem, ListItemIcon, ListItemText, MenuItem, MenuList, Grow, Popper, makeStyles, useTheme } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
@@ -37,50 +37,61 @@ import arrowLeftCircle from 'react-useanimations/lib/arrowLeftCircle'
 
 import { Scrollbars } from 'rc-scrollbars';
 import Castomize from './Dialog/Castomize';
+import Appbar from './Appbar';
 
 const defaultSrc = "/avatardefault.png";
 
-const LightTooltip = withStyles((theme) => ({
-    tooltip: {
-        backgroundColor: theme.palette.common.white,
-        color: 'rgba(0, 0, 0, 0.87)',
-        boxShadow: theme.shadows[1],
-        fontSize: 14,
-        // border: '3px solid',
-        // borderColor: '#00b0ff',
-    },
-}))(Tooltip);
-
-const drawerWidth = 240;
+const drawerWidth = 220;
 
 const useStyles = makeStyles((theme) => ({
     root: {
         display: 'flex',
     },
     appBar: {
+        height: 64,
         backgroundColor: theme.main.palette.header.background,
         zIndex: theme.zIndex.drawer + 1,
-        transition: '1s',
+        [theme.breakpoints.only('xs', 'sm')]: {
+            paddingLeft: 8,
+            paddingTop: 4,
+        },
+        //transition: '1s',
+        // [theme.breakpoints.up('md')]: {
+
+        // },
+        // // [theme.breakpoints.only('md')]: {
+        // //     paddingLeft: 8,
+        // //     paddingTop: 4,
+        // // },
+        // [theme.breakpoints.down('md')]: {
+        //     // paddingLeft: 8,
+        //     // paddingTop: 4,
+        // },
         transition: theme.transitions.create(['width', 'margin'], {
-            // backgroundColor: theme.main.palette.header.background,
-            easing: theme.transitions.easing.sharp,
-            duration: theme.transitions.duration.leavingScreen,
+             // backgroundColor: theme.main.palette.header.background,
+             easing: theme.transitions.easing.sharp,
+             duration: theme.transitions.duration.leavingScreen,
         }),
     },
     appBarShift: {
-        transition: '1s',
+        height: 64,
+        //transition: '1s',
         //backgroundColor: theme.main.palette.header.background,
         marginLeft: drawerWidth,
-        [theme.breakpoints.up('xs')]: {
+        [theme.breakpoints.up('md')]: {
             width: `calc(100% - ${drawerWidth}px)`,
+
         },
-        [theme.breakpoints.only('xs')]: {
+        // [theme.breakpoints.only('md')]: {
+        //     width: '100%',
+        // },
+        [theme.breakpoints.down('md')]: {
             width: '100%',
         },
-        transition: theme.transitions.create(['width', 'margin'], {
-            easing: theme.transitions.easing.sharp,
-            duration: theme.transitions.duration.enteringScreen,
-        }),
+        // transition: theme.transitions.create(['width', 'margin'], {
+        //     easing: theme.transitions.easing.sharp,
+        //     duration: theme.transitions.duration.enteringScreen,
+        // }),
     },
     hide: {
         display: 'none',
@@ -175,7 +186,7 @@ const useStyles = makeStyles((theme) => ({
         // }
     },
     Image: {
-        marginLeft: '-9%',
+        //marginLeft: '-9%',
         color: theme.main.palette.navbar.icon,
     },
     ImageText: {
@@ -183,7 +194,7 @@ const useStyles = makeStyles((theme) => ({
         color: theme.main.palette.navbar.text,
     },
     ImageTextTypography: {
-        fontSize: 18,
+        fontSize: 20,
     },
     dividerBottom: {
         backgroundColor: theme.main.palette.navbar.secondary,
@@ -329,13 +340,13 @@ const useStyles = makeStyles((theme) => ({
         backgroundColor: theme.main.palette.navbar.background,
     },
     icons: {
-        [theme.breakpoints.up('sm')]: {
-            marginLeft: 4,
-            width: 36,
-            height: 36,
-        },
-        width: 30,
-        height: 30,
+        // [theme.breakpoints.up('md')]: {
+        //     marginLeft: 4,
+        //     width: 36,
+        //     height: 36,
+        // },
+        width: 36,
+        height: 36,
         color: theme.main.palette.navbar.icon,
     },
     iconsMenu: {
@@ -372,94 +383,15 @@ const useStyles = makeStyles((theme) => ({
         marginTop: -4,
         marginLeft: 5,
         cursor: 'pointer',
-    }
+    },
+    leftMenu: {
+        height: '100%',
+        width: drawerWidth,
+        zIndex: 1000,
+        color: theme.main.palette.header.text,
+        backgroundColor: theme.main.palette.header.main,
+    },
 }));
-
-//DialogAll
-
-// const Transition = React.forwardRef(function Transition(
-//     props: TransitionProps & {
-//         children?: React.ReactElement;
-//     },
-//     ref: React.Ref<unknown>,
-// ) {
-//     return <Slide direction="up" ref={ref} {...props} />;
-// });
-
-// function TabPanel(props) {
-//     const { children, value, index, ...other } = props;
-//     const classes = useStylesDialogAll();
-//     const theme = useTheme();
-//     return (
-//         <div
-//         // role="tabpanel"
-//         // hidden={value !== index}
-//         // id={`vertical-tabpanel-${index}`}
-//         // aria-labelledby={`vertical-tab-${index}`}
-//         // {...other}
-//         >
-//             {value === index && (
-//                 <div className={classes.TabPanel}>
-//                     {children}
-//                 </div>
-//             )}
-//         </div>
-//     );
-// }
-
-// TabPanel.propTypes = {
-//     children: PropTypes.node,
-//     index: PropTypes.number.isRequired,
-//     value: PropTypes.number.isRequired,
-// };
-
-// const AntTabs = withStyles((theme) => ({
-//     root: {
-//         //borderBottom: '1px solid #e8e8e8',
-//     },
-//     indicator: {
-//         display: 'none',
-//         //backgroundColor: theme.main.palette.main.main,
-//         backgroundColor: 'none',
-//     },
-// }))(Tabs);
-
-// const AntTab = withStyles((theme) => ({
-//     root: {
-//         textAlign: 'left',
-//         // textTransform: 'none',
-//         width: 200,
-//         // fontWeight: theme.typography.fontWeightRegular,
-//         marginRight: 0,
-//         // fontFamily: [
-//         //     '-apple-system',
-//         //     'BlinkMacSystemFont',
-//         //     '"Segoe UI"',
-//         //     'Roboto',
-//         //     '"Helvetica Neue"',
-//         //     'Arial',
-//         //     'sans-serif',
-//         //     '"Apple Color Emoji"',
-//         //     '"Segoe UI Emoji"',
-//         //     '"Segoe UI Symbol"',
-//         // ].join(','),
-//         '&:hover': {
-//             //color: '#40a9ff',
-//             //opacity: 1,
-//         },
-//         '&:focus': {
-//             //color: '#40a9ff',
-//         },
-//     },
-//     selected: {},
-// }))((props) => <Tab disableRipple {...props} />);
-
-// function a11yProps(index) {
-//     return {
-//         id: `vertical-tab-${index}`,
-//         'aria-controls': `vertical-tabpanel-${index}`,
-//     };
-// }
 
 const useStylesDialogAll = makeStyles((theme) => ({
     root: {
@@ -556,7 +488,7 @@ const useStylesDialogAll = makeStyles((theme) => ({
         top: 32,
         right: 32,
         cursor: 'pointer',
-    }
+    },
 }));
 
 const DialogAll = inject('store')(observer((props) => {
@@ -661,110 +593,7 @@ const DialogAll = inject('store')(observer((props) => {
     )
 }))
 
-const ToolbarAll = inject('store')(observer((props) => {
-    const classes = useStyles();
-    const theme = useTheme();
-    const { files, selectFiles } = React.useContext(Context)
 
-    //Открыть поиск в мобильной версии
-
-    const [openSearch, setOpenSearch] = React.useState(false);
-
-    const setNewOpenSearch = () => {
-        setOpenSearch((prevOpen) => !prevOpen);
-    };
-
-    const handleDrawerOpen = () => {
-        props.store.setOpenMenu()
-    };
-
-    const router = useRouter()
-
-    return (
-        <>
-            {/* Кнопка-иконка меню (Отображается всегда, при этом на мобильных платформах исчезает т.к. меню переносится вниз в горизонтальное положение) */}
-            < Hidden only='xs' >
-                <IconButton
-                    color="inherit"
-                    aria-label="open drawer"
-                    onClick={handleDrawerOpen}
-                    edge="start"
-                    className={clsx(classes.menuButton, {
-                        [classes.hide]: props.store.openMenu,
-                    })}
-
-                >
-                    <MenuIcon className={classes.menuButtonIcon} />
-                </IconButton>
-            </Hidden >
-            {/* Основное название сайта. (Отображается всегда) */}
-            < Link href="/" >
-                <Typography display='inline' className={classes.typographyEffect}>
-                    Ξ Effect
-                </Typography>
-            </Link >
-            {/* Набор инструментов главной части приложения. (Меняется в зависимости от страницы мменю. В мобильной версии в самой правой части отображается аватарка-ссылка на профиль пользователя) */}
-            < Grid container direction="row" justifyContent="flex-end" >
-                {/* Набор инструментов для вкладки Образование */}
-                {
-                    router.pathname === '/app/education' && <>
-                        {/* Поиск по курсам. Только НЕ для мобильной версии */}
-                        {!openSearch && <Hidden only={['xs', 'sm']}>
-                            <Paper component="form" className={classes.GridHeaderSearch}>
-                                <InputBase
-                                    className={classes.input}
-                                    placeholder="Поиск курсов"
-                                    inputProps={{ 'aria-label': 'Поиск курсов' }}
-                                />
-                                <Divider className={classes.divider} orientation="vertical" />
-                                <IconButton type="submit" className={classes.iconButton} aria-label="search">
-                                    <SearchIcon />  {/*  className={classes.iconButtonSearch} */}
-                                </IconButton>
-                            </Paper>
-                        </Hidden>}
-                        {/* Кнопка-иконка для открытия панели поиска в мобильной версии. (Видна только в мобильной версии)  */}
-                        {!openSearch && <Hidden mdUp>
-                            <IconButton onClick={setNewOpenSearch} className={classes.iconButton}>
-                                <SearchIcon className={classes.iconButtonSearch} />
-                            </IconButton>
-                        </Hidden>}
-                        {/* Панель поиска, открывающаяся для мобильной версии при нажатии кнопки-иконки поиска */}
-                        {openSearch && <Paper component="form" className={classes.gridHeaderSearchMobile}>
-                            <InputBase
-                                className={classes.input}
-                                placeholder="Поиск курсов"
-                                inputProps={{ 'aria-label': 'Поиск курсов' }}
-                            />
-                            <Divider className={classes.divider} orientation="vertical" />
-                            <IconButton type="submit" className={classes.iconButton} aria-label="search">
-                                <SearchIcon />  {/*  className={classes.iconButtonSearch} */}
-                            </IconButton>
-                            <Divider className={classes.divider} orientation="vertical" />
-                            <IconButton onClick={setNewOpenSearch} className={classes.iconButton}>
-                                <ExitToAppIcon />  {/*  className={classes.iconButtonSearch} */}
-                            </IconButton>
-                        </Paper>}
-                        {/* Кнопка-иконка создания новых курсов */}
-                        <LightTooltip title="Создать курс">
-                            <Fab size="medium" aria-label="add" className={classes.addCourse}>
-                                <AddIcon />
-                            </Fab>
-                        </LightTooltip>
-                    </>
-
-                }
-                {/* Аватарка-ссылка на профиль. (Отображается в мобильной версии) */}
-                <Hidden smUp>
-                    {/* <Link href="" className={classes.linkMobile}> */}
-                    <ListItemIcon className={classes.imageAvatarMobile}>
-                        <img alt="Ваш Аватар" src={files?.source || defaultSrc} className={classes.avatarMobile} />
-                    </ListItemIcon>
-                    {/* </Link> */}
-                </Hidden>
-            </Grid >
-        </>
-    );
-}))
 
 const NavigationAll = inject('store')(observer((props) => {
     const classes = useStyles();
@@ -851,6 +680,19 @@ const NavigationAll = inject('store')(observer((props) => {
     //     props.store.setDialogMenu()
     // }
 
+    const iOS = typeof navigator !== 'undefined' && /iPad|iPhone|iPod/.test(navigator.userAgent);
+
+    const toggleDrawer = (open) => (event) => {
+        if (
+            event &&
+            event.type === 'keydown' &&
+            (event.key === 'Tab' || event.key === 'Shift')
+        ) {
+            return;
+        }
+        props.store.setOpenMenu();
+    }
+
     return (
         <div className={classes.root}>
             <CssBaseline />
@@ -859,10 +701,10 @@ const NavigationAll = inject('store')(observer((props) => {
                     [classes.appBarShift]: props.store.openMenu,
                 })}>
                 <Toolbar>
-                    <ToolbarAll />
+                    <Appbar />
                 </Toolbar>
             </AppBar>
-            <Hidden only='xs'>
+            <Hidden mdDown>
                 <Drawer
                     variant="permanent"
                     className={clsx(classes.drawer, {
@@ -937,17 +779,99 @@ const NavigationAll = inject('store')(observer((props) => {
                     <Divider />
                 </Drawer>
             </Hidden>
-            <Hidden smUp>
-                <AppBar position="fixed" className={classes.appBarBottom}>
-                    <Divider className={classes.dividerBottom} />
-                    <BottomNavigation value={value} onChange={handleChange} className={classes.BottomNavigation} showLabels>
-                        <BottomNavigationAction className={classes.BottomNavigationBox} />
-                        {menulist.map((obj) => (
-                            <BottomNavigationAction onClick={() => pushMobileMenuButton(obj.way)} key={obj.name} className={classes.BottomNavigationAction} value={obj.value} label={<Typography className={classes.label}>{obj.label}</Typography>} icon={obj.logo} />
-                        ))}
-                        <BottomNavigationAction className={classes.BottomNavigationBox} />
-                    </BottomNavigation>
-                </AppBar>
+            <Hidden mdUp>
+                <SwipeableDrawer
+                    disableBackdropTransition={!iOS}
+                    disableDiscovery={iOS}
+                    anchor='left'
+                    open={props.store.openMenu}
+                    onClose={toggleDrawer(false)}
+                    onOpen={toggleDrawer(true)}
+
+                >
+                    <div
+                        className={classes.leftMenu}
+                        role="presentation"
+                        onClick={toggleDrawer(false)}
+                        onKeyDown={toggleDrawer(false)}
+                    >
+
+                        <Drawer
+                            variant="permanent"
+                            className={clsx(classes.drawer, {
+                                [classes.drawerOpen]: props.store.openMenu,
+                                [classes.drawerClose]: !props.store.openMenu,
+                            })}
+                            classes={{
+                                paper: clsx({
+                                    [classes.drawerOpen]: props.store.openMenu,
+                                    [classes.drawerClose]: !props.store.openMenu,
+                                }),
+                            }}
+                        >
+                            {/* Иконка сокрытия разведённого меню */}
+
+                            <div className={classes.toolbar}>
+                                <IconButton onClick={handleDrawerClose}>
+                                    {theme.direction === 'rtl' ? <ChevronRightIcon className={classes.iconsMenu} /> : <ChevronLeftIcon className={classes.iconsMenu} />}
+                                </IconButton>
+                            </div>
+                            <Divider />
+                            {/* Список иконок меню */}
+                            <List>
+                                {/* Аватар-профиль */}
+                                {/* <Link href="/app/profile" className={classes.aNavLink}> */}
+                                <ListItem key="profile">
+                                    <ListItemIcon className={classes.imageAvatar}>
+                                        <img alt="Ваш Аватар" src={files?.source || defaultSrc} className={classes.Avatar} />
+                                    </ListItemIcon>
+                                    {props.store.openMenu && <Grid container direction="column">
+                                        <Typography noWrap={true} className={classes.imageAvatarText}>{props.store.userData.name}</Typography>
+                                        <Typography noWrap={true} className={classes.imageAvatarText}>{props.store.userData.secondName}</Typography>
+                                    </Grid>}
+                                    {router.pathname === '/app/profile' && <Divider orientation="vertical" className={classes.nowPageDividerAvatar} />}
+                                </ListItem>
+                                <Grid className={classes.gridToolIconButton} container direction="row" justifyContent="flex-start" alignItems="center">
+                                    {/* <IconButton className={classes.toolIconButton}> */}
+                                    {props.store.userData.isDarkMode && <UseAnimations onClick={props.store.setDialogMenu} className={classes.toolIcons} strokeColor={'#e0e0e0'} animation={settings} size={30} />}
+                                    {!props.store.userData.isDarkMode && <UseAnimations onClick={props.store.setDialogMenu} className={classes.toolIcons} strokeColor={'#424242'} animation={settings} size={30} />}
+                                    {props.store.userData.isDarkMode && <UseAnimations onClick={gotoInfo} className={classes.toolIcons} strokeColor={'#e0e0e0'} animation={info} size={30} />}
+                                    {!props.store.userData.isDarkMode && <UseAnimations onClick={gotoInfo} className={classes.toolIcons} strokeColor={'#424242'} animation={info} size={30} />}
+                                    {props.store.userData.isDarkMode && <UseAnimations className={classes.toolIcons} strokeColor={'#e0e0e0'} animation={microphone} size={30} />}
+                                    {!props.store.userData.isDarkMode && <UseAnimations className={classes.toolIcons} strokeColor={'#424242'} animation={microphone} size={30} />}
+                                    {props.store.userData.isDarkMode && <UseAnimations className={classes.toolIcons} strokeColor={'#e0e0e0'} animation={volume} size={30} />}
+                                    {!props.store.userData.isDarkMode && <UseAnimations className={classes.toolIcons} strokeColor={'#424242'} animation={volume} size={30} />}
+
+
+                                    {/* </IconButton> */}
+                                </Grid>
+                                <DialogAll />
+                                {/* </Link> */}
+                                <Divider />
+                                {/* Список главного меню  */}
+                                <Grid container direction="row" justifyContent="center" alignItems="center">
+                                    {menulist.map((obj) => (
+                                        // <Grid item >
+                                        <Link href={obj.way} className={classes.aNavLink} key={obj.name}>
+                                            <ListItem button key={obj.name}>
+                                                <ListItemIcon className={classes.Image}>
+                                                    {obj.logo}
+                                                </ListItemIcon>
+                                                {props.store.openMenu && <ListItemText primary={<Typography className={classes.ImageTextTypography}>{obj.name}</Typography>} className={classes.ImageText} />}
+                                                {router.pathname === obj.way && <Divider orientation="vertical" className={classes.nowPageDivider} />}
+                                            </ListItem>
+                                        </Link>
+                                        // </Grid>
+
+                                    ))}
+                                </Grid>
+                            </List>
+
+                            <Divider />
+                        </Drawer>
+
+                    </div>
+                </SwipeableDrawer>
             </Hidden>
             <main className={clsx(classes.mainClass, {
                 [classes.mainOpen]: props.store.openMenu,

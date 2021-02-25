@@ -172,7 +172,7 @@ class Store {
   @action setRegistrationValues = (name, value) => {
     this.registrationValues[name] = value
   }
-  
+
   @action setUserRegValuesFalse = () => {
     this.registrationValues.isFirstName = false
     this.registrationValues.errorSymFirstName = false
@@ -313,7 +313,7 @@ class Store {
 
   @action setUserDataValues = (name, value) => {
     this.userData[name] = value
-    console.log(this.userData.userRole)
+    //console.log(this.userData.userRole)
   }
 
 
@@ -328,7 +328,7 @@ class Store {
 
   @action setOfficialNamesHidden = () => {
     this.userData.officialNamesHidden = !this.userData.officialNamesHidden
-    console.log(this.userData.officialNamesHidden)
+    //console.log(this.userData.officialNamesHidden)
   }
 
   @observable step = 0

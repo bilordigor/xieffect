@@ -137,6 +137,13 @@ const useStyles = makeStyles((theme) => ({
         fontSize: 16,
         color: theme.main.palette.help.red,
     },
+    gridForgotPassword: {
+        zIndex: 999,
+        marginTop: 4,
+        paddingLeft: 20,
+        paddingRight: 20,
+
+    },
 }));
 
 

@@ -159,7 +159,19 @@ const useStyles = makeStyles((theme) => ({
     },
     OutlinedInput: {
         color: theme.main.palette.content.text,
-    }
+    },
+    ErrorLabel: {
+        zIndex: 999,
+        fontSize: 16,
+        color: theme.main.palette.help.red,
+    },
+    gridForgotPassword: {
+        zIndex: 999,
+        marginTop: 4,
+        paddingLeft: 20,
+        paddingRight: 20,
+
+    },
 }));
 
 
@@ -228,51 +240,51 @@ const User = inject('store')(observer((props) => {
         let symNick = 'qwertyuiopasdfghjklzxcvbnm_'
 
         //console.log(values.email.length < 5)
-        if (props.store.userData.firstName.length == 0) {
-           props.store.setRegistrationValues("isFirstName", true)
-        }
-        if (props.store.userData.secondName.length == 0) {
-            props.store.setRegistrationValues("isSecondName", true)
-        }
+        // if (props.store.userData.firstName.length == 0) {
+        //     props.store.setRegistrationValues("isFirstName", true)
+        // }
+        // if (props.store.userData.secondName.length == 0) {
+        //     props.store.setRegistrationValues("isSecondName", true)
+        // }
         if (props.store.userData.nickName.length == 0) {
             props.store.setRegistrationValues("isNickName", true)
         }
         //console.log(props.store.registrationValues.password.length)
-        if (!props.store.registrationValues.isFirstName && !props.store.registrationValues.isSecondName && !props.store.registrationValues.isNickName) {
-            for (let i = 0; i < props.store.userData.firstName.length; i++) {
-                if (symNames.includes(props.store.userData.firstName[i].toLowerCase())) continue
-                else {
-                    props.store.setRegistrationValues("errorSymFirstName", true)
-                    break
-                }
-            }
-            for (let i = 0; i < props.store.userData.secondName.length; i++) {
-                if (symNames.includes(props.store.userData.secondName[i].toLowerCase())) continue
-                else {
-                    props.store.setRegistrationValues("errorSymSecondName", true)
-                    break
-                }
-            }
-            for (let i = 0; i < props.store.userData.nickName.length; i++) {
-                if (symNick.includes(props.store.userData.nickName[i].toLowerCase())) continue
-                else {
-                    props.store.setRegistrationValues("errorSymNickName", true)
-                    break
-                }
-            }
-        }
-        
-        if (!props.store.registrationValues.isFirstName && !props.store.registrationValues.isSecondName && !props.store.registrationValues.isNickName && !props.store.registrationValues.errorSymNickName && !props.store.registrationValues.errorSymSecondName && !props.store.registrationValues.errorSymFirstName) {
+        // if (!props.store.registrationValues.isFirstName && !props.store.registrationValues.isSecondName && !props.store.registrationValues.isNickName) {
+        //     // for (let i = 0; i < props.store.userData.firstName.length; i++) {
+        //     //     if (symNames.includes(props.store.userData.firstName[i].toLowerCase())) continue
+        //     //     else {
+        //     //         props.store.setRegistrationValues("errorSymFirstName", true)
+        //     //         break
+        //     //     }
+        //     // }
+        //     // for (let i = 0; i < props.store.userData.secondName.length; i++) {
+        //     //     if (symNames.includes(props.store.userData.secondName[i].toLowerCase())) continue
+        //     //     else {
+        //     //         props.store.setRegistrationValues("errorSymSecondName", true)
+        //     //         break
+        //     //     }
+        //     // }
+        //     for (let i = 0; i < props.store.userData.nickName.length; i++) {
+        //         if (symNick.includes(props.store.userData.nickName[i].toLowerCase())) continue
+        //         else {
+        //             props.store.setRegistrationValues("errorSymNickName", true)
+        //             break
+        //         }
+        //     }
+        // }
 
+        //if (!props.store.registrationValues.isFirstName && !props.store.registrationValues.isSecondName && !props.store.registrationValues.isNickName && !props.store.registrationValues.errorSymNickName && !props.store.registrationValues.errorSymSecondName && !props.store.registrationValues.errorSymFirstName) {
+        if (!props.store.registrationValues.isNickName) {
             //props.store.goToHex()
 
-            props.store.postData(`${props.store.url}/reg`, {"email": props.store.registrationValues.emailHash, "password": props.store.registrationValues.passwordHash, "firstName": props.store.userDate.firstName, "secondName": props.store.userDate.secondName, "nickName": props.store.userDate.nickName, "userRole": props.store.userDate.userRole, "officialNamesHidden": props.store.userDate.officialNamesHidden}) ///registration/newemail
+            props.store.postData(`${props.store.url}/reg`, { "email": props.store.registrationValues.emailHash, "password": props.store.registrationValues.passwordHash, "username": props.store.userDate.nickName}) ///registration/newemail
                 .then((data) => {
                     if (data.a === true) { //true
                         const router = Router
                         router.push('/app')
-                    // } else if (data.a === false) { //false
-                    //     props.store.setRegistrationValues("emailAlreadyUsed", true)
+                        // } else if (data.a === false) { //false
+                        //     props.store.setRegistrationValues("emailAlreadyUsed", true)
                     }
                 });
 
@@ -299,7 +311,7 @@ const User = inject('store')(observer((props) => {
                                     <Typography variant='h5' className={classes.typographyMain}> Давайте знакомиться! </Typography>
                                     <Typography variant='h7' className={classes.typographyMainly}> Расскажите нам о себе! </Typography>
                                 </Grid>
-                                <Grid item container direction="column" justifyContent="center" alignItems="flex-start" className={classes.gridTextField}>
+                                {/* <Grid item container direction="column" justifyContent="center" alignItems="flex-start" className={classes.gridTextField}>
                                     <FormControl className={classes.textField} variant="outlined">
                                         <InputLabel className={classes.inputLabel} htmlFor="outlined-adornment-password"> <Typography className={classes.textFieldTypography}>Имя</Typography></InputLabel>
                                         <OutlinedInput
@@ -330,8 +342,8 @@ const User = inject('store')(observer((props) => {
                                 </Grid>}
                                 {props.store.registrationValues.isFirstName && <Grid item container direction="column" justifyContent="center" alignItems="flex-start" className={classes.gridError}>
                                     <Typography className={classes.ErrorLabel}> Это обязательное поле</Typography>
-                                </Grid>}
-                                <Grid item container direction="column" justifyContent="center" alignItems="flex-start" className={classes.gridTextField}>
+                                </Grid>} */}
+                                {/* <Grid item container direction="column" justifyContent="center" alignItems="flex-start" className={classes.gridTextField}>
                                     <FormControl className={classes.textField} variant="outlined">
                                         <InputLabel className={classes.inputLabel} htmlFor="outlined-adornment-password"> <Typography className={classes.textFieldTypography}>Фамилия</Typography> </InputLabel>
                                         <OutlinedInput
@@ -362,16 +374,15 @@ const User = inject('store')(observer((props) => {
                                 </Grid>}
                                 {props.store.registrationValues.isSecondName && <Grid item container direction="column" justifyContent="center" alignItems="flex-start" className={classes.gridError}>
                                     <Typography className={classes.ErrorLabel}> Это обязательное поле</Typography>
-                                </Grid>}
+                                        </Grid>}*/}
                                 <Grid item container direction="column" justifyContent="center" alignItems="flex-start" className={classes.gridTextField}>
                                     <FormControl className={classes.textField} variant="outlined">
-                                        <InputLabel className={classes.inputLabel} htmlFor="outlined-adornment-password"> <Typography className={classes.textFieldTypography}>Никнейм</Typography> </InputLabel>
+                                        <InputLabel className={classes.inputLabel} htmlFor="outlined-adornment-password"> <Typography className={classes.textFieldTypography}>Имя пользователя</Typography> </InputLabel>
                                         <OutlinedInput
                                             className={classes.OutlinedInput}
                                             type='text'
                                             value={props.store.userData.nickName}
                                             onChange={handleChange('nickName')}
-                                            //labelWidth={70}
                                             endAdornment={
                                                 <InputAdornment position="end">
                                                     <IconButton
@@ -380,22 +391,24 @@ const User = inject('store')(observer((props) => {
                                                         // onMouseDown={handleMouseDownPassword}
                                                         edge="end"
                                                     >
-                                                        <Tooltip title="Придумайте себе никнейм, он может состоять только из латинских букв в верхнем и (или) нижнем регистре и знака нижнего подчёркивания" arrow>
+                                                        <Tooltip title="Придумайте себе Имя пользователя, это ваше основное имя на просторах нашего портала." arrow>
                                                             <HelpIcon className={classes.icons} />
                                                         </Tooltip>
                                                     </IconButton>
                                                 </InputAdornment>
                                             }
+                                            labelWidth={140}
+                                            
                                         />
                                     </FormControl>
                                 </Grid>
-                                {props.store.registrationValues.isNickName && <Grid item container direction="column" justifyContent="center" alignItems="flex-start" className={classes.gridError}>
+                                {/* {props.store.registrationValues.isNickName && <Grid item container direction="column" justifyContent="center" alignItems="flex-start" className={classes.gridError}>
                                     <Typography className={classes.errorSymNickName}> Недопустимые символы! </Typography>
-                                </Grid>}
-                                {props.store.registrationValues.isNickName && <Grid item container direction="column" justifyContent="center" alignItems="flex-start" className={classes.gridError}>
+                                </Grid>} */}
+                                {props.store.registrationValues.isNickName && <Grid item container direction="column" justifyContent="center" alignItems="flex-start" className={classes.gridForgotPassword}>
                                     <Typography className={classes.ErrorLabel}> Это обязательное поле</Typography>
                                 </Grid>}
-                                <Grid item container direction="column" justifyContent="center" alignItems="flex-start" className={classes.gridTextField}>
+                                {/* <Grid item container direction="column" justifyContent="center" alignItems="flex-start" className={classes.gridTextField}>
                                     <ButtonGroup variant="contained" color="primary" ref={anchorRef} aria-label="split button">
                                         <Button onClick={handleClick}>{options[selectedIndex]}</Button>
                                         <Button
@@ -447,13 +460,13 @@ const User = inject('store')(observer((props) => {
                                         <HelpOutlineIcon className={classes.iconHelp} />
                                     </Tooltip>
 
-                                </Grid>
+                                </Grid> */}
                                 <Grid item container direction="column" justifyContent="center" alignItems="center" className={classes.gridEnterButtom}>
-                                    <Link href="/login">
-                                        <Button onClick={clickRegistartionButton} variant="contained" color="primary" className={classes.enterButtom}>
-                                            Завершить Регистрацию
+                                    {/* <Link href="/login"> */}
+                                    <Button onClick={clickRegistartionButton} variant="contained" color="primary" className={classes.enterButtom}>
+                                        Завершить Регистрацию
                                     </Button>
-                                    </Link >
+                                    {/* </Link > */}
                                 </Grid>
                                 <Grid item container direction="column" justifyContent="center" alignItems="flex-start" className={classes.gridForgotRegistration}>
 
