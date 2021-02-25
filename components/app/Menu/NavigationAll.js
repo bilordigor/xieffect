@@ -68,9 +68,9 @@ const useStyles = makeStyles((theme) => ({
         //     // paddingTop: 4,
         // },
         transition: theme.transitions.create(['width', 'margin'], {
-             // backgroundColor: theme.main.palette.header.background,
-             easing: theme.transitions.easing.sharp,
-             duration: theme.transitions.duration.leavingScreen,
+            // backgroundColor: theme.main.palette.header.background,
+            easing: theme.transitions.easing.sharp,
+            duration: theme.transitions.duration.leavingScreen,
         }),
     },
     appBarShift: {
@@ -132,11 +132,16 @@ const useStyles = makeStyles((theme) => ({
         transition: '1s',
         width: 40,
         height: 40,
+        [theme.breakpoints.only('xs', 'sm')]: {
+            //paddingLeft: 8,
+            marginTop: 80,
+            marginBottom: 80,
+        },
         marginRight: 24,
         marginLeft: -10,
         color: theme.main.palette.header.icon,
     },
-    menuButtonIcon: {
+    menuButtonIcon: {   
         width: 30,
         height: 30,
         color: theme.main.palette.navbar.iconMenu,
@@ -145,11 +150,13 @@ const useStyles = makeStyles((theme) => ({
         display: 'none',
     },
     toolbar: {
+        
+        height: 64,
         backgroundColor: theme.main.palette.header.background,
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'flex-end',
-        padding: theme.spacing(0, 1),
+        //padding: theme.spacing(0, 1),
         // necessary for content to be below app bar
         ...theme.mixins.toolbar,
     },
@@ -381,7 +388,7 @@ const useStyles = makeStyles((theme) => ({
     },
     gridToolIconButton: {
         marginTop: -4,
-        marginLeft: 5,
+        marginLeft: 0,
         cursor: 'pointer',
     },
     leftMenu: {
@@ -693,6 +700,11 @@ const NavigationAll = inject('store')(observer((props) => {
         props.store.setOpenMenu();
     }
 
+    const leftMenuClicked = () => {
+        toggleDrawer(false)
+        handleDrawerClose
+    }
+
     return (
         <div className={classes.root}>
             <CssBaseline />
@@ -741,19 +753,19 @@ const NavigationAll = inject('store')(observer((props) => {
                             {router.pathname === '/app/profile' && <Divider orientation="vertical" className={classes.nowPageDividerAvatar} />}
                         </ListItem>
                         <Grid className={classes.gridToolIconButton} container direction="row" justifyContent="flex-start" alignItems="center">
-                            {/* <IconButton className={classes.toolIconButton}> */}
-                            {props.store.userData.isDarkMode && <UseAnimations onClick={props.store.setDialogMenu} className={classes.toolIcons} strokeColor={'#e0e0e0'} animation={settings} size={30} />}
-                            {!props.store.userData.isDarkMode && <UseAnimations onClick={props.store.setDialogMenu} className={classes.toolIcons} strokeColor={'#424242'} animation={settings} size={30} />}
-                            {props.store.userData.isDarkMode && <UseAnimations onClick={gotoInfo} className={classes.toolIcons} strokeColor={'#e0e0e0'} animation={info} size={30} />}
-                            {!props.store.userData.isDarkMode && <UseAnimations onClick={gotoInfo} className={classes.toolIcons} strokeColor={'#424242'} animation={info} size={30} />}
-                            {props.store.userData.isDarkMode && <UseAnimations className={classes.toolIcons} strokeColor={'#e0e0e0'} animation={microphone} size={30} />}
-                            {!props.store.userData.isDarkMode && <UseAnimations className={classes.toolIcons} strokeColor={'#424242'} animation={microphone} size={30} />}
-                            {props.store.userData.isDarkMode && <UseAnimations className={classes.toolIcons} strokeColor={'#e0e0e0'} animation={volume} size={30} />}
-                            {!props.store.userData.isDarkMode && <UseAnimations className={classes.toolIcons} strokeColor={'#424242'} animation={volume} size={30} />}
+                                    {/* <IconButton className={classes.toolIconButton}> */}
 
+                                    <ListItem button onClick={props.store.setDialogMenu}>
+                                        <ListItemIcon className={classes.Image}>
+                                            {props.store.userData.isDarkMode && <UseAnimations className={classes.toolIcons} strokeColor={'#e0e0e0'} animation={settings} size={36} />}
+                                            {!props.store.userData.isDarkMode && <UseAnimations className={classes.toolIcons} strokeColor={'#424242'} animation={settings} size={36} />}
+                                        </ListItemIcon>
+                                        {props.store.openMenu && <ListItemText primary={<Typography className={classes.ImageTextTypography}> Настройки </Typography>} className={classes.ImageText} />}
+                                        {/* {router.pathname === obj.way && <Divider orientation="vertical" className={classes.nowPageDivider} />} */}
+                                    </ListItem>
 
-                            {/* </IconButton> */}
-                        </Grid>
+                                    {/* </IconButton> */}
+                                </Grid>
                         <DialogAll />
                         {/* </Link> */}
                         <Divider />
@@ -812,7 +824,7 @@ const NavigationAll = inject('store')(observer((props) => {
                             {/* Иконка сокрытия разведённого меню */}
 
                             <div className={classes.toolbar}>
-                                <IconButton onClick={handleDrawerClose}>
+                                <IconButton onClick={leftMenuClicked}>
                                     {theme.direction === 'rtl' ? <ChevronRightIcon className={classes.iconsMenu} /> : <ChevronLeftIcon className={classes.iconsMenu} />}
                                 </IconButton>
                             </div>
@@ -833,15 +845,15 @@ const NavigationAll = inject('store')(observer((props) => {
                                 </ListItem>
                                 <Grid className={classes.gridToolIconButton} container direction="row" justifyContent="flex-start" alignItems="center">
                                     {/* <IconButton className={classes.toolIconButton}> */}
-                                    {props.store.userData.isDarkMode && <UseAnimations onClick={props.store.setDialogMenu} className={classes.toolIcons} strokeColor={'#e0e0e0'} animation={settings} size={30} />}
-                                    {!props.store.userData.isDarkMode && <UseAnimations onClick={props.store.setDialogMenu} className={classes.toolIcons} strokeColor={'#424242'} animation={settings} size={30} />}
-                                    {props.store.userData.isDarkMode && <UseAnimations onClick={gotoInfo} className={classes.toolIcons} strokeColor={'#e0e0e0'} animation={info} size={30} />}
-                                    {!props.store.userData.isDarkMode && <UseAnimations onClick={gotoInfo} className={classes.toolIcons} strokeColor={'#424242'} animation={info} size={30} />}
-                                    {props.store.userData.isDarkMode && <UseAnimations className={classes.toolIcons} strokeColor={'#e0e0e0'} animation={microphone} size={30} />}
-                                    {!props.store.userData.isDarkMode && <UseAnimations className={classes.toolIcons} strokeColor={'#424242'} animation={microphone} size={30} />}
-                                    {props.store.userData.isDarkMode && <UseAnimations className={classes.toolIcons} strokeColor={'#e0e0e0'} animation={volume} size={30} />}
-                                    {!props.store.userData.isDarkMode && <UseAnimations className={classes.toolIcons} strokeColor={'#424242'} animation={volume} size={30} />}
 
+                                    <ListItem button onClick={props.store.setDialogMenu}>
+                                        <ListItemIcon className={classes.Image}>
+                                            {props.store.userData.isDarkMode && <UseAnimations className={classes.toolIcons} strokeColor={'#e0e0e0'} animation={settings} size={36} />}
+                                            {!props.store.userData.isDarkMode && <UseAnimations className={classes.toolIcons} strokeColor={'#424242'} animation={settings} size={36} />}
+                                        </ListItemIcon>
+                                        {props.store.openMenu && <ListItemText primary={<Typography className={classes.ImageTextTypography}> Настройки </Typography>} className={classes.ImageText} />}
+                                        {/* {router.pathname === obj.way && <Divider orientation="vertical" className={classes.nowPageDivider} />} */}
+                                    </ListItem>
 
                                     {/* </IconButton> */}
                                 </Grid>
