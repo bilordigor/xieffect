@@ -38,7 +38,7 @@ class Store {
   @observable alertData = {
     type: 0,
     text: 'Сервер временно недоступен. Приносим свои извинения. Возращайтесь позже'
-  } 
+  }
 
   @action setAlertData = (type, text) => {
     this.alertData.type = type
@@ -125,12 +125,12 @@ class Store {
     try {
       const response = await fetch(url, {
         method: "GET", // *GET, POST, PUT, DELETE, etc.
-        //mode: 'no-cors', // no-cors, *cors, same-origin
+        mode: 'no-cors', // no-cors, *cors, same-origin
         // cache, // *default, no-cache, reload, force-cache, only-if-cached
         //credentials: 'same-origin', // include, *same-origin, omit
         headers: {
-           'Content-Type': 'application/json',
-           //   // 'Content-Type': 'application/x-www-form-urlencoded',
+          'Content-Type': 'application/json',
+          //   // 'Content-Type': 'application/x-www-form-urlencoded',
         },
         // redirect, // manual, *follow, error
         // referrerPolicy, // no-referrer, *client
@@ -141,7 +141,7 @@ class Store {
     }
   }
 
-  @action async getDataPrtcked(url) { // mode, cache, credentials, redirect, referrerPolicy
+  @action async getDataScr(url) { // mode, cache, credentials, redirect, referrerPolicy
     // Default options are marked with *
     try {
       const response = await fetch(url, {
@@ -167,6 +167,28 @@ class Store {
   }
 
   @action async postData(url, data) { // mode, cache, credentials, redirect, referrerPolicy
+    // Default options are marked with *
+    try {
+      const response = await fetch(url, {
+        method: "POST", // *GET, POST, PUT, DELETE, etc.
+        mode: 'no-cors', // no-cors, *cors, same-origin
+        // cache, // *default, no-cache, reload, force-cache, only-if-cached
+        credentials: 'same-origin', // include, *same-origin, omit
+        headers: {
+          'Content-Type': 'application/json',
+          //   // 'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        // redirect, // manual, *follow, error
+        // referrerPolicy, // no-referrer, *client
+        body: JSON.stringify(data) // body data type must match "Content-Type" header
+      });
+      return await response.json(); // parses JSON response into native JavaScript objects
+    } catch (error) {
+      console.log('Возникла проблема с вашим fetch запросом: ', error.message);
+    }
+  }
+
+  @action async postDataScr(url, data) { // mode, cache, credentials, redirect, referrerPolicy
     // Default options are marked with *
     try {
       const response = await fetch(url, {
