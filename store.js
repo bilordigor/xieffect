@@ -67,7 +67,7 @@ class Store {
 
   // Вход и глобальные данные приложения //login.js
 
-  @observable url = 'https://jsonplaceholder.typicode.com'
+  @observable url = 'https://265bcb500362.ngrok.io'
 
 
   @observable loginValues = {

@@ -100,13 +100,18 @@ const Home = inject('store')(observer((props) => {
   }
 
   React.useEffect(() => {
-    props.store.getData(`${props.store.url}/status`)
+    // props.store.getData(`${props.store.url}/status`)
+    //   .then((data) => {
+    //     props.store.setAlertData(date.type, date.text)
+    //   });
+    props.store.getData(`${props.store.url}/`)
       .then((data) => {
-        props.store.setAlertData(date.type, date.text)
+        console.log(data)
       });
+
   }, [])
 
-  const alertList = ['error','warning', 'info', 'success']
+  const alertList = ['error', 'warning', 'info', 'success']
 
   return (
     <>
