@@ -67,7 +67,7 @@ class Store {
 
   // Вход и глобальные данные приложения //login.js
 
-  @observable url = 'https://e34c133ec2a8.ngrok.io'
+  @observable url = 'https://a71c2ea12037.ngrok.io'
 
 
   @observable loginValues = {
