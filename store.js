@@ -177,6 +177,7 @@ class Store {
         //credentials: 'same-origin', // include, *same-origin, omit
         //credentials: 'same-origin',
         headers: {
+          'Content-Type': 'application/json',
           'X-CSRF-TOKEN': this.getCookie('csrf_access_token'),
         },
         // headers: {
@@ -204,6 +205,7 @@ class Store {
         // cache, // *default, no-cache, reload, force-cache, only-if-cached
         //credentials: 'same-origin', // include, *same-origin, omit
         headers: {
+          'Content-Type': 'application/json',
           'X-CSRF-TOKEN': this.getCookie('csrf_access_token'),
           // 'Content-Type': 'application/x-www-form-urlencoded',
         },

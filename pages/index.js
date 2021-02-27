@@ -125,20 +125,40 @@ const Home = inject('store')(observer((props) => {
     //     console.log("3)")
     //     console.log(data)
     //   });
-    props.store.getData(`${props.store.url}/test/abcd/`,)
-      .then((data) => {
-        console.log("4)")
-        console.log(data.a);
-        console.log(data)
-      });
-    props.store.getData(`${props.store.url}/test/abcd/test/`,)
-      .then((data) => {
-        console.log("5)")
-        console.log(data.a);
-        console.log(data)
-      });
+    // props.store.getData(`${props.store.url}/test/abcd/`,)
+    //   .then((data) => {
+    //     console.log("4)")
+    //     console.log(data.a);
+    //     console.log(data)
+    //   });
+    // props.store.getData(`${props.store.url}/test/abcd/test/`,)
+    //   .then((data) => {
+    //     console.log("5)")
+    //     console.log(data.a);
+    //     console.log(data)
+    //   });
 
   }, [])
+
+  const clickedFB = () => {
+    props.store.postData(`${props.store.url}/auth/`, {"email": "test@test.test", "password": "12345"})
+       .then((data) => {
+         console.log("6)")
+         console.log(data.a);
+         console.log(data)
+    });
+  } 
+
+  
+  const clickedSB = () => {
+    props.store.getDataScr(`${props.store.url}/test/`,)
+       .then((data) => {
+         console.log("7)")
+         console.log(data.a);
+         console.log(data)
+    });
+  } 
+
 
   const alertList = ['error', 'warning', 'info', 'success']
 
@@ -164,6 +184,12 @@ const Home = inject('store')(observer((props) => {
           <Grid item container direction="column" alignItems="center" className={classes.gridLabelMain}>
             <Typography className={classes.labelMain}> Новое слово в образовании </Typography>
             <Typography className={classes.labelSecondary}> Ξ Effect - платформа, где можно делиться знаниями и получать их так, как вам будет удобнее.</Typography>
+            <Button onClick={clickedFB()} variant="contained" color="secondary">
+              First
+            </Button>
+            <Button onClick={clickedSB()} variant="contained" color="secondary">
+              Secondary
+            </Button>
           </Grid>
           <Grid item container direction="column" alignItems="center" className={classes.gridAlert}>
             <Alert severity={alertList[props.store.alertData.type]}>{props.store.alertData.text}</Alert>
