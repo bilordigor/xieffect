@@ -104,9 +104,9 @@ const Home = inject('store')(observer((props) => {
     //   .then((data) => {
     //     props.store.setAlertData(date.type, date.text)
     //   });
-    props.store.getData(`${props.store.url}/`, {  method: "GET", mode: 'no-cors', headers: {'Content-Type': 'application/json'}, })
+    props.store.getData(`${props.store.url}/`)
       .then((data) => {
-        // resolve(data ? JSON.parse(data) : {})
+        resolve(data ? JSON.parse(data) : {})
         console.log(data)
       });
 
