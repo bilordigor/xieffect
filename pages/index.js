@@ -125,15 +125,16 @@ const Home = inject('store')(observer((props) => {
     //     console.log("3)")
     //     console.log(data)
     //   });
-    props.store.postData(`${props.store.url}/test/abcd/`, { "test": "smth" })
+    props.store.getData(`${props.store.url}/test/abcd/`,)
       .then((data) => {
         console.log("4)")
-        console.log(data.a)
+        console.log(data.a);
         console.log(data)
       });
-    props.store.postData(`${props.store.url}/test/abcd/test/`, { "test": "smth" })
+    props.store.getData(`${props.store.url}/test/abcd/test/`,)
       .then((data) => {
         console.log("5)")
+        console.log(data.a);
         console.log(data)
       });
 
