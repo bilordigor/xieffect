@@ -67,7 +67,7 @@ class Store {
 
   // Вход и глобальные данные приложения //login.js
 
-  @observable url = 'https://265bcb500362.ngrok.io'
+  @observable url = 'https://e34c133ec2a8.ngrok.io'
 
 
   @observable loginValues = {
@@ -143,6 +143,30 @@ class Store {
     }
   }
 
+  @action async postData(url, data) { // mode, cache, credentials, redirect, referrerPolicy
+    // Default options are marked with *
+    try {
+      const response = await fetch(url, {
+        method: "POST", // *GET, POST, PUT, DELETE, etc.
+        mode: 'no-cors', // no-cors, *cors, same-origin
+        // cache, // *default, no-cache, reload, force-cache, only-if-cached
+        credentials: 'same-origin', // include, *same-origin, omit
+        headers: {
+          'Content-Type': 'application/json',
+          //   // 'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        // redirect, // manual, *follow, error
+        // referrerPolicy, // no-referrer, *client
+        body: JSON.stringify(data) // body data type must match "Content-Type" header
+      });
+      const string = await response.text();
+      const json = string === "" ? {} : JSON.parse(string);
+      return json; // parses JSON response into native JavaScript objects
+    } catch (error) {
+      console.log('Возникла проблема с вашим fetch запросом: ', error.message);
+    }
+  }
+
   @action async getDataScr(url) { // mode, cache, credentials, redirect, referrerPolicy
     // Default options are marked with *
     try {
@@ -170,29 +194,6 @@ class Store {
     }
   }
 
-  @action async postData(url, data) { // mode, cache, credentials, redirect, referrerPolicy
-    // Default options are marked with *
-    try {
-      const response = await fetch(url, {
-        method: "POST", // *GET, POST, PUT, DELETE, etc.
-        mode: 'no-cors', // no-cors, *cors, same-origin
-        // cache, // *default, no-cache, reload, force-cache, only-if-cached
-        credentials: 'same-origin', // include, *same-origin, omit
-        headers: {
-          'Content-Type': 'application/json',
-          //   // 'Content-Type': 'application/x-www-form-urlencoded',
-        },
-        // redirect, // manual, *follow, error
-        // referrerPolicy, // no-referrer, *client
-        body: JSON.stringify(data) // body data type must match "Content-Type" header
-      });
-      const string = await response.text();
-      const json = string === "" ? {} : JSON.parse(string);
-      return json; // parses JSON response into native JavaScript objects
-    } catch (error) {
-      console.log('Возникла проблема с вашим fetch запросом: ', error.message);
-    }
-  }
 
   @action async postDataScr(url, data) { // mode, cache, credentials, redirect, referrerPolicy
     // Default options are marked with *

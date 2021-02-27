@@ -104,10 +104,22 @@ const Home = inject('store')(observer((props) => {
     //   .then((data) => {
     //     props.store.setAlertData(date.type, date.text)
     //   });
-    props.store.getData(`${props.store.url}/status`)
+    // props.store.getData(`${props.store.url}/status`)
+    //   .then((data) => {
+    //     console.log(data)
+    //     props.store.setAlertData(date.type, date.text)
+    //   });
+    props.store.getData(`${props.store.url}/`)
       .then((data) => {
         console.log(data)
-        props.store.setAlertData(date.type, date.text)
+      });
+    props.store.postData(`${props.store.url}/`)
+      .then((data) => {
+        console.log(data)
+      });
+    props.store.postData(`${props.store.url}/`, {"test": "smth"})
+      .then((data) => {
+        console.log(data)
       });
 
   }, [])
