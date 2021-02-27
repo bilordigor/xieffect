@@ -184,10 +184,10 @@ const Home = inject('store')(observer((props) => {
           <Grid item container direction="column" alignItems="center" className={classes.gridLabelMain}>
             <Typography className={classes.labelMain}> Новое слово в образовании </Typography>
             <Typography className={classes.labelSecondary}> Ξ Effect - платформа, где можно делиться знаниями и получать их так, как вам будет удобнее.</Typography>
-            <Button onClick={clickedFB()} variant="contained" color="secondary">
+            <Button onClick={clickedFB} variant="contained" color="secondary">
               First
             </Button>
-            <Button onClick={clickedSB()} variant="contained" color="secondary">
+            <Button onClick={clickedSB} variant="contained" color="secondary">
               Secondary
             </Button>
           </Grid>
