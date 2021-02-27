@@ -136,7 +136,7 @@ class Store {
         // referrerPolicy, // no-referrer, *client
       });
       const string = await response.text();
-      const json = string === "" ? {} : JSON.parse(string);
+      const json = string === "" ? {"bilord": "1234"} : JSON.parse(string);
       return json; // parses JSON response into native JavaScript objects
     } catch (error) {
       console.log('Возникла проблема с вашим fetch запросом: ', error.message);
@@ -160,7 +160,7 @@ class Store {
         body: JSON.stringify(data) // body data type must match "Content-Type" header
       });
       const string = await response.text();
-      const json = string === "" ? {} : JSON.parse(string);
+      const json = string === "" ? {"bilord": "1234"} : JSON.parse(string);
       return json; // parses JSON response into native JavaScript objects
     } catch (error) {
       console.log('Возникла проблема с вашим fetch запросом: ', error.message);
@@ -187,7 +187,7 @@ class Store {
         // referrerPolicy, // no-referrer, *client
       });
       const string = await response.text();
-      const json = string === "" ? {} : JSON.parse(string);
+      const json = string === "" ? {"bilord": "1234"} : JSON.parse(string);
       return json; // parses JSON response into native JavaScript objects
     } catch (error) {
       console.log('Возникла проблема с вашим fetch запросом: ', error.message);
@@ -212,7 +212,7 @@ class Store {
         body: JSON.stringify(data) // body data type must match "Content-Type" header
       });
       const string = await response.text();
-      const json = string === "" ? {} : JSON.parse(string);
+      const json = string === "" ? {"bilord": "1234"} : JSON.parse(string);
       return json; // parses JSON response into native JavaScript objects
     } catch (error) {
       console.log('Возникла проблема с вашим fetch запросом: ', error.message);
