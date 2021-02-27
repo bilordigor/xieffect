@@ -120,7 +120,28 @@ class Store {
     if (parts.length === 2) return parts.pop().split(';').shift();
   }
 
-  @action async getData(url, data) { // mode, cache, credentials, redirect, referrerPolicy
+  @action async getData(url) { // mode, cache, credentials, redirect, referrerPolicy
+    // Default options are marked with *
+    try {
+      const response = await fetch(url, {
+        method: "GET", // *GET, POST, PUT, DELETE, etc.
+        //mode: 'no-cors', // no-cors, *cors, same-origin
+        // cache, // *default, no-cache, reload, force-cache, only-if-cached
+        //credentials: 'same-origin', // include, *same-origin, omit
+        headers: {
+           'Content-Type': 'application/json',
+           //   // 'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        // redirect, // manual, *follow, error
+        // referrerPolicy, // no-referrer, *client
+      });
+      return response.json(); // parses JSON response into native JavaScript objects
+    } catch (error) {
+      console.log('Возникла проблема с вашим fetch запросом: ', error.message);
+    }
+  }
+
+  @action async getDataPrtcked(url) { // mode, cache, credentials, redirect, referrerPolicy
     // Default options are marked with *
     try {
       const response = await fetch(url, {
