@@ -111,14 +111,18 @@ const Home = inject('store')(observer((props) => {
     //   });
     props.store.getData(`${props.store.url}/`)
       .then((data) => {
+        console.log("1)")
         console.log(data)
+        
       });
     props.store.postData(`${props.store.url}/`)
       .then((data) => {
+        console.log("2)")
         console.log(data)
       });
     props.store.postData(`${props.store.url}/`, {"test": "smth"})
       .then((data) => {
+        console.log("3)")
         console.log(data)
       });
 
