@@ -120,25 +120,35 @@ class Store {
     if (parts.length === 2) return parts.pop().split(';').shift();
   }
 
-  @action async getData(url) { // mode, cache, credentials, redirect, referrerPolicy
-    // Default options are marked with *
-    try {
-      const response = await fetch(url, {
-        method: "GET", // *GET, POST, PUT, DELETE, etc.
-        mode: 'no-cors', // no-cors, *cors, same-origin
-        // cache, // *default, no-cache, reload, force-cache, only-if-cached
-        //credentials: 'same-origin', // include, *same-origin, omit
-        headers: {
-          'Content-Type': 'application/json',
-          //   // 'Content-Type': 'application/x-www-form-urlencoded',
-        },
-        // redirect, // manual, *follow, error
-        // referrerPolicy, // no-referrer, *client
-      });
-      return response.text(); // parses JSON response into native JavaScript objects
-    } catch (error) {
-      console.log('Возникла проблема с вашим fetch запросом: ', error.message);
-    }
+  @action async getData(url, parameters) { // mode, cache, credentials, redirect, referrerPolicy
+    // // Default options are marked with *
+    // try {
+    //   const response = await fetch(url, {
+    //     method: "GET", // *GET, POST, PUT, DELETE, etc.
+    //     mode: 'no-cors', // no-cors, *cors, same-origin
+    //     // cache, // *default, no-cache, reload, force-cache, only-if-cached
+    //     //credentials: 'same-origin', // include, *same-origin, omit
+    //     headers: {
+    //       'Content-Type': 'application/json',
+    //       //   // 'Content-Type': 'application/x-www-form-urlencoded',
+    //     },
+    //     // redirect, // manual, *follow, error
+    //     // referrerPolicy, // no-referrer, *client
+    //   });
+    //   return response.text(); // parses JSON response into native JavaScript objects
+    // } catch (error) {
+    //   console.log('Возникла проблема с вашим fetch запросом: ', error.message);
+    // }
+    return fetch(url, parameters)
+      .then(response => {
+        return response.text()
+      })
+      .then((data) => {
+        resolve(data ? JSON.parse(data) : {})
+      })
+      .catch((error) => {
+        reject(error)
+      })
   }
 
   @action async getDataScr(url) { // mode, cache, credentials, redirect, referrerPolicy
