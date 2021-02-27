@@ -146,14 +146,14 @@ const Home = inject('store')(observer((props) => {
          console.log("6)")
          console.log(data.a);
          console.log(data)
-         props.store.setToken(data.access)
+         //props.store.setToken(data.access)
 
     });
   } 
 
   
   const clickedSB = () => {
-    props.store.postDataScr(`${props.store.url}/test/`, {access_token: props.store.token.access_token})
+    props.store.getDataScr(`${props.store.url}/test/`, ) //{"access_token": props.store.token.access_token}
        .then((data) => {
          console.log("7)")
          console.log(data.a);
