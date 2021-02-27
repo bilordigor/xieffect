@@ -22,7 +22,6 @@ const useStyles = makeStyles((theme) => ({
     gridLabelMain: {
         paddingLeft: 16,
         cursor: 'default',
-        paddingTop: 160,
         zIndex: 999,
     },
     gridLabelSecondary: {
@@ -55,8 +54,8 @@ const useStyles = makeStyles((theme) => ({
         zIndex: 999,
     },
     gridDivider: {
-        marginTop: '80vh',
-        //marginBottom: '100px',
+        marginTop: '70vh',
+        marginBottom: '100px',
         marginLeft: '10px',
         marginRight: '10px',
         width: 'auto',
@@ -68,6 +67,10 @@ const useStyles = makeStyles((theme) => ({
         // marginLeft: '10px',
         // marginRight: '10px',
         backgroundColor: theme.main.palette.content.text,
+    },
+    gridroot: {
+        width: '100vw',
+        minHeight: '100vh',
     },
 }));
 
@@ -90,18 +93,24 @@ const Download = inject('store')(observer((props) => {
             </Head>
             <div className={classes.root}>
                 <Background src={wallpapers()} />
-                <Grid container direction="column" justifyContent="flex-start" alignItems="center" className={classes.main}>
-                    <Navigation />
-                    <Grid container direction="row" justifyContent="center" alignItems="center" className={classes.gridLabelMain}>
-                        <Typography className={classes.labelMain}> Загрузка </Typography>
+                <Grid
+                    className={classes.gridroot}
+                    container
+                    direction="column"
+                    alignItems="center"
+                    justifyContent="space-between">
+                    <Grid item container justifyContent="flex-start" direction="column" alignItems="center">
+                        <Navigation />
                     </Grid>
-                    <Grid container direction="row" justifyContent="center" alignItems="center" className={classes.gridLabelSecondary}>
+                    <Grid item container direction="column" alignItems="center" className={classes.gridLabelMain}>
+                        <Typography className={classes.labelMain}> Загрузка </Typography>
                         <Typography className={classes.labelSecondary}> Скоро Ξ Effect будет доступен на множестве платформ: Windows, MacOS, Linux, Android, IOS. А пока можно воспользоваться браузерной версией.</Typography>
                     </Grid>
+                    <Grid item container>
+
+                    </Grid>
                 </Grid>
-                <Grid className={classes.gridDivider}>
-                    <Divider className={classes.divider} />
-                </Grid>
+
             </div>
         </>
     );

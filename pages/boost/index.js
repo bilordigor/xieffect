@@ -22,7 +22,6 @@ const useStyles = makeStyles((theme) => ({
     gridLabelMain: {
         paddingLeft: 16,
         cursor: 'default',
-        paddingTop: 160,
         zIndex: 999,
     },
     gridLabelSecondary: {
@@ -55,7 +54,7 @@ const useStyles = makeStyles((theme) => ({
         zIndex: 999,
     },
     gridDivider: {
-        marginTop: '100%',
+        marginTop: '70vh',
         marginBottom: '100px',
         marginLeft: '10px',
         marginRight: '10px',
@@ -68,6 +67,10 @@ const useStyles = makeStyles((theme) => ({
         // marginLeft: '10px',
         // marginRight: '10px',
         backgroundColor: theme.main.palette.content.text,
+    },
+    gridroot: {
+        width: '100vw',
+        minHeight: '100vh',
     },
 }));
 
@@ -90,18 +93,24 @@ const Boost = inject('store')(observer((props) => {
             </Head>
             <div className={classes.root}>
                 <Background src={wallpapers()} />
-                <Grid container direction="column" justifyContent="flex-start" alignItems="center" className={classes.main}>
-                    <Navigation />
-                    <Grid container direction="row" justifyContent="center" alignItems="center" className={classes.gridLabelMain}>
-                        <Typography className={classes.labelMain}> Boost </Typography>
+                <Grid
+                    className={classes.gridroot}
+                    container
+                    direction="column"
+                    alignItems="center"
+                    justifyContent="space-between">
+                    <Grid item container justifyContent="flex-start" direction="column" alignItems="center">
+                        <Navigation />
                     </Grid>
-                    <Grid container direction="row" justifyContent="center" alignItems="center" className={classes.gridLabelSecondary}>
+                    <Grid item container direction="column" alignItems="center" className={classes.gridLabelMain}>
+                        <Typography className={classes.labelMain}> Boost </Typography>
                         <Typography className={classes.labelSecondary}> Мы против Рекламы на всём нашем портале. А вот за подписку у нас классные плюшки.</Typography>
                     </Grid>
+                    <Grid item container>
+
+                    </Grid>
                 </Grid>
-                <Grid className={classes.gridDivider}>
-                    <Divider className={classes.divider} />
-                </Grid>
+
             </div>
 
         </>

@@ -40,7 +40,12 @@ const useStyles = makeStyles((theme) => ({
         zIndex: 999,
     },
     gridMenuLink: {
-        paddingLeft: 32,
+        [theme.breakpoints.up('lg')]: {
+            paddingLeft: 36,
+        },
+        [theme.breakpoints.down('lg')]: {
+            paddingLeft: 20,
+        },
         fontSize: 16,
         fontFamily: 'Roboto',
         zIndex: 999,
@@ -55,8 +60,25 @@ const useStyles = makeStyles((theme) => ({
         zIndex: 999,
     },
     gridEnterButton: {
+        
+        [theme.breakpoints.up('md')]: {
+            paddingRight: 32,
+            marginLeft: 'auto',
+        },
+        [theme.breakpoints.down('md')]: {
+            paddingRight: 16,
+            paddingLeft: 16,
+        },
+    },
+    gridRegLink: {
         marginLeft: 'auto',
-        paddingRight: 16,
+
+        [theme.breakpoints.up('md')]: {
+            paddingRight: 32,
+        },
+        [theme.breakpoints.down('md')]: {
+            paddingRight: 16,
+        },
     },
     enterButton: {
         borderRadius: 12,
@@ -76,6 +98,7 @@ const useStyles = makeStyles((theme) => ({
     },
     gridEnterMenuButton: {
         zIndex: 1001,
+        paddingRight: 16,
     },
     enterMenuButton: {
         zIndex: 1001,
@@ -128,8 +151,13 @@ const Navigation = inject('store')(observer((props) => {
     }
     const menuList = [
         {
+            key: '0',
+            label: 'Регистрация',
+            way: '/registration',
+        },
+        {
             key: '1',
-            label: 'Загрузить',
+            label: 'Загрузка',
             way: '/download',
         },
         {
@@ -172,7 +200,15 @@ const Navigation = inject('store')(observer((props) => {
 
                 ))}
             </Hidden>
+            <Hidden mdUp>
+                <Grid className={classes.gridRegLink}>
+                    <Link href="/registration">
+                        <LinkUI className={classes.menuLink}>Регистрация</LinkUI>
+                    </Link>
+                </Grid>
+            </Hidden>
             <Grid className={classes.gridEnterButton}>
+
                 <Link href="/login">
                     <Button variant="contained" className={classes.enterButton} > Вход </Button>
                 </Link>

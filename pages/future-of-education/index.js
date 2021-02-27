@@ -22,7 +22,6 @@ const useStyles = makeStyles((theme) => ({
     gridLabelMain: {
         paddingLeft: 16,
         cursor: 'default',
-        paddingTop: 160,
         zIndex: 999,
     },
     gridLabelSecondary: {
@@ -69,6 +68,10 @@ const useStyles = makeStyles((theme) => ({
         // marginRight: '10px',
         backgroundColor: theme.main.palette.content.text,
     },
+    gridroot: {
+        width: '100vw',
+        minHeight: '100vh',
+    },
 }));
 
 
@@ -90,19 +93,24 @@ const FutureOfEducation = inject('store')(observer((props) => {
             </Head>
             <div className={classes.root}>
                 <Background src={wallpapers()} />
-                <Grid container direction="column" justifyContent="flex-start" alignItems="center" className={classes.main}>
-                    
-                    <Navigation />
-                    <Grid container direction="row" justifyContent="center" alignItems="center" className={classes.gridLabelMain}>
-                        <Typography className={classes.labelMain}> Будущее образования </Typography>
+                <Grid
+                    className={classes.gridroot}
+                    container
+                    direction="column"
+                    alignItems="center"
+                    justifyContent="space-between">
+                    <Grid item container justifyContent="flex-start" direction="column" alignItems="center">
+                        <Navigation />
                     </Grid>
-                    <Grid container direction="row" justifyContent="center" alignItems="center" className={classes.gridLabelSecondary}>
+                    <Grid item container direction="column" alignItems="center" className={classes.gridLabelMain}>
+                        <Typography className={classes.labelMain}> Будущее образования </Typography>
                         <Typography className={classes.labelSecondary}> А здесь мы расскажем о некоторых концепциях, которые мы хотели бы реализовать чуть позже, основываясь на цифровом образовании.</Typography>
                     </Grid>
-                    <Grid className={classes.gridDivider}>
-                        <Divider className={classes.divider} />
+                    <Grid item container>
+
                     </Grid>
                 </Grid>
+
             </div>
         </>
     );

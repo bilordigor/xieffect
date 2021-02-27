@@ -22,7 +22,6 @@ const useStyles = makeStyles((theme) => ({
     gridLabelMain: {
         paddingLeft: 16,
         cursor: 'default',
-        paddingTop: 160,
         zIndex: 999,
     },
     gridLabelSecondary: {
@@ -55,19 +54,23 @@ const useStyles = makeStyles((theme) => ({
         zIndex: 999,
     },
     gridDivider: {
-      marginTop: '70vh',
-      marginBottom: '100px',
-      marginLeft: '10px',
-      marginRight: '10px',
-      width: 'auto',
+        marginTop: '70vh',
+        marginBottom: '100px',
+        marginLeft: '10px',
+        marginRight: '10px',
+        width: 'auto',
     },
     divider: {
-      zIndex: 999,
-      height: 2,
-      // width: 'auto',
-      // marginLeft: '10px',
-      // marginRight: '10px',
-      backgroundColor: theme.main.palette.content.text,
+        zIndex: 999,
+        height: 2,
+        // width: 'auto',
+        // marginLeft: '10px',
+        // marginRight: '10px',
+        backgroundColor: theme.main.palette.content.text,
+    },
+    gridroot: {
+        width: '100vw',
+        minHeight: '100vh',
     },
 }));
 
@@ -90,16 +93,21 @@ const Support = inject('store')(observer((props) => {
             </Head>
             <div className={classes.root}>
                 <Background src={wallpapers()} />
-                <Grid container direction="column" justifyContent="flex-start" alignItems="center" className={classes.main}>
-                    <Navigation />
-                    <Grid container direction="row" justifyContent="center" alignItems="center" className={classes.gridLabelMain}>
-                        <Typography className={classes.labelMain}> Почему Ξ Effect? </Typography>
+                <Grid
+                    className={classes.gridroot}
+                    container
+                    direction="column"
+                    alignItems="center"
+                    justifyContent="space-between">
+                    <Grid item container justifyContent="flex-start" direction="column" alignItems="center">
+                        <Navigation />
                     </Grid>
-                    <Grid container direction="row" justifyContent="center" alignItems="center" className={classes.gridLabelSecondary}>
+                    <Grid item container direction="column" alignItems="center" className={classes.gridLabelMain}>
+                        <Typography className={classes.labelMain}> Почему Ξ Effect? </Typography>
                         <Typography className={classes.labelSecondary}> Хороший вопрос! </Typography>
                     </Grid>
-                    <Grid className={classes.gridDivider}>
-                        <Divider className={classes.divider} />
+                    <Grid item container>
+                        
                     </Grid>
                 </Grid>
 

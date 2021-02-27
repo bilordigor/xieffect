@@ -33,6 +33,18 @@ class Store {
 
   //      ИНТЕРФЕЙС
 
+  // /
+
+  @observable alertData = {
+    type: 0,
+    text: 'Сервер временно недоступен. Приносим свои извинения. Возращайтесь позже'
+  } 
+
+  @action setAlertData = (type, text) => {
+    this.alertData.type = type
+    this.alertData.text = text
+  }
+
   // LerningCenter
 
 
@@ -102,6 +114,12 @@ class Store {
   //что и вызывающий его скрипт, добавьте credentials: 'same-origin'.
   //Напротив, чтобы быть уверенным, что учётные данные не передаются с запросом, используйте credentials: 'omit':
 
+  @action async getCookie(name) {
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; ${name}=`);
+    if (parts.length === 2) return parts.pop().split(';').shift();
+  }
+
   @action async getData(url, data) { // mode, cache, credentials, redirect, referrerPolicy
     // Default options are marked with *
     try {
@@ -110,10 +128,14 @@ class Store {
         //mode: 'no-cors', // no-cors, *cors, same-origin
         // cache, // *default, no-cache, reload, force-cache, only-if-cached
         //credentials: 'same-origin', // include, *same-origin, omit
+        credentials: 'same-origin',
         headers: {
-          'Content-Type': 'application/json'
-          //   // 'Content-Type': 'application/x-www-form-urlencoded',
+          'X-CSRF-TOKEN': this.getCookie('csrf_access_token'),
         },
+        // headers: {
+        //   'Content-Type': 'application/json'
+        //   //   // 'Content-Type': 'application/x-www-form-urlencoded',
+        // },
         // redirect, // manual, *follow, error
         // referrerPolicy, // no-referrer, *client
       });
@@ -132,7 +154,7 @@ class Store {
         // cache, // *default, no-cache, reload, force-cache, only-if-cached
         credentials: 'same-origin', // include, *same-origin, omit
         headers: {
-          'Content-Type': 'application/json'
+          'X-CSRF-TOKEN': this.getCookie('csrf_access_token'),
           // 'Content-Type': 'application/x-www-form-urlencoded',
         },
         // redirect, // manual, *follow, error
@@ -183,7 +205,7 @@ class Store {
   }
 
 
-  
+
 
   @action setRegistrationValuesFalse = () => {
     this.registrationValues.errorEmail = false

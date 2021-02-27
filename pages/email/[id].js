@@ -11,11 +11,11 @@ import Background from '../../components/app/help/background/background';
 
 const useStyles = makeStyles((theme) => ({
     root: {
-        backgroundColor: '#2b2b2b',
-        position: 'fixed',
         height: '100vh',
         width: '100vw',
         zIndex: '-1',
+        overflowY: 'auto',
+        overflowX: 'hidden',
     },
     main: {
         zIndex: 999,
@@ -47,7 +47,15 @@ const useStyles = makeStyles((theme) => ({
     labelMain: {
         fontWeight: 'bold',
         color: theme.main.palette.header.text,
-        fontSize: 48,
+        [theme.breakpoints.up('lg')]: {
+            fontSize: 48,
+        },
+        [theme.breakpoints.only('lg')]: {
+            fontSize: 40,
+        },
+        [theme.breakpoints.down('lg')]: {
+            fontSize: 24,
+        },
         zIndex: 999,
     },
     labelSecondary: {
@@ -72,7 +80,11 @@ const useStyles = makeStyles((theme) => ({
     },
     circularProgress: {
         color: theme.main.palette.header.text,
-    }
+    }, 
+    gridroot: {
+        width: '100vw',
+        minHeight: '100vh',
+    },
 }));
 
 
@@ -88,7 +100,7 @@ const Email = inject('store')(observer((props) => {
         props.store.postData(`${props.store.url}/reg/confirm`, { "code": id })
             .then((data) => {
                 if (data.a === true) { //"Success"
-                     props.store.setEmailCheckValues("serverAnswer", true)
+                    props.store.setEmailCheckValues("serverAnswer", true)
                 }
                 // } else if (data.a === "User doesn't exist") { //"User doesn't exist"
                 //     props.store.setLoginValues("errorEmail", true)
@@ -112,7 +124,7 @@ const Email = inject('store')(observer((props) => {
             </Head>
             <div className={classes.root}>
                 <Background src={wallpapers()} />
-                <Grid container direction="column" justifyContent="flex-start" alignItems="center" className={classes.main}>
+                <Grid container direction="column" justifyContent="flex-start" alignItems="center" className={classes.gridroot}>
                     <Grid container direction="row" justifyContent="center" alignItems="center" className={classes.gridLabelMain}>
                         <Typography className={classes.labelMain}> Подтверждение почты </Typography>
                     </Grid>

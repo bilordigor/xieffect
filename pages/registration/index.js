@@ -19,38 +19,37 @@ import EmailIcon from '@material-ui/icons/Email'
 
 const useStyles = makeStyles((theme) => ({
     root: {
-        backgroundColor: '#2b2b2b',
-        position: 'fixed',
         height: '100vh',
         width: '100vw',
         zIndex: '-1',
+        overflowY: 'auto',
+        overflowX: 'hidden',
     },
     main: {
         zIndex: 999,
     },
     gridTittle: {
-        zIndex: 999,
-        position: 'absolute',
-        cursor: 'pointer',
-        top: 16,
+        paddingTop: 16,
         [theme.breakpoints.up('lg')]: {
-            left: 64,
+            paddingLeft: 64,
         },
         [theme.breakpoints.only('lg')]: {
-            left: 32,
+            paddingLeft: 32,
         },
         [theme.breakpoints.down('lg')]: {
-            left: 16,
+            paddingLeft: 16,
         },
+        zIndex: 999,
+        marginRight: 'auto',
     },
     tittle: {
-        zIndex: 999,
-        cursor: 'pointer',
         fontSize: 32,
-        color: 'white',
+        color: theme.main.palette.header.text,
+        cursor: 'pointer',
+        zIndex: 999,
     },
     gridUnderPaper: {
-        paddingTop: 150,
+        //paddingTop: 150,
         zIndex: 999,
     },
     Paper: {
@@ -159,7 +158,11 @@ const useStyles = makeStyles((theme) => ({
         zIndex: 999,
         fontSize: 12,
         color: theme.main.palette.content.border,
-    }
+    },
+    gridroot: {
+        width: '100vw',
+        minHeight: '100vh',
+    },
 }));
 
 
@@ -290,13 +293,18 @@ const Registration = inject('store')(observer((props) => {
             </Head>
             <div className={classes.root}>
                 <Background src="/wallpapers/hp1.jpg" />
-                <Grid container direction="column" justifyContent="center" alignItems="center" className={classes.main}>
-                    <Grid item className={classes.gridTittle}>
+                <Grid
+                    className={classes.gridroot}
+                    container
+                    direction="column"
+                    alignItems="center"
+                    justifyContent="space-between">
+                    <Grid className={classes.gridTittle} item container justifyContent="flex-start" direction="column" alignItems="flex-start">
                         <Link href="/">
-                            <Typography variant="h3" className={classes.tittle}> Ξ Effect </Typography>
-                        </Link >
+                            <Typography className={classes.tittle}> Ξ Effect </Typography>
+                        </Link>
                     </Grid>
-                    <Grid item className={classes.gridUnderPaper}>
+                    <Grid className={classes.gridUnderPaper} item container direction="column" alignItems="center">
                         <Paper variant="outlined" className={classes.Paper}>
                             <Grid container direction="column" justifyContent="center" alignItems="center" className={classes.gridPaper}>
                                 <Grid item container direction="column" justifyContent="center" alignItems="center" className={classes.gridTypography}>
@@ -391,6 +399,8 @@ const Registration = inject('store')(observer((props) => {
                             </Grid>
 
                         </Paper>
+                    </Grid>
+                    <Grid item container>
                     </Grid>
                 </Grid>
             </div>
