@@ -162,7 +162,9 @@ class Store {
         // redirect, // manual, *follow, error
         // referrerPolicy, // no-referrer, *client
       });
-      return response.json(); // parses JSON response into native JavaScript objects
+      const string = await response.text();
+      const json = string === "" ? {} : JSON.parse(string);
+      return json; // parses JSON response into native JavaScript objects
     } catch (error) {
       console.log('Возникла проблема с вашим fetch запросом: ', error.message);
     }
@@ -184,7 +186,9 @@ class Store {
         // referrerPolicy, // no-referrer, *client
         body: JSON.stringify(data) // body data type must match "Content-Type" header
       });
-      return await response.json(); // parses JSON response into native JavaScript objects
+      const string = await response.text();
+      const json = string === "" ? {} : JSON.parse(string);
+      return json; // parses JSON response into native JavaScript objects
     } catch (error) {
       console.log('Возникла проблема с вашим fetch запросом: ', error.message);
     }
@@ -206,7 +210,9 @@ class Store {
         // referrerPolicy, // no-referrer, *client
         body: JSON.stringify(data) // body data type must match "Content-Type" header
       });
-      return await response.json(); // parses JSON response into native JavaScript objects
+      const string = await response.text();
+      const json = string === "" ? {} : JSON.parse(string);
+      return json; // parses JSON response into native JavaScript objects
     } catch (error) {
       console.log('Возникла проблема с вашим fetch запросом: ', error.message);
     }

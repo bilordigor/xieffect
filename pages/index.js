@@ -104,9 +104,10 @@ const Home = inject('store')(observer((props) => {
     //   .then((data) => {
     //     props.store.setAlertData(date.type, date.text)
     //   });
-    props.store.getData(`${props.store.url}/`)
+    props.store.getData(`${props.store.url}/status`)
       .then((data) => {
         console.log(data)
+        props.store.setAlertData(date.type, date.text)
       });
 
   }, [])
