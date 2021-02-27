@@ -106,7 +106,7 @@ const Home = inject('store')(observer((props) => {
     //   });
     props.store.getData(`${props.store.url}/`)
       .then((data) => {
-        console.log(data)
+        console.log(data.hello)
       });
 
   }, [])
