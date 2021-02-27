@@ -135,7 +135,7 @@ class Store {
         // redirect, // manual, *follow, error
         // referrerPolicy, // no-referrer, *client
       });
-      return response.json(); // parses JSON response into native JavaScript objects
+      return response.text(); // parses JSON response into native JavaScript objects
     } catch (error) {
       console.log('Возникла проблема с вашим fetch запросом: ', error.message);
     }
