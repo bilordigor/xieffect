@@ -218,11 +218,12 @@ const Registration = inject('store')(observer((props) => {
 
             props.store.goToHex()
 
-            props.store.postData(`${props.store.url}/reg/${props.store.registrationValues.emailHash}/`, {"email": 1}) ///registration/newemail
+            props.store.postData(`${props.store.url}/reg/${props.store.registrationValues.emailHash}/`, { "email": 1 }) ///registration/newemail
                 .then((data) => {
                     if (data.a === true) { //true
                         const router = Router
                         router.push('/registration/step/email')
+                        setTimeout( () => props.store.setRegistrationValuesClear(), 1000)
                     } else if (data.a === false) { //false
                         props.store.setRegistrationValues("emailAlreadyUsed", true)
                     }

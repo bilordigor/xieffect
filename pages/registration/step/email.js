@@ -155,9 +155,7 @@ const useStyles = makeStyles((theme) => ({
 const EmailReg = inject('store')(observer((props) => {
     const classes = useStyles();
 
-    React.useEffect(() => {
-        props.store.setRegistrationValuesClear()
-    }, [])
+
 
     const gotoAuth = (event) => {
         const router = Router

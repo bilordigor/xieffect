@@ -1,7 +1,8 @@
+import * as React from 'react';
 import Head from 'next/head'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import * as React from 'react';
+
 import { CircularProgress, Divider, Paper, Grid, AppBar, Toolbar, Typography, CssBaseline, useScrollTrigger, Box, Container, Fab, Zoom, Button } from '@material-ui/core';
 import { makeStyles, useTheme } from '@material-ui/core/styles'
 
@@ -85,34 +86,50 @@ const useStyles = makeStyles((theme) => ({
         width: '100vw',
         minHeight: '100vh',
     },
+    acceptButton: {
+        borderRadius: 12,
+        zIndex: 999,
+        color: theme.main.palette.header.text,
+        marginTop: 32,
+    }
 }));
 
 
 const Email = inject('store')(observer((props) => {
     const classes = useStyles();
     const theme = useTheme();
-
     const router = useRouter()
-    // console.log(typeof(id))
-    React.useEffect(() => {
-        //console.log(id)
-        props.store.postData(`${props.store.url}/reg/confirm/`, { "code": router.query })
+    const { id } = router.query
+    // const fetching = () => {
+
+    //     console.log(id)
+
+    // }
+
+    // // console.log(typeof(id))
+    // React.useEffect(() => {
+    //     //console.log(id)
+    //     setTimeout(fetching, 5000)
+    //     // } else if (data.a === "User doesn't exist") { //"User doesn't exist"
+    //     //     props.store.setLoginValues("errorEmail", true)
+    //     // } else if (data.a === "Wrong password") { //
+    //     //     props.store.setLoginValues("errorPassword", true)
+    //     // }
+    // }, [])
+
+    const wallpapers = () => {
+        let count = Math.floor(Math.random() * (Math.floor(5) - Math.ceil(1))) + Math.ceil(1)
+        return "/wallpapers/hp" + count.toString() + ".jpg"
+    }
+
+    const acceptButtonClicked = () => {
+        props.store.postData(`${props.store.url}/reg/confirm/`, { "code": id })
             .then((data) => {
                 console.log(data)
                 if (data.a === true) { //"Success"
                     props.store.setEmailCheckValues("serverAnswer", true)
                 }
-                // } else if (data.a === "User doesn't exist") { //"User doesn't exist"
-                //     props.store.setLoginValues("errorEmail", true)
-                // } else if (data.a === "Wrong password") { //
-                //     props.store.setLoginValues("errorPassword", true)
-                // }
-            });
-    }, [])
-
-    const wallpapers = () => {
-        let count = Math.floor(Math.random() * (Math.floor(5) - Math.ceil(1))) + Math.ceil(1)
-        return "/wallpapers/hp" + count.toString() + ".jpg"
+            })
     }
 
     return (
@@ -128,6 +145,9 @@ const Email = inject('store')(observer((props) => {
                     <Grid container direction="row" justifyContent="center" alignItems="center" className={classes.gridLabelMain}>
                         <Typography className={classes.labelMain}> Подтверждение почты </Typography>
                     </Grid>
+                    <Button variant="contained" onClick={acceptButtonClicked} className={classes.acceptButton}>
+                        Подтвердить
+                    </Button>
                     {!props.store.emailCheck.serverAnswer && <Grid container direction="row" justifyContent="center" alignItems="center" className={classes.gridLabelSecondary}>
                         <CircularProgress className={classes.circularProgress} />
                     </Grid>}
