@@ -9,13 +9,7 @@
     "heroku-postbuild": "npm run build",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  // "scripts": {
-  //   "dev": "next dev",
-  //   "build": "next build",
-  //   "start": "next start",
-  //   "serve": "concurrently \" npm run dev\" \" npm run mock \"",
-  //   "mock": " json-server -w db.json -p 4200"
-  // },
+
   "dependencies": {
     "@agney/react-loading": "^0.1.2",
     "@babel/core": "^7.12.10",
