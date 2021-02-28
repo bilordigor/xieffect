@@ -11,6 +11,8 @@ import FireplaceIcon from '@material-ui/icons/Fireplace';
 import PublicIcon from '@material-ui/icons/Public';
 import MessageIcon from '@material-ui/icons/Message';
 
+const axios = require('axios');
+
 let Crypto = require('crypto-js')
 
 // eslint-disable-next-line react-hooks/rules-of-hooks
@@ -206,6 +208,27 @@ class Store {
     }
   }
 
+  @action login = (email, password, cookies) => {
+    return dispatch => {
+        const authData = {
+            email: email,
+            password: password
+        };
+    
+        let url = `${this.url}/auth/`;
+    
+        axios.post(url, authData, {withCredentials: true})
+            .then(
+                response => {
+                    console.log(response)
+                })
+            .catch(err => {
+                console.log(err)
+            });
+    
+        dispatch();
+        }
+    };
 
   @action async postDataScr(url, data) { // mode, cache, credentials, redirect, referrerPolicy
     // Default options are marked with *

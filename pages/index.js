@@ -138,6 +138,8 @@ const Home = inject('store')(observer((props) => {
     //     console.log(data)
     //   });
 
+    props.store.login("test@test.test", "12345")
+
   }, [])
 
   const clickedFB = () => {
