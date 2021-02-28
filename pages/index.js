@@ -143,25 +143,37 @@ const Home = inject('store')(observer((props) => {
   }, [])
 
   const clickedFB = () => {
-    props.store.postData(`${props.store.url}/auth/`, {"email": "test@test.test", "password": "12345"})
-       .then((data) => {
-         console.log("6)")
-         console.log(data.a);
-         console.log(data)
-         //props.store.setToken(data.access)
+    props.store.postData(`${props.store.url}/auth/`, { "email": "test@test.test", "password": "12345" })
+      .then((data) => {
+        console.log("6)")
+        console.log(data.a);
+        console.log(data)
+        //props.store.setToken(data.access)
 
-    });
-  } 
+      });
+  }
 
-  
+
   const clickedSB = () => {
-    props.store.getDataScr(`${props.store.url}/test/`, ) //{"access_token": props.store.token.access_token}
-       .then((data) => {
-         console.log("7)")
-         console.log(data.a);
-         console.log(data)
-    });
-  } 
+    // props.store.getDataScr(`${props.store.url}/test/`, ) //{"access_token": props.store.token.access_token}
+    //    .then((data) => {
+    //      console.log("7)")
+    //      console.log(data.a);
+    //      console.log(data)
+    // });
+    props.store.postDataScr(`${props.store.url}/test/`,) //{"access_token": props.store.token.access_token}
+      .then((data) => {
+        console.log("8)")
+        console.log(data.a);
+        console.log(data)
+      });
+    props.store.postDataScr(`${props.store.url}/test/`, {"test": "smth"}) //{"access_token": props.store.token.access_token}
+      .then((data) => {
+        console.log("9)")
+        console.log(data.a);
+        console.log(data)
+      });
+  }
 
 
   const alertList = ['error', 'warning', 'info', 'success']
