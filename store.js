@@ -133,9 +133,9 @@ class Store {
     try {
       const response = await fetch(url, {
         method: "GET", // *GET, POST, PUT, DELETE, etc.
-        mode: 'no-cors', // no-cors, *cors, same-origin
+        //mode: 'no-cors', // no-cors, *cors, same-origin
         // cache, // *default, no-cache, reload, force-cache, only-if-cached
-        credentials: 'include', // include, *same-origin, omit
+        //credentials: 'include', // include, *same-origin, omit
         headers: {
           'Content-Type': 'application/json',
           //   // 'Content-Type': 'application/x-www-form-urlencoded',
@@ -156,9 +156,9 @@ class Store {
     try {
       const response = await fetch(url, {
         method: "POST", // *GET, POST, PUT, DELETE, etc.
-        mode: 'no-cors', // no-cors, *cors, same-origin
+        //mode: 'no-cors', // no-cors, *cors, same-origin
         // cache, // *default, no-cache, reload, force-cache, only-if-cached
-        credentials: 'include', // include, *same-origin, omit
+        //credentials: 'include', // include, *same-origin, omit
         headers: {
           'Content-Type': 'application/json',
           //   // 'Content-Type': 'application/x-www-form-urlencoded',
@@ -180,10 +180,10 @@ class Store {
     try {
       const response = await fetch(url, {
         method: "GET", // *GET, POST, PUT, DELETE, etc.
-        mode: 'no-cors', // no-cors, *cors, same-origin
+        //mode: 'no-cors', // no-cors, *cors, same-origin
         // cache, // *default, no-cache, reload, force-cache, only-if-cached
         //credentials: 'same-origin', // include, *same-origin, omit
-        credentials: 'include',
+        //credentials: 'include',
         headers: {
           'Content-Type': 'application/json',
           'X-CSRF-TOKEN': this.getCookie('csrf_access_token'),
@@ -209,9 +209,9 @@ class Store {
     try {
       const response = await fetch(url, {
         method: "POST", // *GET, POST, PUT, DELETE, etc.
-        mode: 'no-cors', // no-cors, *cors, same-origin
+        //mode: 'no-cors', // no-cors, *cors, same-origin
         // cache, // *default, no-cache, reload, force-cache, only-if-cached
-        credentials: 'include', // include, *same-origin, omit
+        //credentials: 'include', // include, *same-origin, omit
         headers: {
           'Content-Type': 'application/json',
           'X-CSRF-TOKEN': this.getCookie('csrf_access_token'),
