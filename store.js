@@ -135,7 +135,7 @@ class Store {
         method: "GET", // *GET, POST, PUT, DELETE, etc.
         //mode: 'no-cors', // no-cors, *cors, same-origin
         // cache, // *default, no-cache, reload, force-cache, only-if-cached
-        //credentials: 'include', // include, *same-origin, omit
+        credentials: 'include', // include, *same-origin, omit
         headers: {
           'Content-Type': 'application/json',
           //   // 'Content-Type': 'application/x-www-form-urlencoded',
@@ -143,6 +143,7 @@ class Store {
         // redirect, // manual, *follow, error
         // referrerPolicy, // no-referrer, *client
       });
+      console.log(response.headers)
       const string = await response.text();
       const json = string === "" ? {"bilord": "1234"} : JSON.parse(string);
       return json; // parses JSON response into native JavaScript objects
@@ -158,7 +159,7 @@ class Store {
         method: "POST", // *GET, POST, PUT, DELETE, etc.
         //mode: 'no-cors', // no-cors, *cors, same-origin
         // cache, // *default, no-cache, reload, force-cache, only-if-cached
-        //credentials: 'include', // include, *same-origin, omit
+        credentials: 'include', // include, *same-origin, omit
         headers: {
           'Content-Type': 'application/json',
           //   // 'Content-Type': 'application/x-www-form-urlencoded',
@@ -167,6 +168,7 @@ class Store {
         // referrerPolicy, // no-referrer, *client
         body: JSON.stringify(data) // body data type must match "Content-Type" header
       });
+      console.log(response.headers)
       const string = await response.text();
       const json = string === "" ? {"bilord": "1234"} : JSON.parse(string);
       return json; // parses JSON response into native JavaScript objects
@@ -183,7 +185,7 @@ class Store {
         //mode: 'no-cors', // no-cors, *cors, same-origin
         // cache, // *default, no-cache, reload, force-cache, only-if-cached
         //credentials: 'same-origin', // include, *same-origin, omit
-        //credentials: 'include',
+        credentials: 'include',
         headers: {
           'Content-Type': 'application/json',
           'X-CSRF-TOKEN': this.getCookie('csrf_access_token'),
@@ -195,6 +197,7 @@ class Store {
         // redirect, // manual, *follow, error
         // referrerPolicy, // no-referrer, *client
       });
+      console.log(response.headers)
       const string = await response.text();
       const json = string === "" ? {"bilord": "1234"} : JSON.parse(string);
       return json; // parses JSON response into native JavaScript objects
@@ -211,7 +214,7 @@ class Store {
         method: "POST", // *GET, POST, PUT, DELETE, etc.
         //mode: 'no-cors', // no-cors, *cors, same-origin
         // cache, // *default, no-cache, reload, force-cache, only-if-cached
-        //credentials: 'include', // include, *same-origin, omit
+        credentials: 'include', // include, *same-origin, omit
         headers: {
           'Content-Type': 'application/json',
           'X-CSRF-TOKEN': this.getCookie('csrf_access_token'),
@@ -221,6 +224,7 @@ class Store {
         // referrerPolicy, // no-referrer, *client
         body: JSON.stringify(data) // body data type must match "Content-Type" header
       });
+      console.log(response.headers)
       const string = await response.text();
       const json = string === "" ? {"bilord": "1234"} : JSON.parse(string);
       return json; // parses JSON response into native JavaScript objects
