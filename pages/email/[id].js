@@ -80,7 +80,7 @@ const useStyles = makeStyles((theme) => ({
     },
     circularProgress: {
         color: theme.main.palette.header.text,
-    }, 
+    },
     gridroot: {
         width: '100vw',
         minHeight: '100vh',
@@ -93,12 +93,12 @@ const Email = inject('store')(observer((props) => {
     const theme = useTheme();
 
     const router = useRouter()
-    const { id } = router.query
-    // console.log(id)
     // console.log(typeof(id))
     React.useEffect(() => {
-        props.store.postData(`${props.store.url}/reg/confirm/`, { "code": id })
+        //console.log(id)
+        props.store.postData(`${props.store.url}/reg/confirm/`, { "code": router.query })
             .then((data) => {
+                console.log(data)
                 if (data.a === true) { //"Success"
                     props.store.setEmailCheckValues("serverAnswer", true)
                 }
