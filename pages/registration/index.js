@@ -192,61 +192,6 @@ const Registration = inject('store')(observer((props) => {
         return "/wallpapers/hp" + count.toString() + ".jpg"
     }
 
-    async function postData(url = '', data = {}) {
-        // Default options are marked with *
-        const response = await fetch(url, {
-            method: 'POST', // *GET, POST, PUT, DELETE, etc.
-            mode: 'cors', // no-cors, *cors, same-origin
-            cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
-            credentials: 'same-origin', // include, *same-origin, omit
-            headers: {
-                'Content-Type': 'application/json'
-                // 'Content-Type': 'application/x-www-form-urlencoded',
-            },
-            redirect: 'follow', // manual, *follow, error
-            referrerPolicy: 'no-referrer', // no-referrer, *client
-            body: JSON.stringify(data) // body data type must match "Content-Type" header
-        });
-        return await response.json(); // parses JSON response into native JavaScript objects
-    }
-
-    const onRegistrationButtonClick = () => {
-        props.store.setRegistrationValuesFalse()
-        //console.log(props.store.registrationValues)
-        let sym = '1234567890qwertyuiopasdfghjklzxcvbnm_'
-        //console.log(values.email.length < 5)
-        if (!props.store.registrationValues.email.includes('@') || !props.store.registrationValues.email.includes('.') || props.store.registrationValues.email.length < 5) {
-            props.store.setRegistrationValues("errorEmail", true)
-            //console.log('email error')
-        }
-        //console.log(props.store.registrationValues.password.length)
-        if (props.store.registrationValues.password.length < 6) {
-            props.store.setRegistrationValues("errorPasswordLength", true)
-            //console.log('length error')
-        }
-        for (let i = 0; i < props.store.registrationValues.password.length; i++) {
-            if (sym.includes(props.store.registrationValues.password[i].toLowerCase())) continue
-            else {
-                props.store.setRegistrationValues("errorSymbols", true)
-                //console.log('sym error')
-                break
-            }
-        }
-        if (!props.store.registrationValues.errorPasswordLength && !props.store.registrationValues.errorSymbols && !props.store.registrationValues.errorEmail) {
-
-            props.store.goToHex()
-
-            // postData('https://example.com/answer', { email: props.store.registrationValues.email, password:  })
-            // .then((data) => {
-            //     console.log(data); // JSON data parsed by `response.json()` call
-            // });
-
-            const router = Router
-            router.push('/registration/step/email')
-        }
-        //console.log(props.store.registrationValues)
-    }
-
     const clickRegistartionButton = () => {
         props.store.setRegistrationValuesFalse()
         //console.log(props.store.registrationValues)
@@ -273,7 +218,7 @@ const Registration = inject('store')(observer((props) => {
 
             props.store.goToHex()
 
-            props.store.postData(`${props.store.url}/reg/${props.store.registrationValues.emailHash}`, {}) ///registration/newemail
+            props.store.postData(`${props.store.url}/reg/${props.store.registrationValues.emailHash}/`, {"email": 1}) ///registration/newemail
                 .then((data) => {
                     if (data.a === true) { //true
                         const router = Router

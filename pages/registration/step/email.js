@@ -172,7 +172,7 @@ const EmailReg = inject('store')(observer((props) => {
 
     const clickedNext = () => {
         props.store.setRegistrationValuesFalse()
-        props.store.getData(`${props.store.url}/reg/${props.store.registrationValues.emailHash}`)
+        props.store.getData(`${props.store.url}/reg/${props.store.registrationValues.emailHash}/`)
             .then((data) => {
                 if (data.a === true) {
                     const router = Router

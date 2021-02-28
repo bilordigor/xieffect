@@ -147,7 +147,7 @@ class Store {
       });
       console.log(response.headers)
       const string = await response.text();
-      const json = string === "" ? {"bilord": "1234"} : JSON.parse(string);
+      const json = string === "" ? { "bilord": "1234" } : JSON.parse(string);
       return json; // parses JSON response into native JavaScript objects
     } catch (error) {
       console.log('Возникла проблема с вашим fetch запросом: ', error.message);
@@ -161,7 +161,7 @@ class Store {
         method: "POST", // *GET, POST, PUT, DELETE, etc.
         //mode: 'no-cors', // no-cors, *cors, same-origin
         // cache, // *default, no-cache, reload, force-cache, only-if-cached
-        credentials: "include", // include, *same-origin, omit
+        //credentials: "include", // include, *same-origin, omit
         headers: {
           'Content-Type': 'application/json',
           //   // 'Content-Type': 'application/x-www-form-urlencoded',
@@ -172,7 +172,7 @@ class Store {
       });
       console.log(response.headers)
       const string = await response.text();
-      const json = string === "" ? {"bilord": "1234"} : JSON.parse(string);
+      const json = string === "" ? { "bilord": "1234" } : JSON.parse(string);
       return json; // parses JSON response into native JavaScript objects
     } catch (error) {
       console.log('Возникла проблема с вашим fetch запросом: ', error.message);
@@ -201,34 +201,12 @@ class Store {
       });
       console.log(response.headers)
       const string = await response.text();
-      const json = string === "" ? {"bilord": "1234"} : JSON.parse(string);
+      const json = string === "" ? { "bilord": "1234" } : JSON.parse(string);
       return json; // parses JSON response into native JavaScript objects
     } catch (error) {
       console.log('Возникла проблема с вашим fetch запросом: ', error.message);
     }
   }
-
-  @action login = (email, password, cookies) => {
-    return dispatch => {
-        const authData = {
-            email: email,
-            password: password
-        };
-    
-        let url = `${this.url}/auth/`;
-    
-        axios.post(url, authData, {withCredentials: true})
-            .then(
-                response => {
-                    console.log(response)
-                })
-            .catch(err => {
-                console.log(err)
-            });
-    
-        dispatch();
-        }
-    };
 
   @action async postDataScr(url, data) { // mode, cache, credentials, redirect, referrerPolicy
     // Default options are marked with *
@@ -249,7 +227,7 @@ class Store {
       });
       console.log(response.headers)
       const string = await response.text();
-      const json = string === "" ? {"bilord": "1234"} : JSON.parse(string);
+      const json = string === "" ? { "bilord": "1234" } : JSON.parse(string);
       return json; // parses JSON response into native JavaScript objects
     } catch (error) {
       console.log('Возникла проблема с вашим fetch запросом: ', error.message);
@@ -264,6 +242,7 @@ class Store {
     emailHash: '',
     password: '',
     passwordHash: '',
+    username: '',
     isCheckedEmail: false,
     showPassword: false,
     error: false,
@@ -294,8 +273,6 @@ class Store {
   }
 
 
-
-
   @action setRegistrationValuesFalse = () => {
     this.registrationValues.errorEmail = false
     this.registrationValues.errorPasswordLength = false
@@ -314,6 +291,21 @@ class Store {
     //this.registrationValues.passwordHash = ''
   }
 
+  @observable userData = {
+    isBackgroundImageInMain: false,
+    isBackgroundImageInEducation: false,
+    isDarkMode: true,
+    readyAuth: false,
+    officialNamesHidden: false,
+    firstName: '',
+    secondName: '',
+    username: '',
+    userRole: 'Участник',
+  }
+
+  @action setUserDataValues = (name, value) => {
+    this.userData[name] = value
+  }
 
   // Подтверждение почты 
 
@@ -406,27 +398,6 @@ class Store {
   @action setOpenMenu = () => {
     this.openMenu = !this.openMenu
   }
-
-  @observable userData = {
-    //settings
-    isBackgroundImageInMain: false,
-    isBackgroundImageInEducation: false,
-    isDarkMode: true,
-    readyAuth: false,
-    officialNamesHidden: false,
-    //date
-    firstName: '',
-    secondName: '',
-    nickName: '',
-    userRole: 'Участник',
-
-  }
-
-  @action setUserDataValues = (name, value) => {
-    this.userData[name] = value
-    //console.log(this.userData.userRole)
-  }
-
 
   @action setIsDarkMode = () => {
     this.userData.isDarkMode = !this.userData.isDarkMode

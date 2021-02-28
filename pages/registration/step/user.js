@@ -182,8 +182,8 @@ const useStyles = makeStyles((theme) => ({
 const User = inject('store')(observer((props) => {
     const classes = useStyles();
 
-    const handleChange = (section, name) => (event) => {
-        props.store.setUserDataValues(section, name, event.target.value)
+    const handleChange = (name) => (event) => {
+        props.store.setRegistrationValues( name, event.target.value)
     };
 
     const gotoAuth = (event) => {
@@ -249,9 +249,9 @@ const User = inject('store')(observer((props) => {
         // if (props.store.userData.secondName.length == 0) {
         //     props.store.setRegistrationValues("isSecondName", true)
         // }
-        if (props.store.userData.nickName.length == 0) {
-            props.store.setRegistrationValues("isNickName", true)
-        }
+        // if (props.store.userData.nickName.length === 0) {
+        //     props.store.setRegistrationValues("isNickName", true)
+        // }
         //console.log(props.store.registrationValues.password.length)
         // if (!props.store.registrationValues.isFirstName && !props.store.registrationValues.isSecondName && !props.store.registrationValues.isNickName) {
         //     // for (let i = 0; i < props.store.userData.firstName.length; i++) {
@@ -281,7 +281,7 @@ const User = inject('store')(observer((props) => {
         if (!props.store.registrationValues.isNickName) {
             //props.store.goToHex()
 
-            props.store.postData(`${props.store.url}/reg`, { "email": props.store.registrationValues.emailHash, "password": props.store.registrationValues.passwordHash, "username": props.store.userDate.nickName }) ///registration/newemail
+            props.store.postData(`${props.store.url}/reg/`, { "email": props.store.registrationValues.emailHash, "password": props.store.registrationValues.passwordHash, "username": props.store.registrationValues.username }) ///registration/newemail
                 .then((data) => {
                     if (data.a === true) { //true
                         const router = Router
@@ -389,8 +389,8 @@ const User = inject('store')(observer((props) => {
                                         <OutlinedInput
                                             className={classes.OutlinedInput}
                                             type='text'
-                                            value={props.store.userData.nickName}
-                                            onChange={handleChange('nickName')}
+                                            value={props.store.registrationValues.username}
+                                            onChange={handleChange('username')}
                                             endAdornment={
                                                 <InputAdornment position="end">
                                                     <IconButton
@@ -405,7 +405,7 @@ const User = inject('store')(observer((props) => {
                                                     </IconButton>
                                                 </InputAdornment>
                                             }
-                                            labelWidth={140}
+                                            labelWidth={210}
 
                                         />
                                     </FormControl>

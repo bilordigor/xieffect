@@ -97,7 +97,7 @@ const Email = inject('store')(observer((props) => {
     // console.log(id)
     // console.log(typeof(id))
     React.useEffect(() => {
-        props.store.postData(`${props.store.url}/reg/confirm`, { "code": id })
+        props.store.postData(`${props.store.url}/reg/confirm/`, { "code": id })
             .then((data) => {
                 if (data.a === true) { //"Success"
                     props.store.setEmailCheckValues("serverAnswer", true)

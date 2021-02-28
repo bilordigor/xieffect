@@ -210,7 +210,7 @@ const Login = inject('store')(observer((props) => {
         if (props.store.loginValues.email.length > 0 && props.store.loginValues.password.length > 0) {
             props.store.setLoginValuesFalse()
             props.store.goToHexLogin()
-            props.store.getData(`${props.store.url}/auth`, { "email": props.store.loginValues.email, "password": props.store.loginValues.passwordHash }) // postData /auth
+            props.store.getData(`${props.store.url}/auth/`, { "email": props.store.loginValues.email, "password": props.store.loginValues.passwordHash }) // postData /auth
                 .then((data) => {
                     console.log(data)
                     if (data.a == "Success") { //userId //"Success"
