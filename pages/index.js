@@ -100,10 +100,13 @@ const Home = inject('store')(observer((props) => {
   }
 
   React.useEffect(() => {
-    // props.store.getData(`${props.store.url}/status`)
-    //   .then((data) => {
-    //     props.store.setAlertData(date.type, date.text)
-    //   });
+    props.store.getData(`${props.store.url}/status/`)
+      .then((data) => {
+        console.log(data)
+        if (data === !undefined) {
+          props.store.setAlertData(data.type, data.text)
+        }
+      });
     // props.store.getData(`${props.store.url}/status`)
     //   .then((data) => {
     //     console.log(data)
