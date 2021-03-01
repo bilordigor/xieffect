@@ -12,7 +12,7 @@ const useStylesProfile = makeStyles((theme) => ({
     root: {
         width: '100%',
         height: 'auto',
-        backgroundColor: theme.main.palette.content.background,
+        //backgroundColor: theme.main.palette.content.background,
     },
     rootProfile: {
         // paddingLeft: 8,

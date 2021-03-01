@@ -148,9 +148,9 @@ const Email = inject('store')(observer((props) => {
                     <Button variant="contained" onClick={acceptButtonClicked} className={classes.acceptButton}>
                         Подтвердить
                     </Button>
-                    {!props.store.emailCheck.serverAnswer && <Grid container direction="row" justifyContent="center" alignItems="center" className={classes.gridLabelSecondary}>
+                    {/* {!props.store.emailCheck.serverAnswer && <Grid container direction="row" justifyContent="center" alignItems="center" className={classes.gridLabelSecondary}>
                         <CircularProgress className={classes.circularProgress} />
-                    </Grid>}
+                    </Grid>} */}
                     {props.store.emailCheck.serverAnswer && <Grid container direction="row" justifyContent="center" alignItems="center" className={classes.gridLabelSecondary}>
                         <Typography className={classes.labelSecondary}> Ваша почта успешно подтверждена. С этой страницы можно уходить.</Typography>
                     </Grid>}
