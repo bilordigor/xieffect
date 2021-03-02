@@ -38,7 +38,7 @@ import arrowLeftCircle from 'react-useanimations/lib/arrowLeftCircle'
 import { Scrollbars } from 'rc-scrollbars';
 import Castomize from './Castomize';
 import { Settings } from '@material-ui/icons';
-import UserAccount from './userAccount';
+import UserAccount from './UserAccount';
 
 
 const useStylesDialogAll = makeStyles((theme) => ({

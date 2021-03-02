@@ -35,7 +35,7 @@ import { inject, observer } from 'mobx-react'
 import { Scrollbars } from 'rc-scrollbars';
 import Castomize from './Castomize';
 import { Settings } from '@material-ui/icons';
-import UserAccount from './userAccount';
+import UserAccount from './UserAccount';
 
 const Accordion = styled((props) => (
     <MuiAccordion disableGutters elevation={0} square {...props} />
