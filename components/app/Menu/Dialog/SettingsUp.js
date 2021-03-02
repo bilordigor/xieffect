@@ -38,6 +38,7 @@ import arrowLeftCircle from 'react-useanimations/lib/arrowLeftCircle'
 import { Scrollbars } from 'rc-scrollbars';
 import Castomize from './Castomize';
 import { Settings } from '@material-ui/icons';
+import UserAccount from './userAccount';
 
 
 const useStylesDialogAll = makeStyles((theme) => ({
@@ -203,8 +204,8 @@ const SettingsUp = inject('store')(observer((props) => {
                     alignItems="flex-start"
                 >
                     {props.store.dialogMenuItem === 0 && <div className={classes.content}>
-                        0
-                        </div>}
+                        <UserAccount />
+                    </div>}
                     {props.store.dialogMenuItem === 1 && <div className={classes.content}>
                         1
                         </div>}

@@ -35,6 +35,7 @@ import { inject, observer } from 'mobx-react'
 import { Scrollbars } from 'rc-scrollbars';
 import Castomize from './Castomize';
 import { Settings } from '@material-ui/icons';
+import UserAccount from './userAccount';
 
 const Accordion = styled((props) => (
     <MuiAccordion disableGutters elevation={0} square {...props} />
@@ -110,7 +111,7 @@ const useStylesDialogAll = makeStyles((theme) => ({
         paddingLeft: 16,
         paddingTop: 8,
         fontWeight: 'bold',
-        fontSize: 16,
+        fontSize: 22,
     },
     menuButton: {
         // display: 'flex',
@@ -167,6 +168,10 @@ const useStylesDialogAll = makeStyles((theme) => ({
         right: 32,
         cursor: 'pointer',
     },
+    label: {
+        paddingLeft: 4,
+        fontSize: 20,
+    }
 }));
 
 const SettingsDown = inject('store')(observer((props) => {
@@ -189,17 +194,15 @@ const SettingsDown = inject('store')(observer((props) => {
             <Divider className={classes.divider} />
             <Accordion expanded={expanded === 'panel1'} onChange={handleChange('panel1')}>
                 <AccordionSummary aria-controls="panel1d-content" id="panel1d-header">
-                    <Typography>Учётная запись</Typography>
+                    <Typography className={classes.label}>Учётная запись</Typography>
                 </AccordionSummary>
                 <AccordionDetails>
-                    <Typography>
-                        0
-                    </Typography>
+                    <UserAccount />
                 </AccordionDetails>
             </Accordion>
             <Accordion expanded={expanded === 'panel2'} onChange={handleChange('panel2')}>
                 <AccordionSummary aria-controls="panel2d-content" id="panel2d-header">
-                    <Typography>Конфиденциальность</Typography>
+                    <Typography className={classes.label}>Конфиденциальность</Typography>
                 </AccordionSummary>
                 <AccordionDetails>
                     <Typography>
@@ -209,7 +212,7 @@ const SettingsDown = inject('store')(observer((props) => {
             </Accordion>
             <Accordion expanded={expanded === 'panel3'} onChange={handleChange('panel3')}>
                 <AccordionSummary aria-controls="panel3d-content" id="panel3d-header">
-                    <Typography>Boost Effect</Typography>
+                    <Typography className={classes.label}>Boost Effect</Typography>
                 </AccordionSummary>
                 <AccordionDetails>
                     <Typography>
@@ -222,7 +225,7 @@ const SettingsDown = inject('store')(observer((props) => {
             <Divider className={classes.divider} />
             <Accordion expanded={expanded === 'panel4'} onChange={handleChange('panel4')}>
                 <AccordionSummary aria-controls="panel4d-content" id="panel4d-header">
-                    <Typography>Внешний вид</Typography>
+                    <Typography className={classes.label}>Внешний вид</Typography>
                 </AccordionSummary>
                 <AccordionDetails>
                     <Castomize />
@@ -230,7 +233,7 @@ const SettingsDown = inject('store')(observer((props) => {
             </Accordion>
             <Accordion expanded={expanded === 'panel5'} onChange={handleChange('panel5')}>
                 <AccordionSummary aria-controls="panel5d-content" id="panel5d-header">
-                    <Typography>Уведомления</Typography>
+                    <Typography className={classes.label}>Уведомления</Typography>
                 </AccordionSummary>
                 <AccordionDetails>
                     <Typography>
@@ -240,7 +243,7 @@ const SettingsDown = inject('store')(observer((props) => {
             </Accordion>
             <Accordion expanded={expanded === 'panel6'} onChange={handleChange('panel6')}>
                 <AccordionSummary aria-controls="panel6d-content" id="panel6d-header">
-                    <Typography>Язык</Typography>
+                    <Typography className={classes.label}>Язык</Typography>
                 </AccordionSummary>
                 <AccordionDetails>
                     <Typography>
