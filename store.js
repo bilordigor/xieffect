@@ -47,7 +47,7 @@ class Store {
 
   @observable alertData = {
     type: 0,
-    text: 'Сервер временно недоступен. Приносим свои извинения. Возращайтесь позже'
+    text: ''
   }
 
   @action setAlertData = (type, text) => {

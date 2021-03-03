@@ -105,6 +105,8 @@ const Home = inject('store')(observer((props) => {
         console.log(data)
         if (data != undefined) {
           props.store.setAlertData(data.type, data.text)
+        } else {
+          props.store.setAlertData(0, "Сервер временно недоступен. Приносим свои извинения. Возращайтесь позже")
         }
       });
     // props.store.getData(`${props.store.url}/status`)
