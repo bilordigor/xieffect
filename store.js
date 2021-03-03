@@ -77,7 +77,7 @@ class Store {
 
   // Вход и глобальные данные приложения //login.js
 
-  @observable url = 'https://483256124168.ngrok.io'
+  @observable url = 'https://qwert45hi.pythonanywhere.com'
 
 
   @observable loginValues = {
