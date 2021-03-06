@@ -284,7 +284,7 @@ const Login = inject('store')(observer((props) => {
                                     </FormControl>
                                 </Grid>
                                 {props.store.loginValues.errorEmail && <Grid item container direction="column" justifyContent="center" alignItems="flex-start" className={classes.gridForgotPassword}>
-                                    <Typography className={classes.ErrorLabel}> Пользователя с таким именем почты не существует </Typography>
+                                    <Typography className={classes.ErrorLabel}> Пользователя с таким адресом почты не существует </Typography>
                                 </Grid>}
                                 <Grid item container direction="column" justifyContent="center" alignItems="flex-start" className={classes.gridTextField}>
                                     <FormControl className={classes.textField} variant="outlined">
@@ -317,7 +317,7 @@ const Login = inject('store')(observer((props) => {
                                     <Typography className={classes.ErrorLabel}> Нужно ввести адрес почты и пароль! </Typography>
                                 </Grid>}
                                 <Grid item container direction="column" justifyContent="center" alignItems="flex-start" className={classes.gridForgotPassword}>
-                                    <LinkUI className={classes.forgotPassword} href="#" onClick={gotoForgotPassword}>
+                                    <LinkUI className={classes.forgotPassword} href="/resetpassword/email">
                                         Забыли пароль?
                                 </LinkUI>
                                 </Grid>

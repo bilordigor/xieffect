@@ -102,7 +102,7 @@ const Home = inject('store')(observer((props) => {
   React.useEffect(() => {
     props.store.getData(`${props.store.url}/status/`)
       .then((data) => {
-        console.log(data)
+        //console.log(data)
         if (data != undefined) {
           props.store.setAlertData(data.type, data.text)
         } else {
@@ -211,7 +211,7 @@ const Home = inject('store')(observer((props) => {
             </Button> */}
           </Grid>
           <Grid item container direction="column" alignItems="center" className={classes.gridAlert}>
-            <Alert severity={alertList[props.store.alertData.type]}>{props.store.alertData.text}</Alert>
+            { props.store.alertData.text != '' && <Alert severity={alertList[props.store.alertData.type]}>{props.store.alertData.text}</Alert>}
           </Grid>
         </Grid>
       </div>

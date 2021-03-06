@@ -282,7 +282,7 @@ const Registration = inject('store')(observer((props) => {
                                     </FormControl>
                                 </Grid>
                                 {props.store.registrationValues.errorEmail && <Grid item container direction="column" justifyContent="center" alignItems="flex-start" className={classes.gridForgotPassword}>
-                                    <Typography className={classes.ErrorLabel}> Некорректное имя почты </Typography>
+                                    <Typography className={classes.ErrorLabel}> Некорректный адрес почты </Typography>
                                 </Grid>}
                                 {props.store.registrationValues.emailAlreadyUsed && <Grid item container direction="column" justifyContent="center" alignItems="flex-start" className={classes.gridForgotPassword}>
                                     <Typography className={classes.ErrorLabel}> Данный адрес электронной почты уже используется </Typography>

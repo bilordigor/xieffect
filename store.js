@@ -145,11 +145,12 @@ class Store {
         // redirect, // manual, *follow, error
         // referrerPolicy, // no-referrer, *client
       });
-      console.log(response.headers)
+      //console.log(response.headers)
       const string = await response.text();
       const json = string === "" ? { "bilord": "1234" } : JSON.parse(string);
       return json; // parses JSON response into native JavaScript objects
     } catch (error) {
+      //console.log(error)
       console.log('Возникла проблема с вашим fetch запросом: ', error.message);
     }
   }
@@ -170,11 +171,12 @@ class Store {
         // referrerPolicy, // no-referrer, *client
         body: JSON.stringify(data) // body data type must match "Content-Type" header
       });
-      console.log(response.headers)
+      //console.log(response.headers)
       const string = await response.text();
       const json = string === "" ? { "bilord": "1234" } : JSON.parse(string);
       return json; // parses JSON response into native JavaScript objects
     } catch (error) {
+      //console.log(error)
       console.log('Возникла проблема с вашим fetch запросом: ', error.message);
     }
   }
@@ -199,11 +201,12 @@ class Store {
         // redirect, // manual, *follow, error
         // referrerPolicy, // no-referrer, *client
       });
-      console.log(response.headers)
+      //console.log(response.headers)
       const string = await response.text();
       const json = string === "" ? { "bilord": "1234" } : JSON.parse(string);
       return json; // parses JSON response into native JavaScript objects
     } catch (error) {
+      //console.log(error)
       console.log('Возникла проблема с вашим fetch запросом: ', error.message);
     }
   }
@@ -225,11 +228,12 @@ class Store {
         // referrerPolicy, // no-referrer, *client
         body: JSON.stringify(data) // body data type must match "Content-Type" header
       });
-      console.log(response.headers)
+      //console.log(response.headers)
       const string = await response.text();
       const json = string === "" ? { "bilord": "1234" } : JSON.parse(string);
       return json; // parses JSON response into native JavaScript objects
     } catch (error) {
+      //console.log(error)
       console.log('Возникла проблема с вашим fetch запросом: ', error.message);
     }
   }
@@ -243,6 +247,8 @@ class Store {
     password: '',
     passwordHash: '',
     username: '',
+    emailReset: '',
+    passwordReset: '',
     isCheckedEmail: false,
     showPassword: false,
     error: false,
@@ -257,6 +263,12 @@ class Store {
     errorSymSecondName: false,
     isNickName: false,
     errorSymNickName: false,
+    errorEmailReset: false,
+    errorEmailNotFounedReset: false,
+    emailResetOk: false,
+    emailResetOkay: false,
+    errorSymbolsReset: false,
+    errorPasswordLengthReset: false,
   }
 
   @action setRegistrationValues = (name, value) => {
@@ -270,6 +282,10 @@ class Store {
     this.registrationValues.errorSymSecondName = false
     this.registrationValues.isNickName = false
     this.registrationValues.errorSymNickName = false
+    this.registrationValues.errorEmailReset = false
+    this.registrationValues.errorEmailNotFounedReset = false
+    this.registrationValues.errorSymbolsReset = false
+    this.registrationValues.errorPasswordLengthReset = false
   }
 
 
