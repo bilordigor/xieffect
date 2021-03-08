@@ -278,7 +278,7 @@ const User = inject('store')(observer((props) => {
         // }
 
         //if (!props.store.registrationValues.isFirstName && !props.store.registrationValues.isSecondName && !props.store.registrationValues.isNickName && !props.store.registrationValues.errorSymNickName && !props.store.registrationValues.errorSymSecondName && !props.store.registrationValues.errorSymFirstName) {
-        if (!props.store.registrationValues.isNickName) {
+        if (!props.store.registrationValuesUI.isNickName) {
             //props.store.goToHex()
 
             props.store.postData(`${props.store.url}/reg/`, { "email": props.store.registrationValues.emailHash, "password": props.store.registrationValues.passwordHash, "username": props.store.registrationValues.username }) ///registration/newemail
@@ -413,7 +413,7 @@ const User = inject('store')(observer((props) => {
                                 {/* {props.store.registrationValues.isNickName && <Grid item container direction="column" justifyContent="center" alignItems="flex-start" className={classes.gridError}>
                                     <Typography className={classes.errorSymNickName}> Недопустимые символы! </Typography>
                                 </Grid>} */}
-                                {props.store.registrationValues.isNickName && <Grid item container direction="column" justifyContent="center" alignItems="flex-start" className={classes.gridForgotPassword}>
+                                {props.store.registrationValuesUI.isNickName && <Grid item container direction="column" justifyContent="center" alignItems="flex-start" className={classes.gridForgotPassword}>
                                     <Typography className={classes.ErrorLabel}> Это обязательное поле</Typography>
                                 </Grid>}
                                 {/* <Grid item container direction="column" justifyContent="center" alignItems="flex-start" className={classes.gridTextField}>

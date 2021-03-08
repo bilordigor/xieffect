@@ -176,7 +176,7 @@ const EmailReg = inject('store')(observer((props) => {
                     const router = Router
                     router.push('/registration/step/user')
                 } else if (data.a === false) {
-                    props.store.setRegistrationValues("isCheckedEmail", false)
+                    props.store.setRegistrationValuesUI("isCheckedEmail", false)
                 }
             });
 
@@ -219,7 +219,7 @@ const EmailReg = inject('store')(observer((props) => {
                                     </Button>
                                     {/* </Link > */}
                                 </Grid>
-                                {props.store.registrationValues.isCheckedEmail && <Grid item container direction="column" justifyContent="center" alignItems="flex-start" className={classes.gridError}>
+                                {props.store.registrationValuesUI.isCheckedEmail && <Grid item container direction="column" justifyContent="center" alignItems="flex-start" className={classes.gridError}>
                                     <Typography className={classes.ErrorLabel}> Подтвердите вашу почту! Перейдите по ссылке в письме, которое мы отправили вам на почту.</Typography>
                                 </Grid>}
                                 <Grid item container direction="column" justifyContent="center" alignItems="flex-start" className={classes.gridForgotRegistration}>

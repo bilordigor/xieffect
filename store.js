@@ -33,18 +33,63 @@ class Store {
     makeObservable(this)
   }
 
-  @observable token = {
-    access_token: ''
+  // // Global Data and Functions
+  // URL-adress server
+  @observable url = 'https://qwert45hi.pythonanywhere.com'
+
+  // // App&User Data and Functions
+
+  // "/login" (Вход)
+  @observable loginValues = {
+    jwt: '',
+    email: '',
+    password: '',
+    passwordHash: '',
   }
 
-  @action setToken = (newToken) => {
-    this.token.access_token = newToken
+  @action setLoginValues = (name, value) => {
+    this.loginValues[name] = value
   }
 
-  //      ИНТЕРФЕЙС
+  @action setLoginValuesClear = () => {
+    this.loginValues.email = ''
+    this.loginValues.password = ''
+    this.loginValues.passwordHash = ''
+  }
 
-  // /
+  @action goToHexLogin = () => {
+    this.loginValues.passwordHash = Crypto.SHA384(this.loginValues.password).toString()
+  }
 
+  // "/registarion"
+
+  @observable registrationValues = {
+    jwt: '',
+    email: '',
+    emailHash: '',
+    password: '',
+    passwordHash: '',
+    username: '',
+    emailReset: '',
+    passwordReset: '',
+  }
+
+  @action setRegistrationValues = (name, value) => {
+    this.registrationValues[name] = value
+  }
+
+  @action setRegistrationValuesClear = () => {
+    this.registrationValues.email = ''
+    this.registrationValues.password = ''
+  }
+
+  @action goToHex = () => {
+    this.registrationValues.passwordHash = Crypto.SHA384(this.registrationValues.password).toString()
+    this.registrationValues.emailHash = this.registrationValues.email
+  }
+
+  // // UI Data and Functions
+  // "/" (main page) 
   @observable alertData = {
     type: 0,
     text: ''
@@ -55,8 +100,118 @@ class Store {
     this.alertData.text = text
   }
 
-  // LerningCenter
+  // "/login.js" (Вход)
+  @observable loginValuesUI = {
+    fetchRequestReady: false,
+    loginSuccess: false,
+    showPassword: false,
+    error: false,
+    errorEmail: false,
+    errorPassword: false,
+  }
 
+  @action setLoginValuesUI = (name, value) => {
+    this.loginValues[name] = value
+  }
+
+  @action setLoginValuesFalse = () => {
+    this.loginValuesUI.error = false
+    this.loginValuesUI.errorEmail = false
+    this.loginValuesUI.errorPassword = false
+
+  }
+
+  // "/registarion"
+
+  @observable registrationValuesUI = {
+    isCheckedEmail: false,
+    showPassword: false,
+    error: false,
+    errorEmail: false,
+    emailAlreadyUsed: false,
+    errorPasswordLength: false,
+    errorSymbols: false,
+    isFirstName: false,
+    errorSymFirstName: false,
+    isSecondName: false,
+    errorSymSecondName: false,
+    isNickName: false,
+    errorSymNickName: false,
+    errorEmailReset: false,
+    errorEmailNotFounedReset: false,
+    emailResetOk: false,
+    emailResetOkay: false,
+    errorSymbolsReset: false,
+    errorPasswordLengthReset: false,
+  }
+
+  @action setRegistrationValuesUI = (name, value) => {
+    this.registrationValues[name] = value
+  }
+
+  @action setUserRegValuesFalse = () => {
+    this.registrationValues.isFirstName = false
+    this.registrationValues.errorSymFirstName = false
+    this.registrationValues.isSecondName = false
+    this.registrationValues.errorSymSecondName = false
+    this.registrationValues.isNickName = false
+    this.registrationValues.errorSymNickName = false
+    this.registrationValues.errorEmailReset = false
+    this.registrationValues.errorEmailNotFounedReset = false
+    this.registrationValues.errorSymbolsReset = false
+    this.registrationValues.errorPasswordLengthReset = false
+  }
+
+  @action setRegistrationValuesFalse = () => {
+    this.registrationValues.errorEmail = false
+    this.registrationValues.errorPasswordLength = false
+    this.registrationValues.errorSymbols = false
+    this.registrationValues.emailAlreadyUsed = false
+  }
+
+
+  // "/email/<id>"
+  @observable emailCheck = {
+    serverAnswer: false,
+  }
+
+  @action setEmailCheckValues = (name, value) => {
+    this.emailCheck[name] = value
+  }
+
+  // "/app/" (main app page)
+  // Education social UI (UI example)
+  @observable todoList = [
+    { key: 0, time: '10:30', task: 'Математика', info: 'Курс', done: false },
+    { key: 1, time: '12:30', task: 'Робототехника', info: 'Кружок', done: false },
+    { key: 2, time: '14:20', task: 'Время покушать!', info: 'Приятного аппетита :)', done: false },
+    { key: 3, time: '15:40', task: 'История', info: 'Школьный урок', done: false },
+    { key: 4, time: '21:30', task: 'Веб Дизайн', info: 'Кружок', done: false },
+  ]
+
+  @observable lastActiveList = [
+    { key: 0, time: '08:10', label: 'Физика. Общий школьный курс' },
+    { key: 1, time: '12:30', label: 'Кружок по Олимпиадной Биологии' },
+    { key: 2, time: '14:00', label: 'Коворкинг в Сообществе \"Кефир\" ' },
+    { key: 3, time: '17:30', label: 'Спортивная секция. Волейбол' },
+    { key: 4, time: '19:50', label: 'Кружок Информатики' },
+    { key: 5, time: '22:30', label: 'Трансляция лекции по дисциплине Цифровая культура' },
+  ]
+
+  @observable NoteList = [
+    { key: 0, time: '09:30', label: 'Вы получили 2 по предмету Физика' },
+    { key: 1, time: '11:40', label: 'На завтра нужно сделать ЭССЕ по предмету История' },
+    { key: 2, time: '13:30', label: 'Сегодня в столовой блины!' },
+    { key: 3, time: '15:10', label: 'Не забываем о концерте к 1 Мая © Алёна Алексеевна' },
+    { key: 4, time: '16:20', label: 'Кружок Информатики ведёт набор!' },
+    { key: 5, time: '20:80', label: ' Котики, пора дочитать Войну и Мир. - Ваша ЛН' },
+  ]
+
+  @action setIsIcon = (key) => {
+
+    this.todoList[key].done = !this.todoList[key].done
+    //console.log(this.todoList[key].done)
+  }
 
   @observable dataTimeTable = [
     { time: "9:00", lesson: "Математика", now: true, },
@@ -75,48 +230,72 @@ class Store {
     this.learningCenterValues.openExpandMore = !this.learningCenterValues.openExpandMore
   }
 
-  // Вход и глобальные данные приложения //login.js
+  //  "/app/education" (Education Page)
+  // Courses loading 
+  @observable courseList = [{ key: '1' }, { key: '2' }, { key: '3' }, { key: '4' }, { key: '5' }, { key: '6' }, { key: '7' }, { key: '8' },]
 
-  @observable url = 'https://qwert45hi.pythonanywhere.com'
-
-
-  @observable loginValues = {
-    fetchRequestReady: false,
-    jwt: '',
-    email: '',
-    password: '',
-    passwordHash: '',
-    loginSuccess: false,
-    showPassword: false,
-    error: false,
-    errorEmail: false,
-    errorPassword: false,
-
+  @action setCourseList = (data) => {
+    this.courseList = data
   }
 
-  @action setLoginValues = (name, value) => {
-    this.loginValues[name] = value
+  // Filters for courses
+  @observable chipsList = [
+    { key: 0, title: "Все", clicked: true },
+    { key: 1, title: "Ваши курсы", clicked: false },
+    { key: 2, title: "Избранное", clicked: false },
+    { key: 3, title: "Популярное", clicked: false },
+    { key: 4, title: "Рекомендации", clicked: false },
+    { key: 5, title: "Школьные курсы", clicked: false },
+    { key: 6, title: "ЕГЭ", clicked: false },
+    { key: 7, title: "Кружок", clicked: false },
+  ]
+
+  @action chipperClick = (key) => {
+    for (let i = 0; i < this.chipsList.length; i++) {
+      this.chipsList[i].clicked = false
+    }
+    this.chipsList[key].clicked = true
   }
 
-  @action setLoginValuesFalse = () => {
-    this.loginValues.error = false
-    this.loginValues.errorEmail = false
-    this.loginValues.errorPassword = false
 
-  }
+  // // Const Data 
 
-  @action setLoginValuesClear = () => {
-    this.loginValues.email = ''
-    this.loginValues.password = ''
-    this.loginValues.passwordHash = ''
-  }
+  // Список пунктов главного меню
+  @observable menulist = [
+    {
+      name: 'Главная',
+      way: '/',
+      logo: <HomeIcon />,
+    },
+    {
+      name: 'Образование',
+      way: '/education',
+      logo: <SchoolIcon />,
+    },
+    {
+      name: 'Новости',
+      way: '/news',
+      logo: <PublicIcon />,
+    },
+    {
+      name: 'Друзья',
+      way: '/friends',
+      logo: <MessageIcon />,
+    },
+    {
+      name: 'Сообщества',
+      way: '/communities',
+      logo: <FireplaceIcon />,
+    },
+    {
+      name: 'Приложения',
+      way: '/apps',
+      logo: <AppsIcon />,
+    }
+  ]
 
-  @action goToHexLogin = () => {
-    this.loginValues.passwordHash = Crypto.SHA384(this.loginValues.password).toString()
-    // console.log(this.registrationValues.passwordHash)
-    // console.log(this.registrationValues.passwordHash.length)
-  }
-
+  // // Support Data and Functions
+  // Fetch API 
 
   //Чтобы браузеры могли отправлять запрос с учётными данными (даже для cross-origin запросов),
   //добавьте credentials: 'include' в объект init, передаваемый вами в метод fetch():
@@ -147,7 +326,7 @@ class Store {
       });
       //console.log(response.headers)
       const string = await response.text();
-      const json = string === "" ? { "bilord": "1234" } : JSON.parse(string);
+      const json = string === "" ? {} : JSON.parse(string);
       return json; // parses JSON response into native JavaScript objects
     } catch (error) {
       //console.log(error)
@@ -203,7 +382,7 @@ class Store {
       });
       //console.log(response.headers)
       const string = await response.text();
-      const json = string === "" ? { "bilord": "1234" } : JSON.parse(string);
+      const json = string === "" ? {} : JSON.parse(string);
       return json; // parses JSON response into native JavaScript objects
     } catch (error) {
       //console.log(error)
@@ -230,7 +409,7 @@ class Store {
       });
       //console.log(response.headers)
       const string = await response.text();
-      const json = string === "" ? { "bilord": "1234" } : JSON.parse(string);
+      const json = string === "" ? {} : JSON.parse(string);
       return json; // parses JSON response into native JavaScript objects
     } catch (error) {
       //console.log(error)
@@ -238,74 +417,12 @@ class Store {
     }
   }
 
+
+  // Вход и глобальные данные приложения //login.js
+
+
   // Страница Регистрации //registarion
 
-  @observable registrationValues = {
-    jwt: '',
-    email: '',
-    emailHash: '',
-    password: '',
-    passwordHash: '',
-    username: '',
-    emailReset: '',
-    passwordReset: '',
-    isCheckedEmail: false,
-    showPassword: false,
-    error: false,
-    errorEmail: false,
-    emailAlreadyUsed: false,
-    errorPasswordLength: false,
-    errorSymbols: false,
-    //registration/step/user
-    isFirstName: false,
-    errorSymFirstName: false,
-    isSecondName: false,
-    errorSymSecondName: false,
-    isNickName: false,
-    errorSymNickName: false,
-    errorEmailReset: false,
-    errorEmailNotFounedReset: false,
-    emailResetOk: false,
-    emailResetOkay: false,
-    errorSymbolsReset: false,
-    errorPasswordLengthReset: false,
-  }
-
-  @action setRegistrationValues = (name, value) => {
-    this.registrationValues[name] = value
-  }
-
-  @action setUserRegValuesFalse = () => {
-    this.registrationValues.isFirstName = false
-    this.registrationValues.errorSymFirstName = false
-    this.registrationValues.isSecondName = false
-    this.registrationValues.errorSymSecondName = false
-    this.registrationValues.isNickName = false
-    this.registrationValues.errorSymNickName = false
-    this.registrationValues.errorEmailReset = false
-    this.registrationValues.errorEmailNotFounedReset = false
-    this.registrationValues.errorSymbolsReset = false
-    this.registrationValues.errorPasswordLengthReset = false
-  }
-
-
-  @action setRegistrationValuesFalse = () => {
-    this.registrationValues.errorEmail = false
-    this.registrationValues.errorPasswordLength = false
-    this.registrationValues.errorSymbols = false
-    this.registrationValues.emailAlreadyUsed = false
-  }
-
-  @action goToHex = () => {
-    this.registrationValues.passwordHash = Crypto.SHA384(this.registrationValues.password).toString()
-    this.registrationValues.emailHash = this.registrationValues.email
-  }
-
-  @action setRegistrationValuesClear = () => {
-    this.registrationValues.email = ''
-    this.registrationValues.password = ''
-    //this.registrationValues.passwordHash = ''
-  }
 
   @observable userData = {
     isBackgroundImageInMain: false,
@@ -325,67 +442,8 @@ class Store {
 
   // Подтверждение почты 
 
-  @observable emailCheck = {
-    serverAnswer: false,
-  }
 
-  @action setEmailCheckValues = (name, value) => {
-    this.emailCheck[name] = value
-  }
 
-  // Главная страница 
-
-  @observable todoList = [
-    { key: 0, time: '10:30', task: 'Математика', info: 'Курс', done: false },
-    { key: 1, time: '12:30', task: 'Робототехника', info: 'Кружок', done: false },
-    { key: 2, time: '14:20', task: 'Время покушать!', info: 'Приятного аппетита :)', done: false },
-    { key: 3, time: '15:40', task: 'История', info: 'Школьный урок', done: false },
-    { key: 4, time: '21:30', task: 'Веб Дизайн', info: 'Кружок', done: false },
-  ]
-
-  @observable lastActiveList = [
-    { key: 0, time: '08:10', label: 'Физика. Общий школьный курс' },
-    { key: 1, time: '12:30', label: 'Кружок по Олимпиадной Биологии' },
-    { key: 2, time: '14:00', label: 'Коворкинг в Сообществе \"Кефир\" ' },
-    { key: 3, time: '17:30', label: 'Спортивная секция. Волейбол' },
-    { key: 4, time: '19:50', label: 'Кружок Информатики' },
-    { key: 5, time: '22:30', label: 'Трансляция лекции по дисциплине Цифровая культура' },
-  ]
-
-  @observable NoteList = [
-    { key: 0, time: '09:30', label: 'Вы получили 2 по предмету Физика' },
-    { key: 1, time: '11:40', label: 'На завтра нужно сделать ЭССЕ по предмету История' },
-    { key: 2, time: '13:30', label: 'Сегодня в столовой блины!' },
-    { key: 3, time: '15:10', label: 'Не забываем о концерте к 1 Мая © Алёна Алексеевна' },
-    { key: 4, time: '16:20', label: 'Кружок Информатики ведёт набор!' },
-    { key: 5, time: '20:80', label: ' Котики, пора дочитать Войну и Мир. - Ваша ЛН' },
-  ]
-
-  @action setIsIcon = (key) => {
-
-    this.todoList[key].done = !this.todoList[key].done
-    //console.log(this.todoList[key].done)
-  }
-
-  // Страница образования //app/education // Фильтры
-
-  @observable chipsList = [
-    { key: 0, title: "Все", clicked: true },
-    { key: 1, title: "Ваши курсы", clicked: false },
-    { key: 2, title: "Избранное", clicked: false },
-    { key: 3, title: "Популярное", clicked: false },
-    { key: 4, title: "Рекомендации", clicked: false },
-    { key: 5, title: "Школьные курсы", clicked: false },
-    { key: 6, title: "ЕГЭ", clicked: false },
-    { key: 7, title: "Кружок", clicked: false },
-  ]
-
-  @action chipperClick = (key) => {
-    for (let i = 0; i < this.chipsList.length; i++) {
-      this.chipsList[i].clicked = false
-    }
-    this.chipsList[key].clicked = true
-  }
 
   //    ДАННЫЕ
 
@@ -429,26 +487,7 @@ class Store {
     //console.log(this.userData.officialNamesHidden)
   }
 
-  @observable step = 0
-
   @observable topLeftMenuButtom = false
-
-  @observable daysArrow = [{ day: 0, weekday: '' }, { day: 0, weekday: '' }, { day: 0, weekday: '' }, { day: 0, weekday: '' }, { day: 0, weekday: '' }]
-
-  @action days = () => {
-    let today = new Date().getTime();
-    let weekdays = ['Вс', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб'];
-    for (let i = 0; i < 5; i++) {
-      let date = new Date(today + DAY_MILSEC * i + DAY_MILSEC * this.step);
-      this.daysArrow[i].day = date.getDate()
-      this.daysArrow[i].weekday = weekdays[date.getDay()]
-      // console.log(date.getDate())
-      // console.log(this.daysArrow)
-    }
-    // console.log(today)
-    // console.log(this.daysArrow)
-    // console.log(this.step)
-  }
 
   @action setTrueTopLeftMenuButtom = () => {
     this.topLeftMenuButtom = true
@@ -458,57 +497,46 @@ class Store {
     this.topLeftMenuButtom = false
   }
 
-  @action navigateBeforeIcon = () => {
-    if (this.step > 0) {
-      this.step -= 1
-    }
 
+
+
+
+}
+
+function initializeStore(initialData = null) {
+  const _store = store ?? new Store()
+
+  // If your page has Next.js data fetching methods that use a Mobx store, it will
+  // get hydrated here, check `pages/ssg.js` and `pages/ssr.js` for more details
+  if (initialData) {
+    _store.hydrate(initialData)
   }
+  // For SSG and SSR always create a new store
+  if (typeof window === 'undefined') return _store
+  // Create the store once in the client
+  if (!store) store = _store
 
-  @action navigateNextIcon = () => {
-    this.step += 1
-  }
+  return _store
+}
+
+export function useStore(initialState) {
+  const store = useMemo(() => initializeStore(initialState), [initialState])
+  return store
+}
 
 
 
-  @observable courseList = [{ key: '1' }, { key: '2' }, { key: '3' }, { key: '4' }, { key: '5' }, { key: '6' }, { key: '7' }, { key: '8' },]
 
-  @action setCourseList = (data) => {
-    this.courseList = data
-  }
 
-  @observable menulist = [
-    {
-      name: 'Главная',
-      way: '/',
-      logo: <HomeIcon />,
-    },
-    {
-      name: 'Образование',
-      way: '/education',
-      logo: <SchoolIcon />,
-    },
-    {
-      name: 'Новости',
-      way: '/news',
-      logo: <PublicIcon />,
-    },
-    {
-      name: 'Друзья',
-      way: '/friends',
-      logo: <MessageIcon />,
-    },
-    {
-      name: 'Сообщества',
-      way: '/communities',
-      logo: <FireplaceIcon />,
-    },
-    {
-      name: 'Приложения',
-      way: '/apps',
-      logo: <AppsIcon />,
-    }
-  ]
+
+
+
+
+
+
+
+
+
 
   // @observable dialogsList = [
   //   { key: '1', id: '1', userName: 'Стивен Хокинг', lastMessage: 'At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus. Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae. Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis doloribus asperiores repellat.', courseAvatar: "https://media.discordapp.net/attachments/616924730875707393/783636659031375892/bigben1.jpg?width=1208&height=755", createrName: 'Ξ Effect', createrAvatar: 'Ξ' },
@@ -538,25 +566,3 @@ class Store {
   //   this.courseList = data.courseList
   //   console.log(this.courseList)
   // }
-}
-
-function initializeStore(initialData = null) {
-  const _store = store ?? new Store()
-
-  // If your page has Next.js data fetching methods that use a Mobx store, it will
-  // get hydrated here, check `pages/ssg.js` and `pages/ssr.js` for more details
-  if (initialData) {
-    _store.hydrate(initialData)
-  }
-  // For SSG and SSR always create a new store
-  if (typeof window === 'undefined') return _store
-  // Create the store once in the client
-  if (!store) store = _store
-
-  return _store
-}
-
-export function useStore(initialState) {
-  const store = useMemo(() => initializeStore(initialState), [initialState])
-  return store
-}
