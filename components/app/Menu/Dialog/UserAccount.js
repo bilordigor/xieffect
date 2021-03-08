@@ -1,12 +1,18 @@
 import React, { useState } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import UploadFileIcon from '@material-ui/icons/UploadFile';
-import { Avatar, Badge, Grid, withStyles, FormControl, InputLabel, TextField, OutlinedInput, FormControlLabel, Switch, AppBar, Tabs, Tab, Typography, Box, Button } from '@material-ui/core'
+import { InputAdornment, Tooltip, IconButton, ClickAwayListener, Divider, ButtonGroup, MenuList, MenuItem, Avatar, Paper, Grow, Popper, Badge, Grid, withStyles, FormControl, InputLabel, TextField, OutlinedInput, FormControlLabel, Switch, AppBar, Tabs, Tab, Typography, Box, Button } from '@material-ui/core'
 import { useFileUpload } from "use-file-upload"
 import { inject, observer } from 'mobx-react'
 import Image from 'next/image'
 import Context from '../../../../store'
 import ImageUploading from "react-images-uploading";
+import SaveIcon from '@material-ui/icons/Save';
+import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
+
+
+const options = ['Участник', 'Ученик', 'Преподаватель', 'Автор', 'Родитель'];
+
 
 const SmallAvatar = withStyles((theme) => ({
     root: {
@@ -57,13 +63,34 @@ const useStyles = makeStyles((theme) => ({
         paddingLeft: 8,
         fontSize: 24,
         color: theme.main.palette.content.text,
-    }
+    },
+    divider: {
+        paddingTop: 8,
+        //paddingBottom: 8,
+    },
+    textField: {
+        marginLeft: 12,
+        marginRight: 0,
+        width: "calc(100% - 160px)",
+        //backgroundColor: 'rgb(49,51,57)',
+    },
+    OutlinedInput: {
+        color: theme.main.palette.content.text,
+    }, 
+    icons: {
+        //color: 'rgb(142,146,151)',
+    },
 
 
 }));
 
 const UserAccount = inject('store')(observer((props) => {
     const classes = useStyles();
+
+    const handleChange = (name) => (event) => {
+        props.store.setRegistrationValues( name, event.target.value)
+    };
+
     // const [isDarkMode, setIsDarkMode] = useState(() => false);
     const [images, setImages] = React.useState([]);
     const maxNumber = 1;
@@ -72,17 +99,48 @@ const UserAccount = inject('store')(observer((props) => {
         console.log(imageList, addUpdateIndex);
         setImages(imageList);
     };
+
+
+    //SelectorButton
+
+    const [open, setOpen] = React.useState(false);
+    const anchorRef = React.useRef(null);
+    const [selectedIndex, setSelectedIndex] = React.useState(0);
+
+    const handleClick = () => {
+        //console.info(`You clicked ${options[selectedIndex]}`);
+    };
+
+    const handleMenuItemClick = (event, index) => {
+        setSelectedIndex(index);
+        props.store.setUserDataValues("userRole", options[index])
+        setOpen(false);
+    };
+
+    const handleToggle = () => {
+        setOpen((prevOpen) => !prevOpen);
+    };
+
+    const handleClose = (event) => {
+        if (anchorRef.current && anchorRef.current.contains(event.target)) {
+            return;
+        }
+
+        setOpen(false);
+    };
+
+
     return (
         <>
             <Grid spacing={1} container direction="column" className={classes.root}>
                 <Grid
-                    item
+                    //item
                     container
                     direction="row"
-                    justifyContent="flex-start"
+                    //justifyContent="flex-start"
                     alignItems="center"
                 >
-                    <Grid item>
+                    {/* <Grid> */}
                         <ImageUploading
                             multiple
                             value={images}
@@ -126,13 +184,94 @@ const UserAccount = inject('store')(observer((props) => {
                                 </>
                             )}
                         </ImageUploading>
-                    </Grid>
-                    <Grid item>
-                        <Typography className={classes.usernameLabel}> bilord </Typography>
-                    </Grid>
+                    {/* </Grid>
+                    <Grid> */}
+                        <FormControl className={classes.textField} variant="outlined">
+                            {/* <InputLabel className={classes.inputLabel} htmlFor="outlined-adornment-password"> <Typography className={classes.textFieldTypography}>Имя пользователя</Typography> </InputLabel> */}
+                            <OutlinedInput
+                                className={classes.OutlinedInput}
+                                type='text'
+                                value="bilord"
+                                onChange={handleChange('username')}
+                                endAdornment={  
+                                    <InputAdornment position="end">
+                                        <IconButton
+                                            aria-label="toggle password visibility"
+                                            // onClick={handleClickShowPassword}
+                                            // onMouseDown={handleMouseDownPassword}
+                                            edge="end"
+                                        >
+                                            <Tooltip title="Сохранить изменения" arrow>
+                                                <SaveIcon className={classes.icons} />
+                                            </Tooltip>
+                                        </IconButton>
+                                    </InputAdornment>
+                                }
+                                //labelWidth={210}
+
+                            />
+                        </FormControl>
+                    {/* </Grid> */}
 
                 </Grid>
+                <Divider className={classes.divider} />
+                <Grid
+                    item
+                    container
+                    direction="row"
+                    justifyContent="flex-start"
+                    alignItems="center"
+                >
+                    <Grid item>
+                        <ButtonGroup variant="contained" color="primary" ref={anchorRef} aria-label="split button">
+                            <Button onClick={handleClick}>{options[selectedIndex]}</Button>
+                            <Button
+                                color="primary"
+                                size="small"
+                                aria-controls={open ? 'split-button-menu' : undefined}
+                                aria-expanded={open ? 'true' : undefined}
+                                aria-label="select merge strategy"
+                                aria-haspopup="menu"
+                                onClick={handleToggle}
+                            >
+                                <ArrowDropDownIcon />
+                            </Button>
+                        </ButtonGroup>
+                        <Popper open={open} anchorEl={anchorRef.current} role={undefined} transition disablePortal className={classes.popper}>
+                            {({ TransitionProps, placement }) => (
+                                <Grow
+                                    {...TransitionProps}
+                                    style={{
+                                        transformOrigin: placement === 'bottom' ? 'center top' : 'center bottom',
+                                    }}
+                                >
+                                    <Paper className={classes.paper}>
+                                        <ClickAwayListener onClickAway={handleClose}>
+                                            <MenuList id="split-button-menu">
+                                                {options.map((option, index) => (
+                                                    <MenuItem
+                                                        key={option}
+                                                        // disabled={index === 2}
+                                                        selected={index === selectedIndex}
+                                                        onClick={(event) => handleMenuItemClick(event, index)}
+                                                    >
+                                                        {option}
+                                                    </MenuItem>
+                                                ))}
+                                            </MenuList>
+                                        </ClickAwayListener>
+                                    </Paper>
+                                </Grow>
+                            )}
+                        </Popper>
+                    </Grid>
+                    <Grid item>
 
+                    </Grid>
+
+
+                </Grid>
+                <Divider className={classes.divider} />
             </Grid>
         </>
     );

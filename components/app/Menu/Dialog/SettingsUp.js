@@ -128,7 +128,7 @@ const useStylesDialogAll = makeStyles((theme) => ({
     content: {
         marginTop: 32,
         marginLeft: 32,
-        width: 400,
+        width: 500,
         height: "100%",
     },
     goBackButton: {

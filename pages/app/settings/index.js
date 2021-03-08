@@ -27,7 +27,7 @@ export default function Friends() {
   return (
     <>
       <Head>
-        <title>Ξ Друзья</title>
+        <title>Ξ Настройки</title>
       </Head>
       <NavigationAll>
         <div className={classes.root}>
