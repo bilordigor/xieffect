@@ -108,6 +108,7 @@ class Store {
     error: false,
     errorEmail: false,
     errorPassword: false,
+    errorServer: false,
   }
 
   @action setLoginValuesUI = (name, value) => {
@@ -118,6 +119,7 @@ class Store {
     this.loginValuesUI.error = false
     this.loginValuesUI.errorEmail = false
     this.loginValuesUI.errorPassword = false
+    this.loginValuesUI.errorServer = false
 
   }
 

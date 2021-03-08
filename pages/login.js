@@ -212,16 +212,19 @@ const Login = inject('store')(observer((props) => {
             props.store.goToHexLogin()
             props.store.postData(`${props.store.url}/auth/`, { "email": props.store.loginValues.email, "password": props.store.loginValues.passwordHash }) // postData /auth
                 .then((data) => {
-                    //console.log(data)
-                    if (data.a == "Success") { //userId //"Success"
-                        props.store.setLoginValuesFalse()
-                        props.store.setLoginValuesUI("loginSuccess", true)
-                        const router = Router
-                        router.push('/app')
-                    } else if (data.a == "User doesn't exist") { //"User doesn't exist"
-                        props.store.setLoginValuesUI("errorEmail", true)
-                    } else if (data.a == "Wrong password") { //
-                        props.store.setLoginValuesUI("errorPassword", true)
+                    if ( data != undefined) {
+                        if (data.a == "Success") { //userId //"Success"
+                            props.store.setLoginValuesFalse()
+                            props.store.setLoginValuesUI("loginSuccess", true)
+                            const router = Router
+                            router.push('/app')
+                        } else if (data.a == "User doesn't exist") { //"User doesn't exist"
+                            props.store.setLoginValuesUI("errorEmail", true)
+                        } else if (data.a == "Wrong password") { //
+                            props.store.setLoginValuesUI("errorPassword", true)
+                        }
+                    } else {
+                        props.store.setLoginValuesUI("errorServer", true)
                     }
                 });
         }
@@ -315,6 +318,9 @@ const Login = inject('store')(observer((props) => {
                                 </Grid>}
                                 {props.store.loginValuesUI.error && <Grid item container direction="column" justifyContent="center" alignItems="flex-start" className={classes.gridForgotPassword}>
                                     <Typography className={classes.ErrorLabel}> Нужно ввести адрес почты и пароль! </Typography>
+                                </Grid>}
+                                {props.store.loginValuesUI.errorServer && <Grid item container direction="column" justifyContent="center" alignItems="flex-start" className={classes.gridForgotPassword}>
+                                    <Typography className={classes.ErrorLabel}> Ошибка сервера :( </Typography>
                                 </Grid>}
                                 <Grid item container direction="column" justifyContent="center" alignItems="flex-start" className={classes.gridForgotPassword}>
                                     <LinkUI className={classes.forgotPassword} href="/resetpassword/email">
