@@ -161,14 +161,14 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const Login = inject('store')(observer((props) => {
+const Login = inject('store')(observer(({ store }) => {
     const classes = useStyles();
     const handleChange = (prop) => (event) => {
-        props.store.setLoginValues(prop, event.target.value)
+        store.setLoginValues(prop, event.target.value)
         //setValues({ ...values, [prop]: event.target.value });
     };
     const handleClickShowPassword = () => {
-        props.store.setLoginValuesUI("showPassword", !props.store.loginValuesUI.showPassword)
+        store.setLoginValuesUI("showPassword", !store.loginValuesUI.showPassword)
     };
 
     const handleMouseDownPassword = (event) => {
@@ -188,48 +188,37 @@ const Login = inject('store')(observer((props) => {
         router.push('/registration')
     }
 
-    // React.useEffect(() => {
-    //     fetch('https://jsonplaceholder.typicode.com/users')
-    //         .then(response => response.json())
-    //         .then(data => console.log(data))
-
-    //     fetch('https://jsonplaceholder.typicode.com/users', {
-    //         method: 'POST',
-    //         body: JSON.stringify({
-    //             username: 'Elon Mask',
-    //             email: 'elonmusk@yandex.ru',
-    //             userId: 1
-    //         }),
-    //         headers: { "Content-Type": "application/json; charset=utf-8" }
-    //     })
-    //         .then(response => response.json())
-    //         .then(data => console.log(data))
-    // }, [])
+    React.useEffect(() => {
+        console.log(store.loginValues.email)
+        console.log(store.registrationValues.email)
+    }, [])
 
     const clickEnterButton = () => {
-        if (props.store.loginValues.email.length > 0 && props.store.loginValues.password.length > 0) {
-            props.store.setLoginValuesFalse()
-            props.store.goToHexLogin()
-            props.store.postData(`${props.store.url}/auth/`, { "email": props.store.loginValues.email, "password": props.store.loginValues.passwordHash }) // postData /auth
+        //console.log("clicked")
+        store.setLoginValuesFalse()
+        if (store.loginValues.email.length > 0 && store.loginValues.password.length > 0) {
+            
+            store.goToHexLogin()
+            store.postData(`${store.url}/auth/`, { "email": store.loginValues.email, "password": store.loginValues.passwordHash }) // postData /auth
                 .then((data) => {
-                    if ( data != undefined) {
+                    if (data != undefined) {
                         if (data.a == "Success") { //userId //"Success"
-                            props.store.setLoginValuesFalse()
-                            props.store.setLoginValuesUI("loginSuccess", true)
+                            store.setLoginValuesFalse()
+                            store.setLoginValuesUI("loginSuccess", true)
                             const router = Router
                             router.push('/app')
                         } else if (data.a == "User doesn't exist") { //"User doesn't exist"
-                            props.store.setLoginValuesUI("errorEmail", true)
+                            store.setLoginValuesUI("errorEmail", true)
                         } else if (data.a == "Wrong password") { //
-                            props.store.setLoginValuesUI("errorPassword", true)
+                            store.setLoginValuesUI("errorPassword", true)
                         }
                     } else {
-                        props.store.setLoginValuesUI("errorServer", true)
+                        store.setLoginValuesUI("errorServer", true)
                     }
                 });
         }
         else {
-            props.store.setLoginValuesUI("error", true)
+            store.setLoginValuesUI("error", true)
         }
     }
 
@@ -268,7 +257,7 @@ const Login = inject('store')(observer((props) => {
                                         <OutlinedInput
                                             className={classes.OutlinedInput}
                                             type='text'
-                                            value={props.store.loginValues.email}
+                                            value={store.loginValues.email}
                                             onChange={handleChange('email')}
                                             endAdornment={
                                                 <InputAdornment position="end">
@@ -286,7 +275,7 @@ const Login = inject('store')(observer((props) => {
                                         />
                                     </FormControl>
                                 </Grid>
-                                {props.store.loginValuesUI.errorEmail && <Grid item container direction="column" justifyContent="center" alignItems="flex-start" className={classes.gridForgotPassword}>
+                                {store.loginValuesUI.errorEmail && <Grid item container direction="column" justifyContent="center" alignItems="flex-start" className={classes.gridForgotPassword}>
                                     <Typography className={classes.ErrorLabel}> Пользователя с таким адресом почты не существует </Typography>
                                 </Grid>}
                                 <Grid item container direction="column" justifyContent="center" alignItems="flex-start" className={classes.gridTextField}>
@@ -294,8 +283,8 @@ const Login = inject('store')(observer((props) => {
                                         <InputLabel className={classes.inputLabel} htmlFor="outlined-adornment-password"> <Typography className={classes.textFieldTypography}>Пароль</Typography> </InputLabel>
                                         <OutlinedInput
                                             className={classes.OutlinedInput}
-                                            type={props.store.loginValuesUI.showPassword ? 'text' : 'password'}
-                                            value={props.store.loginValues.password}
+                                            type={store.loginValuesUI.showPassword ? 'text' : 'password'}
+                                            value={store.loginValues.password}
                                             onChange={handleChange('password')}
                                             endAdornment={
                                                 <InputAdornment position="end">
@@ -305,7 +294,7 @@ const Login = inject('store')(observer((props) => {
                                                         onMouseDown={handleMouseDownPassword}
                                                         edge="end"
                                                     >
-                                                        {props.store.loginValuesUI.showPassword ? <Visibility className={classes.icons} /> : <VisibilityOff className={classes.icons} />}
+                                                        {store.loginValuesUI.showPassword ? <Visibility className={classes.icons} /> : <VisibilityOff className={classes.icons} />}
                                                     </IconButton>
                                                 </InputAdornment>
                                             }
@@ -313,13 +302,13 @@ const Login = inject('store')(observer((props) => {
                                         />
                                     </FormControl>
                                 </Grid>
-                                {props.store.loginValuesUI.errorPassword && <Grid item container direction="column" justifyContent="center" alignItems="flex-start" className={classes.gridForgotPassword}>
+                                {store.loginValuesUI.errorPassword && <Grid item container direction="column" justifyContent="center" alignItems="flex-start" className={classes.gridForgotPassword}>
                                     <Typography className={classes.ErrorLabel}> Неправильный пароль </Typography>
                                 </Grid>}
-                                {props.store.loginValuesUI.error && <Grid item container direction="column" justifyContent="center" alignItems="flex-start" className={classes.gridForgotPassword}>
+                                {store.loginValuesUI.error && <Grid item container direction="column" justifyContent="center" alignItems="flex-start" className={classes.gridForgotPassword}>
                                     <Typography className={classes.ErrorLabel}> Нужно ввести адрес почты и пароль! </Typography>
                                 </Grid>}
-                                {props.store.loginValuesUI.errorServer && <Grid item container direction="column" justifyContent="center" alignItems="flex-start" className={classes.gridForgotPassword}>
+                                {store.loginValuesUI.errorServer && <Grid item container direction="column" justifyContent="center" alignItems="flex-start" className={classes.gridForgotPassword}>
                                     <Typography className={classes.ErrorLabel}> Ошибка сервера :( </Typography>
                                 </Grid>}
                                 <Grid item container direction="column" justifyContent="center" alignItems="flex-start" className={classes.gridForgotPassword}>

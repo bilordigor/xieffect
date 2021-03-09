@@ -152,7 +152,7 @@ const useStyles = makeStyles((theme) => ({
 
 
 
-const EmailReg = inject('store')(observer((props) => {
+const EmailReg = inject('store')(observer(({ store }) => {
     const classes = useStyles();
 
 
@@ -169,14 +169,18 @@ const EmailReg = inject('store')(observer((props) => {
     }
 
     const clickedNext = () => {
-        props.store.setRegistrationValuesFalse()
-        props.store.getData(`${props.store.url}/reg/${props.store.registrationValues.emailHash}/`)
+        store.setRegistrationValuesFalse()
+        store.getData(`${store.url}/reg/${store.registrationValues.emailHash}/`)
             .then((data) => {
-                if (data.a === true) {
-                    const router = Router
-                    router.push('/registration/step/user')
-                } else if (data.a === false) {
-                    props.store.setRegistrationValuesUI("isCheckedEmail", false)
+                if (data != undefined) {
+                    if (data.a === true) {
+                        const router = Router
+                        router.push('/registration/step/user')
+                    } else if (data.a === false) {
+                        store.setRegistrationValuesUI("isCheckedEmail", false)
+                    }
+                } else {
+                    store.setRegistrationValuesUI("errorServerEmail", true)
                 }
             });
 
@@ -219,8 +223,11 @@ const EmailReg = inject('store')(observer((props) => {
                                     </Button>
                                     {/* </Link > */}
                                 </Grid>
-                                {props.store.registrationValuesUI.isCheckedEmail && <Grid item container direction="column" justifyContent="center" alignItems="flex-start" className={classes.gridError}>
+                                {store.registrationValuesUI.isCheckedEmail && <Grid item container direction="column" justifyContent="center" alignItems="flex-start" className={classes.gridError}>
                                     <Typography className={classes.ErrorLabel}> Подтвердите вашу почту! Перейдите по ссылке в письме, которое мы отправили вам на почту.</Typography>
+                                </Grid>}
+                                {store.registrationValuesUI.errorServerEmail && <Grid item container direction="column" justifyContent="center" alignItems="flex-start" className={classes.gridError}>
+                                    <Typography className={classes.ErrorLabel}> Ошибка сервера :( </Typography>
                                 </Grid>}
                                 <Grid item container direction="column" justifyContent="center" alignItems="flex-start" className={classes.gridForgotRegistration}>
                                     <LinkUI className={classes.forgotRegistration} href="#" onClick={gotoAuth}>

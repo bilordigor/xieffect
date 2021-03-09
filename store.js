@@ -11,7 +11,7 @@ import FireplaceIcon from '@material-ui/icons/Fireplace';
 import PublicIcon from '@material-ui/icons/Public';
 import MessageIcon from '@material-ui/icons/Message';
 
-const axios = require('axios');
+//const axios = require('axios');
 
 let Crypto = require('crypto-js')
 
@@ -41,7 +41,6 @@ class Store {
 
   // "/login" (Вход)
   @observable loginValues = {
-    jwt: '',
     email: '',
     password: '',
     passwordHash: '',
@@ -112,7 +111,7 @@ class Store {
   }
 
   @action setLoginValuesUI = (name, value) => {
-    this.loginValues[name] = value
+    this.loginValuesUI[name] = value
   }
 
   @action setLoginValuesFalse = () => {
@@ -145,30 +144,36 @@ class Store {
     emailResetOkay: false,
     errorSymbolsReset: false,
     errorPasswordLengthReset: false,
+    errorServer: false,
+    errorServerEmail: false,
+    errorServerUser: false,
   }
 
   @action setRegistrationValuesUI = (name, value) => {
-    this.registrationValues[name] = value
+    this.registrationValuesUI[name] = value
   }
 
   @action setUserRegValuesFalse = () => {
-    this.registrationValues.isFirstName = false
-    this.registrationValues.errorSymFirstName = false
-    this.registrationValues.isSecondName = false
-    this.registrationValues.errorSymSecondName = false
-    this.registrationValues.isNickName = false
-    this.registrationValues.errorSymNickName = false
-    this.registrationValues.errorEmailReset = false
-    this.registrationValues.errorEmailNotFounedReset = false
-    this.registrationValues.errorSymbolsReset = false
-    this.registrationValues.errorPasswordLengthReset = false
+    this.registrationValuesUI.isFirstName = false
+    this.registrationValuesUI.errorSymFirstName = false
+    this.registrationValuesUI.isSecondName = false
+    this.registrationValuesUI.errorSymSecondName = false
+    this.registrationValuesUI.isNickName = false
+    this.registrationValuesUI.errorSymNickName = false
+    this.registrationValuesUI.errorEmailReset = false
+    this.registrationValuesUI.errorEmailNotFounedReset = false
+    this.registrationValuesUI.errorSymbolsReset = false
+    this.registrationValuesUI.errorPasswordLengthReset = false
   }
 
   @action setRegistrationValuesFalse = () => {
-    this.registrationValues.errorEmail = false
-    this.registrationValues.errorPasswordLength = false
-    this.registrationValues.errorSymbols = false
-    this.registrationValues.emailAlreadyUsed = false
+    this.registrationValuesUI.errorEmail = false
+    this.registrationValuesUI.errorPasswordLength = false
+    this.registrationValuesUI.errorSymbols = false
+    this.registrationValuesUI.emailAlreadyUsed = false
+    this.registrationValuesUI.errorServer = false
+    this.registrationValuesUI.errorServerEmail = false
+    this.registrationValuesUI.errorServerUser = false
   }
 
 

@@ -167,14 +167,14 @@ const useStyles = makeStyles((theme) => ({
 
 
 
-const Registration = inject('store')(observer((props) => {
+const Registration = inject('store')(observer(({ store }) => {
     const classes = useStyles();
     const handleChange = (prop) => (event) => {
-        props.store.setRegistrationValues(prop, event.target.value)
+        store.setRegistrationValues(prop, event.target.value)
         //setValues({ ...values, [prop]: event.target.value });
     };
     const handleClickShowPassword = () => {
-        props.store.setRegistrationValuesUI("showPassword", !props.store.registrationValuesUI.showPassword)
+        store.setRegistrationValuesUI("showPassword", !store.registrationValuesUI.showPassword)
     };
 
     const handleMouseDownPassword = (event) => {
@@ -193,33 +193,37 @@ const Registration = inject('store')(observer((props) => {
     }
 
     const clickRegistartionButton = () => {
-        props.store.setRegistrationValuesFalse()
+        store.setRegistrationValuesFalse()
         let sym = '1234567890qwertyuiopasdfghjklzxcvbnm_'
-        if (!props.store.registrationValues.email.includes('@') || !props.store.registrationValues.email.includes('.') || props.store.registrationValues.email.length < 5) {
-            props.store.setRegistrationValuesUI("errorEmail", true)
+        if (!store.registrationValues.email.includes('@') || !store.registrationValues.email.includes('.') || store.registrationValues.email.length < 5) {
+            store.setRegistrationValuesUI("errorEmail", true)
         }
-        if (props.store.registrationValues.password.length < 6) {
-            props.store.setRegistrationValuesUI("errorPasswordLength", true)
+        if (store.registrationValues.password.length < 6) {
+            store.setRegistrationValuesUI("errorPasswordLength", true)
         }
-        for (let i = 0; i < props.store.registrationValues.password.length; i++) {
-            if (sym.includes(props.store.registrationValues.password[i].toLowerCase())) continue
+        for (let i = 0; i < store.registrationValues.password.length; i++) {
+            if (sym.includes(store.registrationValues.password[i].toLowerCase())) continue
             else {
-                props.store.setRegistrationValuesUI("errorSymbols", true)
+                store.setRegistrationValuesUI("errorSymbols", true)
                 break
             }
         }
-        if (!props.store.registrationValuesUI.errorPasswordLength && !props.store.registrationValuesUI.errorSymbols && !props.store.registrationValuesUI.errorEmail) {
+        if (!store.registrationValuesUI.errorPasswordLength && !store.registrationValuesUI.errorSymbols && !store.registrationValuesUI.errorEmail) {
 
-            props.store.goToHex()
+            store.goToHex()
 
-            props.store.postData(`${props.store.url}/reg/${props.store.registrationValues.emailHash}/`, { "email": 1 }) ///registration/newemail
+            store.postData(`${store.url}/reg/${store.registrationValues.emailHash}/`, { "email": 1 }) ///registration/newemail
                 .then((data) => {
-                    if (data.a === true) { //true
-                        const router = Router
-                        router.push('/registration/step/email')
-                        setTimeout( () => props.store.setRegistrationValuesClear(), 1000)
-                    } else if (data.a === false) { //false
-                        props.store.setRegistrationValuesUI("emailAlreadyUsed", true)
+                    if (data != undefined) {
+                        if (data.a === true) { //true
+                            const router = Router
+                            router.push('/registration/step/email')
+                            setTimeout(() => store.setRegistrationValuesClear(), 1000)
+                        } else if (data.a === false) { //false
+                            store.setRegistrationValuesUI("emailAlreadyUsed", true)
+                        }
+                    } else {
+                        store.setRegistrationValuesUI("errorServer", true)
                     }
                 });
 
@@ -257,7 +261,7 @@ const Registration = inject('store')(observer((props) => {
                                         <OutlinedInput
                                             className={classes.OutlinedInput}
                                             type='text'
-                                            value={props.store.registrationValues.email}
+                                            value={store.registrationValues.email}
                                             onChange={handleChange('email')}
                                             endAdornment={
                                                 <InputAdornment position="end">
@@ -275,10 +279,10 @@ const Registration = inject('store')(observer((props) => {
                                         />
                                     </FormControl>
                                 </Grid>
-                                {props.store.registrationValuesUI.errorEmail && <Grid item container direction="column" justifyContent="center" alignItems="flex-start" className={classes.gridForgotPassword}>
+                                {store.registrationValuesUI.errorEmail && <Grid item container direction="column" justifyContent="center" alignItems="flex-start" className={classes.gridForgotPassword}>
                                     <Typography className={classes.ErrorLabel}> Некорректный адрес почты </Typography>
                                 </Grid>}
-                                {props.store.registrationValuesUI.emailAlreadyUsed && <Grid item container direction="column" justifyContent="center" alignItems="flex-start" className={classes.gridForgotPassword}>
+                                {store.registrationValuesUI.emailAlreadyUsed && <Grid item container direction="column" justifyContent="center" alignItems="flex-start" className={classes.gridForgotPassword}>
                                     <Typography className={classes.ErrorLabel}> Данный адрес электронной почты уже используется </Typography>
                                 </Grid>}
                                 <Grid item container direction="column" justifyContent="center" alignItems="flex-start" className={classes.gridTextField}>
@@ -286,8 +290,8 @@ const Registration = inject('store')(observer((props) => {
                                         <InputLabel className={classes.inputLabel} htmlFor="outlined-adornment-password"> <Typography className={classes.textFieldTypography}>Пароль</Typography> </InputLabel>
                                         <OutlinedInput
                                             className={classes.OutlinedInput}
-                                            type={props.store.registrationValues.showPassword ? 'text' : 'password'}
-                                            value={props.store.registrationValues.password}
+                                            type={store.registrationValuesUI.showPassword ? 'text' : 'password'}
+                                            value={store.registrationValues.password}
                                             onChange={handleChange('password')}
                                             endAdornment={
                                                 <InputAdornment position="end">
@@ -297,7 +301,7 @@ const Registration = inject('store')(observer((props) => {
                                                         onMouseDown={handleMouseDownPassword}
                                                         edge="end"
                                                     >
-                                                        {props.store.registrationValuesUI.showPassword ? <Visibility className={classes.icons} /> : <VisibilityOff className={classes.icons} />}
+                                                        {store.registrationValuesUI.showPassword ? <Visibility className={classes.icons} /> : <VisibilityOff className={classes.icons} />}
                                                     </IconButton>
                                                 </InputAdornment>
                                             }
@@ -308,11 +312,14 @@ const Registration = inject('store')(observer((props) => {
                                 <Grid item container direction="column" justifyContent="center" alignItems="flex-start" className={classes.gridForgotPassword}>
                                     <Typography className={classes.AboutLabel}> Минимальная длина: 6 символов. Используйте латинские буквы, цифры и знак нижнего подчёркивания.</Typography>
                                 </Grid>
-                                {props.store.registrationValuesUI.errorPasswordLength && <Grid item container direction="column" justifyContent="center" alignItems="flex-start" className={classes.gridForgotPassword}>
+                                {store.registrationValuesUI.errorPasswordLength && <Grid item container direction="column" justifyContent="center" alignItems="flex-start" className={classes.gridForgotPassword}>
                                     <Typography className={classes.ErrorLabel}> Недопустим пароль менее 6 символов </Typography>
                                 </Grid>}
-                                {props.store.registrationValuesUI.errorSymbols && <Grid item container direction="column" justifyContent="center" alignItems="flex-start" className={classes.gridForgotPassword}>
+                                {store.registrationValuesUI.errorSymbols && <Grid item container direction="column" justifyContent="center" alignItems="flex-start" className={classes.gridForgotPassword}>
                                     <Typography className={classes.ErrorLabel}> Недопустимые символы в пароле </Typography>
+                                </Grid>}
+                                {store.registrationValuesUI.errorServer && <Grid item container direction="column" justifyContent="center" alignItems="flex-start" className={classes.gridForgotPassword}>
+                                    <Typography className={classes.ErrorLabel}> Ошибка сервера :( </Typography>
                                 </Grid>}
                                 {/* { values.error && <Grid item container direction="column" justifyContent="center" alignItems="flex-start" className={classes.gridForgotPassword}>
                                 <Typography className={classes.ErrorLabel}> Неправильное имя пользователя или пароль </Typography>
