@@ -72,23 +72,44 @@ const useStyles = makeStyles((theme) => ({
         marginLeft: 12,
         marginRight: 0,
         width: "calc(100% - 160px)",
-        //backgroundColor: 'rgb(49,51,57)',
+        backgroundColor: 'rgb(49,51,57)',
     },
     OutlinedInput: {
+        zIndex: 999,
         color: theme.main.palette.content.text,
-    }, 
+    },
     icons: {
         //color: 'rgb(142,146,151)',
     },
+    inputLabel: {
+        zIndex: 999,
+        color: 'rgb(142,146,151)',
+
+    },
+    textFieldTypography: {
+        zIndex: 999,
+        marginTop: -4,
+        color: 'rgb(142,146,151)',
+    },
+    gridTextField: {
+        paddingTop: 12,
+    },
+    gridSelectButton: {
+        paddingTop: 6,
+        paddingLeft: 12,
+    },
+    popper: {
+        zIndex: 1000,
+    }
 
 
 }));
 
-const UserAccount = inject('store')(observer((props) => {
+const UserAccount = inject('store')(observer(({ store }) => {
     const classes = useStyles();
 
     const handleChange = (name) => (event) => {
-        props.store.setRegistrationValues( name, event.target.value)
+        store.setSettingsValues(name, event.target.value)
     };
 
     // const [isDarkMode, setIsDarkMode] = useState(() => false);
@@ -113,7 +134,7 @@ const UserAccount = inject('store')(observer((props) => {
 
     const handleMenuItemClick = (event, index) => {
         setSelectedIndex(index);
-        props.store.setUserDataValues("userRole", options[index])
+        store.setSettingsValues("role", index)
         setOpen(false);
     };
 
@@ -141,76 +162,76 @@ const UserAccount = inject('store')(observer((props) => {
                     alignItems="center"
                 >
                     {/* <Grid> */}
-                        <ImageUploading
-                            multiple
-                            value={images}
-                            onChange={onChange}
-                            maxNumber={maxNumber}
-                            dataURLKey="data_url"
-                        >
-                            {({
-                                imageList,
-                                onImageUpload,
-                                onImageRemoveAll,
-                                onImageUpdate,
-                                onImageRemove,
-                                isDragging,
-                                dragProps
-                            }) => (
-                                <>
-                                    <Button onClick={onImageUpload} {...dragProps}>
-                                        <Badge
-                                            className={classes.Badge}
-                                            overlap="circular"
-                                            anchorOrigin={{
-                                                vertical: 'bottom',
-                                                horizontal: 'right',
-                                            }}
-                                            badgeContent={
-                                                <UploadFileIcon className={classes.Icon} />
-                                            }
-                                        >
-                                            <div className={classes.background}>
-                                                <Image
-                                                    //alt={alt}
-                                                    src="/enot.jpg"
-                                                    layout="fill"
-                                                    objectFit="cover"
-                                                    quality={100}
-                                                />
-                                            </div>
-                                        </Badge>
-                                    </Button>
-                                </>
-                            )}
-                        </ImageUploading>
+                    <ImageUploading
+                        multiple
+                        value={images}
+                        onChange={onChange}
+                        maxNumber={maxNumber}
+                        dataURLKey="data_url"
+                    >
+                        {({
+                            imageList,
+                            onImageUpload,
+                            onImageRemoveAll,
+                            onImageUpdate,
+                            onImageRemove,
+                            isDragging,
+                            dragProps
+                        }) => (
+                            <>
+                                <Button onClick={onImageUpload} {...dragProps}>
+                                    <Badge
+                                        className={classes.Badge}
+                                        overlap="circular"
+                                        anchorOrigin={{
+                                            vertical: 'bottom',
+                                            horizontal: 'right',
+                                        }}
+                                        badgeContent={
+                                            <UploadFileIcon className={classes.Icon} />
+                                        }
+                                    >
+                                        <div className={classes.background}>
+                                            <Image
+                                                //alt={alt}
+                                                src="/enot.jpg"
+                                                layout="fill"
+                                                objectFit="cover"
+                                                quality={100}
+                                            />
+                                        </div>
+                                    </Badge>
+                                </Button>
+                            </>
+                        )}
+                    </ImageUploading>
                     {/* </Grid>
                     <Grid> */}
-                        <FormControl className={classes.textField} variant="outlined">
-                            {/* <InputLabel className={classes.inputLabel} htmlFor="outlined-adornment-password"> <Typography className={classes.textFieldTypography}>Имя пользователя</Typography> </InputLabel> */}
-                            <OutlinedInput
-                                className={classes.OutlinedInput}
-                                type='text'
-                                value="bilord"
-                                onChange={handleChange('username')}
-                                endAdornment={  
-                                    <InputAdornment position="end">
-                                        <IconButton
-                                            aria-label="toggle password visibility"
-                                            // onClick={handleClickShowPassword}
-                                            // onMouseDown={handleMouseDownPassword}
-                                            edge="end"
-                                        >
-                                            <Tooltip title="Сохранить изменения" arrow>
-                                                <SaveIcon className={classes.icons} />
-                                            </Tooltip>
-                                        </IconButton>
-                                    </InputAdornment>
-                                }
-                                //labelWidth={210}
+                    <FormControl className={classes.textField} variant="outlined">
+                        <InputLabel className={classes.inputLabel} htmlFor="outlined-adornment-password"> <Typography className={classes.textFieldTypography}>Имя пользователя</Typography> </InputLabel>
+                        <OutlinedInput
+                            className={classes.OutlinedInput}
+                            type='text'
+                            value={store.settingsNew.username}
+                            onChange={handleChange('username')}
+                            // endAdornment={  
+                            //     <InputAdornment position="end">
+                            //         <IconButton
+                            //             aria-label="toggle password visibility"
+                            //             // onClick={handleClickShowPassword}
+                            //             // onMouseDown={handleMouseDownPassword}
+                            //             edge="end"
+                            //         >
+                            //             <Tooltip title="Сохранить изменения" arrow>
+                            //                 <SaveIcon className={classes.icons} />
+                            //             </Tooltip>
+                            //         </IconButton>
+                            //     </InputAdornment>
+                            // }
+                            labelWidth={210}
 
-                            />
-                        </FormControl>
+                        />
+                    </FormControl>
                     {/* </Grid> */}
 
                 </Grid>
@@ -222,9 +243,9 @@ const UserAccount = inject('store')(observer((props) => {
                     justifyContent="flex-start"
                     alignItems="center"
                 >
-                    <Grid item>
+                    <Grid item container className={classes.gridSelectButton}>
                         <ButtonGroup variant="contained" color="primary" ref={anchorRef} aria-label="split button">
-                            <Button onClick={handleClick}>{options[selectedIndex]}</Button>
+                            <Button onClick={handleClick}>{options[store.settingsNew.role]}</Button>
                             <Button
                                 color="primary"
                                 size="small"
@@ -252,7 +273,7 @@ const UserAccount = inject('store')(observer((props) => {
                                                     <MenuItem
                                                         key={option}
                                                         // disabled={index === 2}
-                                                        selected={index === selectedIndex}
+                                                        selected={index === store.settingsNew.role}
                                                         onClick={(event) => handleMenuItemClick(event, index)}
                                                     >
                                                         {option}
@@ -265,10 +286,92 @@ const UserAccount = inject('store')(observer((props) => {
                             )}
                         </Popper>
                     </Grid>
-                    <Grid item>
+                    {(store.settingsNew.role === 1 || store.settingsNew.role === 2 || store.settingsNew.role === 4) && <>
+                        <Grid item container className={classes.gridTextField}>
+                            <FormControl className={classes.textField} variant="outlined">
+                                <InputLabel className={classes.inputLabel} htmlFor="outlined-adornment-password"> <Typography className={classes.textFieldTypography}>Имя</Typography> </InputLabel>
+                                <OutlinedInput
+                                    className={classes.OutlinedInput}
+                                    type='text'
+                                    value={store.settingsNew.firstName}
+                                    onChange={handleChange('firstName')}
+                                    // endAdornment={  
+                                    //     <InputAdornment position="end">
+                                    //         <IconButton
+                                    //             aria-label="toggle password visibility"
+                                    //             // onClick={handleClickShowPassword}
+                                    //             // onMouseDown={handleMouseDownPassword}
+                                    //             edge="end"
+                                    //         >
+                                    //             <Tooltip title="Сохранить изменения" arrow>
+                                    //                 <SaveIcon className={classes.icons} />
+                                    //             </Tooltip>
+                                    //         </IconButton>
+                                    //     </InputAdornment>
+                                    // }
+                                    labelWidth={210}
 
-                    </Grid>
+                                />
+                            </FormControl>
+                        </Grid>
+                        <Grid item container className={classes.gridTextField}>
+                            <FormControl className={classes.textField} variant="outlined">
+                                <InputLabel className={classes.inputLabel} htmlFor="outlined-adornment-password"> <Typography className={classes.textFieldTypography}>Фамилия</Typography> </InputLabel>
+                                <OutlinedInput
+                                    className={classes.OutlinedInput}
+                                    type='text'
+                                    value={store.settingsNew.secondName}
+                                    onChange={handleChange('secondName')}
+                                    // endAdornment={  
+                                    //     <InputAdornment position="end">
+                                    //         <IconButton
+                                    //             aria-label="toggle password visibility"
+                                    //             // onClick={handleClickShowPassword}
+                                    //             // onMouseDown={handleMouseDownPassword}
+                                    //             edge="end"
+                                    //         >
+                                    //             <Tooltip title="Сохранить изменения" arrow>
+                                    //                 <SaveIcon className={classes.icons} />
+                                    //             </Tooltip>
+                                    //         </IconButton>
+                                    //     </InputAdornment>
+                                    // }
+                                    labelWidth={210}
 
+                                />
+                            </FormControl>
+                        </Grid>
+                        <Grid item container className={classes.gridTextField}>
+                            <FormControl className={classes.textField} variant="outlined">
+                                <InputLabel className={classes.inputLabel} htmlFor="outlined-adornment-password"> <Typography className={classes.textFieldTypography}>Отчество</Typography> </InputLabel>
+                                <OutlinedInput
+                                    className={classes.OutlinedInput}
+                                    type='text'
+                                    value={store.settingsNew.patronymic}
+                                    onChange={handleChange('patronymic')}
+                                    // endAdornment={  
+                                    //     <InputAdornment position="end">
+                                    //         <IconButton
+                                    //             aria-label="toggle password visibility"
+                                    //             // onClick={handleClickShowPassword}
+                                    //             // onMouseDown={handleMouseDownPassword}
+                                    //             edge="end"
+                                    //         >
+                                    //             <Tooltip title="Сохранить изменения" arrow>
+                                    //                 <SaveIcon className={classes.icons} />
+                                    //             </Tooltip>
+                                    //         </IconButton>
+                                    //     </InputAdornment>
+                                    // }
+                                    labelWidth={210}
+
+                                />
+                            </FormControl>
+                        </Grid>
+                    </>}
+
+                </Grid>
+                <Grid item container>
 
                 </Grid>
                 <Divider className={classes.divider} />

@@ -78,6 +78,7 @@ const MyApp = (observer(({ Component, pageProps }) => {
         help: {
           red: dark ? '#b71c1c' : '#e57373',
           redbackground: dark ? 'rgb(183, 28, 28, .2)' : 'rgb(229, 115, 115, .2)',
+          green: dark ? '#357a38' : '#4caf50',
         }
       }
     }

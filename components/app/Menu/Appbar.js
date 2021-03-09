@@ -123,6 +123,12 @@ const useStyles = makeStyles((theme) => ({
         color: theme.main.palette.header.text,
         backgroundColor: theme.main.palette.header.main,
     },
+    saveButtom: {
+        backgroundColor: theme.main.palette.help.green,
+        '&:hover': {
+            backgroundColor: theme.main.palette.help.green,
+        }
+    }
 }));
 
 const Appbar = inject('store')(observer((props) => {
@@ -143,6 +149,10 @@ const Appbar = inject('store')(observer((props) => {
     };
 
     const router = useRouter()
+
+    const clickSaveButton = () => {
+
+    }
 
     return (
         <>
@@ -228,6 +238,17 @@ const Appbar = inject('store')(observer((props) => {
                                 <AddIcon />
                             </Fab>
                         </LightTooltip> */}
+                    </>
+
+                }
+                {
+                    router.pathname === '/app/settings' && <>
+                        <Tooltip title="Сохранить все изменения в настройках" arrow>
+                            <Button onClick={clickSaveButton} variant="contained" color="primary" className={classes.saveButtom}>
+                                Сохранить изменения
+                            </Button>
+                        </Tooltip>
+
                     </>
 
                 }

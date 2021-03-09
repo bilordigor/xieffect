@@ -1,7 +1,7 @@
 import Head from 'next/head'
 import Link from 'next/link'
 import Router from 'next/router'
-import * as React from 'react';
+import React from 'react';
 import { Alert, Divider, Paper, Grid, AppBar, Toolbar, Typography, CssBaseline, useScrollTrigger, Box, Container, Fab, Zoom, Button, Hidden } from '@material-ui/core';
 import { makeStyles, useTheme } from '@material-ui/core/styles'
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp'

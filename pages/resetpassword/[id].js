@@ -186,18 +186,18 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-const PasswordReset = inject('store')(observer((props) => {
+const PasswordReset = inject('store')(observer(({store}) => {
     const classes = useStyles();
     const theme = useTheme();
     const router = useRouter()
     const { id } = router.query
 
     const handleChange = (prop) => (event) => {
-        props.store.setRegistrationValues(prop, event.target.value)
+        store.setRegistrationValues(prop, event.target.value)
         //setValues({ ...values, [prop]: event.target.value });
     };
     const handleClickShowPassword = () => {
-        props.store.setRegistrationValues("showPassword", !props.store.registrationValues.showPassword)
+        store.setRegistrationValuesUI("showPassword", !store.registrationValuesUI.showPassword)
     };
 
     const handleMouseDownPassword = (event) => {
@@ -245,28 +245,28 @@ const PasswordReset = inject('store')(observer((props) => {
     // }
 
     const acceptButtonClicked = () => {
-        props.store.setRegistrationValuesFalse()
+        store.setRegistrationValuesFalse()
         //console.log(props.store.registrationValues)
         let sym = '1234567890qwertyuiopasdfghjklzxcvbnm_'
-        if (props.store.registrationValues.passwordReset.length < 6) {
-            props.store.setRegistrationValues("errorPasswordLengthReset", true)
+        if (store.registrationValues.passwordReset.length < 6) {
+            store.setRegistrationValuesUI("errorPasswordLengthReset", true)
             //console.log('length error')
         }
-        for (let i = 0; i < props.store.registrationValues.passwordReset.length; i++) {
-            if (sym.includes(props.store.registrationValues.passwordReset[i].toLowerCase())) continue
+        for (let i = 0; i < store.registrationValues.passwordReset.length; i++) {
+            if (sym.includes(store.registrationValues.passwordReset[i].toLowerCase())) continue
             else {
-                props.store.setRegistrationValues("errorSymbolsReset", true)
+                store.setRegistrationValuesUI("errorSymbolsReset", true)
                 //console.log('sym error')
                 break
             }
         }
-        if (!props.store.registrationValues.errorSymbolsReset && !props.store.registrationValues.errorPasswordLengthReset) {
-            props.store.postData(`${props.store.url}/password-reset/confirm/`, { "code": id, "password": props.store.registrationValues.passwordReset, })
+        if (!store.registrationValuesUI.errorSymbolsReset && !store.registrationValuesUI.errorPasswordLengthReset) {
+            store.postData(`${store.url}/password-reset/confirm/`, { "code": id, "password": store.registrationValues.passwordReset, })
                 .then((data) => {
                     //console.log(data)
                     if (data != undefined) {
                         if (data.a === true) { //"Success"
-                            props.store.setRegistrationValues("emailResetOkay", true)
+                            store.setRegistrationValuesUI("emailResetOkay", true)
                         }
                     }
                 })
@@ -305,8 +305,8 @@ const PasswordReset = inject('store')(observer((props) => {
                                         <InputLabel className={classes.inputLabel} htmlFor="outlined-adornment-password"> <Typography className={classes.textFieldTypography}>Новый пароль</Typography> </InputLabel>
                                         <OutlinedInput
                                             className={classes.OutlinedInput}
-                                            type={props.store.registrationValues.showPassword ? 'text' : 'password'}
-                                            value={props.store.registrationValues.passwordReset}
+                                            type={store.registrationValuesUI.showPassword ? 'text' : 'password'}
+                                            value={store.registrationValues.passwordReset}
                                             onChange={handleChange('passwordReset')}
                                             endAdornment={
                                                 <InputAdornment position="end">
@@ -316,7 +316,7 @@ const PasswordReset = inject('store')(observer((props) => {
                                                         onMouseDown={handleMouseDownPassword}
                                                         edge="end"
                                                     >
-                                                        {props.store.registrationValues.showPassword ? <Visibility className={classes.icons} /> : <VisibilityOff className={classes.icons} />}
+                                                        {props.store.registrationValuesUI.showPassword ? <Visibility className={classes.icons} /> : <VisibilityOff className={classes.icons} />}
                                                     </IconButton>
                                                 </InputAdornment>
                                             }
@@ -328,20 +328,20 @@ const PasswordReset = inject('store')(observer((props) => {
                                 {/* {props.store.registrationValues.isNickName && <Grid item container direction="column" justifyContent="center" alignItems="flex-start" className={classes.gridError}>
                                     <Typography className={classes.errorSymNickName}> Недопустимые символы! </Typography>
                                 </Grid>} */}
-                                {props.store.registrationValues.errorSymbolsReset && <Grid item container direction="column" justifyContent="center" alignItems="flex-start" className={classes.gridForgotPassword}>
+                                {store.registrationValuesUI.errorSymbolsReset && <Grid item container direction="column" justifyContent="center" alignItems="flex-start" className={classes.gridForgotPassword}>
                                     <Typography className={classes.ErrorLabel}> Недопустимые символы!</Typography>
                                 </Grid>}
-                                {props.store.registrationValues.errorPasswordLengthReset && <Grid item container direction="column" justifyContent="center" alignItems="flex-start" className={classes.gridForgotPassword}>
+                                {store.registrationValuesUI.errorPasswordLengthReset && <Grid item container direction="column" justifyContent="center" alignItems="flex-start" className={classes.gridForgotPassword}>
                                     <Typography className={classes.ErrorLabel}> Минимальная длинна пароля - 6 символов!</Typography>
                                 </Grid>}
-                                {!props.store.registrationValues.emailResetOkay && <>
+                                {!store.registrationValuesUI.emailResetOkay && <>
                                     <Grid item container direction="column" justifyContent="center" alignItems="center" className={classes.gridEnterButtom}>
                                         <Button onClick={acceptButtonClicked} variant="contained" color="primary" className={classes.enterButtom}>
                                             Сохранить новый пароль
                                     </Button>
                                     </Grid>
                                 </>}
-                                {props.store.registrationValues.emailResetOkay && <>
+                                {store.registrationValuesUI.emailResetOkay && <>
                                     <Grid item container direction="column" justifyContent="center" alignItems="center" className={classes.gridTypography}>
                                         <Typography className={classes.typographyMainlySuccess}> Пароль успешно сохранён. С этой страницы можно безопасно уходить  </Typography>
                                     </Grid>

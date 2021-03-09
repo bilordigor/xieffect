@@ -191,11 +191,11 @@ const useStyles = makeStyles((theme) => ({
 
 
 
-const PassResetEmail = inject('store')(observer((props) => {
+const PassResetEmail = inject('store')(observer(({store}) => {
     const classes = useStyles();
 
     const handleChange = (name) => (event) => {
-        props.store.setRegistrationValues(name, event.target.value)
+        store.setRegistrationValues(name, event.target.value)
     };
 
     const gotoAuth = (event) => {
@@ -217,7 +217,7 @@ const PassResetEmail = inject('store')(observer((props) => {
 
     const handleMenuItemClick = (event, index) => {
         setSelectedIndex(index);
-        props.store.setUserDataValues("userRole", options[index])
+        store.setUserDataValues("userRole", options[index])
         setOpen(false);
     };
 
@@ -239,21 +239,21 @@ const PassResetEmail = inject('store')(observer((props) => {
     }
 
     const clickRegistartionButton = () => {
-        props.store.setUserRegValuesFalse()
-        if (!props.store.registrationValues.emailReset.includes('@') || !props.store.registrationValues.emailReset.includes('.') || props.store.registrationValues.emailReset.length < 5) {
-            props.store.setRegistrationValuesUI("errorEmailReset", true)
+        store.setUserRegValuesFalse()
+        if (!store.registrationValues.emailReset.includes('@') || !store.registrationValues.emailReset.includes('.') || store.registrationValues.emailReset.length < 5) {
+            store.setRegistrationValuesUI("errorEmailReset", true)
         }
         //if (!props.store.registrationValues.isFirstName && !props.store.registrationValues.isSecondName && !props.store.registrationValues.isNickName && !props.store.registrationValues.errorSymNickName && !props.store.registrationValues.errorSymSecondName && !props.store.registrationValues.errorSymFirstName) {
-        if (!props.store.registrationValuesUI.errorEmailReset && !props.store.registrationValuesUI.errorEmailNotFounedReset) {
+        if (!store.registrationValuesUI.errorEmailReset && !store.registrationValuesUI.errorEmailNotFounedReset) {
             //props.store.goToHex()
 
-            props.store.getData(`${props.store.url}/password-reset/${props.store.registrationValues.emailReset}/`)
+            store.getData(`${store.url}/password-reset/${store.registrationValues.emailReset}/`)
                 .then((data) => {
                     if (data != undefined) {
                         if (data.a === true) { //true
-                            props.store.setRegistrationValuesUI("emailResetOk", true)
+                            store.setRegistrationValuesUI("emailResetOk", true)
                         } else if (data.a === false) {
-                            props.store.setRegistrationValuesUI("errorEmailNotFounedReset", true)
+                            store.setRegistrationValuesUI("errorEmailNotFounedReset", true)
                         }
                     }
                 });
@@ -294,7 +294,7 @@ const PassResetEmail = inject('store')(observer((props) => {
                                         <OutlinedInput
                                             className={classes.OutlinedInput}
                                             type='text'
-                                            value={props.store.registrationValues.emailReset}
+                                            value={store.registrationValues.emailReset}
                                             onChange={handleChange('emailReset')}
                                             endAdornment={
                                                 <InputAdornment position="end">
@@ -318,20 +318,20 @@ const PassResetEmail = inject('store')(observer((props) => {
                                 {/* {props.store.registrationValues.isNickName && <Grid item container direction="column" justifyContent="center" alignItems="flex-start" className={classes.gridError}>
                                     <Typography className={classes.errorSymNickName}> Недопустимые символы! </Typography>
                                 </Grid>} */}
-                                {props.store.registrationValuesUI.errorEmailReset && <Grid item container direction="column" justifyContent="center" alignItems="flex-start" className={classes.gridForgotPassword}>
+                                {store.registrationValuesUI.errorEmailReset && <Grid item container direction="column" justifyContent="center" alignItems="flex-start" className={classes.gridForgotPassword}>
                                     <Typography className={classes.ErrorLabel}> Некорректный адрес почты</Typography>
                                 </Grid>}
-                                {props.store.registrationValuesUI.errorEmailNotFounedReset && <Grid item container direction="column" justifyContent="center" alignItems="flex-start" className={classes.gridForgotPassword}>
+                                {store.registrationValuesUI.errorEmailNotFounedReset && <Grid item container direction="column" justifyContent="center" alignItems="flex-start" className={classes.gridForgotPassword}>
                                     <Typography className={classes.ErrorLabel}> Пользователя с таким адресом электронной почты не существует</Typography>
                                 </Grid>}
-                                {!props.store.registrationValuesUI.emailResetOk && <>
+                                {!store.registrationValuesUI.emailResetOk && <>
                                     <Grid item container direction="column" justifyContent="center" alignItems="center" className={classes.gridEnterButtom}>
                                         <Button onClick={clickRegistartionButton} variant="contained" color="primary" className={classes.enterButtom}>
                                             Отправить письмо
                                         </Button>  
                                     </Grid>
                                 </>}
-                                {props.store.registrationValuesUI.emailResetOk && <>
+                                {store.registrationValuesUI.emailResetOk && <>
                                     <Grid item container direction="column" justifyContent="center" alignItems="center" className={classes.gridTypography}>
                                         <Typography className={classes.typographyMainlySuccess}> Письмо отправлено. С этой страницы можно безопасно уходить  </Typography>
 

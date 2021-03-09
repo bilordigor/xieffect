@@ -87,6 +87,38 @@ class Store {
     this.registrationValues.emailHash = this.registrationValues.email
   }
 
+  // "/app/settinds"
+
+  @observable settings = {
+    avatar: '',
+    username: '',
+    role: 0,
+    firstName: '',
+    secondName: '',
+    patronymic: '',
+    email: '',
+    password: '',
+    darkTheme: true,
+    appLanguage: '',
+  }
+
+  @observable settingsNew = {
+    avatar: '',
+    username: '',
+    role: 0,
+    firstName: '',
+    secondName: '',
+    patronymic: '',
+    email: '',
+    password: '',
+    darkTheme: true,
+    appLanguage: '',
+  }
+
+  @action setSettingsValues = (name, value) => {
+    this.settingsNew[name] = value
+  }
+
   // // UI Data and Functions
   // "/" (main page) 
   @observable alertData = {

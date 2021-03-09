@@ -1,3 +1,4 @@
+import React from 'react';
 import { Divider, withStyles, Paper, Grid, FormControlLabel, makeStyles, useTheme, Menu, Hidden, IconButton, InputBase, Switch, Typography } from '@material-ui/core'
 import Head from 'next/head'
 // import DialogsList from '../../components/FriendsPage/DialogsList';
@@ -9,6 +10,8 @@ import Page from 'react-page-loading'
 import NavigationAll from '../../../components/app/Menu/NavigationAll';
 import SettingsUp from '../../../components/app/Menu/Dialog/SettingsUp';
 import SettingsDown from '../../../components/app/Menu/Dialog/SettingsDown';
+import { inject, observer } from 'mobx-react'
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -20,9 +23,23 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Friends() {
+const Settings = inject('store')(observer(({ store }) => {
   const classes = useStyles();
   const theme = useTheme();
+
+  React.useEffect(() => {
+    store.getData(`${store.url}/settings/`)
+      .then((data) => {
+        //console.log(data)
+        if (data != undefined) {
+          store.settings = data
+          store.settingsNew = data 
+        } else {
+          console.log( "Проблемы с сервером" )
+        }
+      });
+
+  }, [])
 
   return (
     <>
@@ -32,14 +49,16 @@ export default function Friends() {
       <NavigationAll>
         <div className={classes.root}>
           <Hidden mdUp>
-                <SettingsDown/>
+            <SettingsDown />
           </Hidden>
           <Hidden mdDown>
-                <SettingsUp/>
+            <SettingsUp />
           </Hidden>
         </div>
       </NavigationAll>
 
     </>
   )
-}
+}))
+
+export default Settings
