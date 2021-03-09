@@ -189,8 +189,7 @@ const Login = inject('store')(observer(({ store }) => {
     }
 
     React.useEffect(() => {
-        console.log(store.loginValues.email)
-        console.log(store.registrationValues.email)
+        
     }, [])
 
     const clickEnterButton = () => {
