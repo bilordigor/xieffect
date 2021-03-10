@@ -31,7 +31,10 @@ const Settings = inject('store')(observer(({ store }) => {
     store.getData(`${store.url}/settings/`)
       .then((data) => {
         console.log(data)
-        if (data != undefined) {
+        if (data.message != undefined) {
+          console.log( "Проблемы с сервером" )
+        }
+        else if (data != undefined) {
           store.settings = data
           store.settingsNew = data 
         } else {
