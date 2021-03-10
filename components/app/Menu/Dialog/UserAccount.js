@@ -11,7 +11,6 @@ import SaveIcon from '@material-ui/icons/Save';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 
 
-const options = ['Участник', 'Ученик', 'Преподаватель', 'Автор', 'Родитель'];
 
 
 const SmallAvatar = withStyles((theme) => ({
@@ -107,6 +106,8 @@ const useStyles = makeStyles((theme) => ({
 
 const UserAccount = inject('store')(observer(({ store }) => {
     const classes = useStyles();
+    const options = ['Участник', 'Ученик', 'Преподаватель', 'Автор', 'Родитель'];
+
 
     const handleChange = (name) => (event) => {
         store.setSettingsValues(name, event.target.value)
@@ -133,6 +134,7 @@ const UserAccount = inject('store')(observer(({ store }) => {
     };
 
     const handleMenuItemClick = (event, index) => {
+        console.log( "click" )
         store.setSettingsValues("role", index)
         setOpen(false);
     };
