@@ -30,7 +30,7 @@ const Settings = inject('store')(observer(({ store }) => {
   React.useEffect(() => {
     store.getData(`${store.url}/settings/`)
       .then((data) => {
-        //console.log(data)
+        console.log(data)
         if (data != undefined) {
           store.settings = data
           store.settingsNew = data 
