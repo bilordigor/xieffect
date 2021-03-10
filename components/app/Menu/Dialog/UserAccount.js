@@ -126,14 +126,13 @@ const UserAccount = inject('store')(observer(({ store }) => {
 
     const [open, setOpen] = React.useState(false);
     const anchorRef = React.useRef(null);
-    const [selectedIndex, setSelectedIndex] = React.useState(0);
+    //const [selectedIndex, setSelectedIndex] = React.useState(0);
 
     const handleClick = () => {
         //console.info(`You clicked ${options[selectedIndex]}`);
     };
 
     const handleMenuItemClick = (event, index) => {
-        setSelectedIndex(index);
         store.setSettingsValues("role", index)
         setOpen(false);
     };
