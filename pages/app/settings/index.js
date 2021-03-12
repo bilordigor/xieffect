@@ -46,6 +46,7 @@ const Settings = inject('store')(observer(({ store }) => {
         //   console.log(data.message)
         // }
         if (data != undefined) {
+          console.log(data)
           // store.settings = data
           // store.settingsNew = data
           store.SettingsNew.username = data.username
