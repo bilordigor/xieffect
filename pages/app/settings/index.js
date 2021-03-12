@@ -58,7 +58,7 @@ const Settings = inject('store')(observer(({ store }) => {
           //store.SettingsNew.username = data.username
           //store.SettingsNew.email = data.email
           store.setSettingsEmailValues()
-          console.log(store.SettingsNew)
+          console.log(store.settingsNew)
         } else {
           console.log("Проблемы с сервером")
         }
