@@ -105,6 +105,11 @@ class Store {
     appLanguage: '',
   }
 
+  @action setSettingsValues = (name, value) => {
+    this.settings[name] = value
+  }
+
+
   @observable settingsNew = {
     avatar: '',
     username: '',
@@ -121,7 +126,7 @@ class Store {
     language: '',
   }
 
-  @action setSettingsValues = (name, value) => {
+  @action setSettingsNewValues = (name, value) => {
     this.settingsNew[name] = value
   }
 

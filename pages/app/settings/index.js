@@ -47,11 +47,17 @@ const Settings = inject('store')(observer(({ store }) => {
         // }
         if (data != undefined) {
           console.log(data)
+          store.setSettingsNewValues("username", data.username)
+          store.setSettingsNewValues("email", data.email)
+          store.setSettingsNewValues("darkTheme", data["dark-theme"])
+          store.setSettingsValues("username", data.username)
+          store.setSettingsValues("email", data.email)
+          store.setSettingsValues("darkTheme", data["dark-theme"])
           // store.settings = data
           // store.settingsNew = data
           //store.SettingsNew.username = data.username
           //store.SettingsNew.email = data.email
-          //store.setSettingsEmailValues()
+          store.setSettingsEmailValues()
           console.log(store.SettingsNew)
         } else {
           console.log("Проблемы с сервером")
