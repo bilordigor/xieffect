@@ -418,8 +418,8 @@ const UserAccount = inject('store')(observer(({ store }) => {
                         {!store.settingsUI.hiddenEmail && <Typography className={classes.labelEmailBefore}> {store.settingsNew.emailBefore} </Typography>}
                         {store.settingsUI.hiddenEmail && <Typography className={classes.labelEmailBefore}> {"*".repeat(store.settingsNew.emailBefore.length)} </Typography>}
                         <Typography className={classes.labelEmailAfter}> {store.settingsNew.emailAfter} </Typography>
-                        {store.settingsUI.hiddenEmail && <Link className={classes.link} onClick={() => store.setSettingsUIValues("hiddenEmail", true)}> Показать </Link>}
-                        {!store.settingsUI.hiddenEmail && <Link className={classes.link} onClick={() => store.setSettingsUIValues("hiddenEmail", false)}> Скрыть </Link>}
+                        {store.settingsUI.hiddenEmail && <Link className={classes.link} onClick={() => store.setSettingsUIValues("hiddenEmail", false)}> Показать </Link>}
+                        {!store.settingsUI.hiddenEmail && <Link className={classes.link} onClick={() => store.setSettingsUIValues("hiddenEmail", true)}> Скрыть </Link>}
 
                     </Grid>
                 </Grid>
