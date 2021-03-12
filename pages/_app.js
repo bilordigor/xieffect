@@ -73,7 +73,7 @@ const MyApp = (observer(({ Component, pageProps }) => {
           text: dark ? '#e0e0e0' : '#424242',
           icon: dark ? '#e0e0e0' : '#424242',
           secondary: dark ? '#3f50b5' : '#3f50b5',
-          background: dark ? 'rgb(49,51,57)' : '##bdbdbd',
+          background: dark ? '#36393f' : '##bdbdbd',
         },
         help: {
           red: dark ? '#b71c1c' : '#e57373',

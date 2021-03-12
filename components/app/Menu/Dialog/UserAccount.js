@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import UploadFileIcon from '@material-ui/icons/UploadFile';
-import { InputAdornment, Tooltip, IconButton, ClickAwayListener, Divider, ButtonGroup, MenuList, MenuItem, Avatar, Paper, Grow, Popper, Badge, Grid, withStyles, FormControl, InputLabel, TextField, OutlinedInput, FormControlLabel, Switch, AppBar, Tabs, Tab, Typography, Box, Button } from '@material-ui/core'
+import { Link, InputAdornment, Tooltip, IconButton, ClickAwayListener, Divider, ButtonGroup, MenuList, MenuItem, Avatar, Paper, Grow, Popper, Badge, Grid, withStyles, FormControl, InputLabel, TextField, OutlinedInput, FormControlLabel, Switch, AppBar, Tabs, Tab, Typography, Box, Button } from '@material-ui/core'
 import { useFileUpload } from "use-file-upload"
 import { inject, observer } from 'mobx-react'
 import Image from 'next/image'
@@ -71,7 +71,7 @@ const useStyles = makeStyles((theme) => ({
         marginLeft: 12,
         marginRight: 0,
         width: "calc(100% - 160px)",
-        backgroundColor: 'rgb(49,51,57)',
+        backgroundColor: theme.main.palette.content.reverseText,
     },
     OutlinedInput: {
         zIndex: 999,
@@ -82,13 +82,13 @@ const useStyles = makeStyles((theme) => ({
     },
     inputLabel: {
         zIndex: 999,
-        color: 'rgb(142,146,151)',
+        color: theme.main.palette.content.text,
 
     },
     textFieldTypography: {
         zIndex: 999,
         marginTop: -4,
-        color: 'rgb(142,146,151)',
+        color: theme.main.palette.content.text,
     },
     gridTextField: {
         paddingTop: 12,
@@ -99,6 +99,33 @@ const useStyles = makeStyles((theme) => ({
     },
     popper: {
         zIndex: 1000,
+    },
+    labelEmailPassword: {
+        paddingTop: 6,
+        paddingLeft: 12,
+    },
+    gridLabel: {
+        paddingTop: 6,
+        paddingLeft: 12,
+        backgroundColor: theme.main.palette.content.reverseText,
+        paddingBottom: 6,
+        borderRadius: 4,
+    },
+    labelEmailBefore: {
+        fontSize: 20,
+    },
+    labelEmailAfter: {
+        fontSize: 20,
+    },
+    link: {
+        color: '#637bfe',
+        cursor: 'default',
+        paddingLeft: 4,
+        paddingTop: 4,
+    },
+    changeButton: {
+        width: 180,
+        marginTop: 8,
     }
 
 
@@ -134,7 +161,7 @@ const UserAccount = inject('store')(observer(({ store }) => {
     };
 
     const handleMenuItemClick = (event, index) => {
-        console.log( "click" )
+        console.log("click")
         store.setSettingsValues("role", index)
         setOpen(false);
     };
@@ -236,7 +263,7 @@ const UserAccount = inject('store')(observer(({ store }) => {
                     {/* </Grid> */}
 
                 </Grid>
-                <Divider className={classes.divider} />
+                {/* <Divider className={classes.divider} />
                 <Grid
                     item
                     container
@@ -371,9 +398,51 @@ const UserAccount = inject('store')(observer(({ store }) => {
                         </Grid>
                     </>}
 
-                </Grid>
-                <Grid item container>
+                </Grid> */}
 
+                <Divider className={classes.divider} />
+                <Grid
+                    container
+                    direction="column"
+                    justifyContent="center"
+                    alignItems="flex-start"
+                >
+                    <Typography className={classes.labelEmailPassword}> Почта </Typography>
+                    <Grid
+                        className={classes.gridLabel}
+                        container
+                        direction="row"
+                        justifyContent="flex-start"
+                        alignItems="center"
+                    >
+                        {!store.settingsUI.hiddenEmail && <Typography className={classes.labelEmailBefore}> {store.settingsNew.emailBefore} </Typography>}
+                        {store.settingsUI.hiddenEmail && <Typography className={classes.labelEmailBefore}> {"*".repeat(store.settingsNew.emailBefore.length)} </Typography>}
+                        <Typography className={classes.labelEmailAfter}> {store.settingsNew.emailAfter} </Typography>
+                        {!store.settingsUI.hiddenEmail && <Link className={classes.link} onClick={() => store.setSettingsUIValues("hiddenEmail", true)}> Показать </Link>}
+                        {store.settingsUI.hiddenEmail && <Link className={classes.link} onClick={() => store.setSettingsUIValues("hiddenEmail", false)}> Скрыть </Link>}
+
+                    </Grid>
+                </Grid>
+                <Grid
+                    container
+                    direction="column"
+                    justifyContent="center"
+                    alignItems="flex-start"
+                >
+                    <Button variant="contained" className={classes.changeButton}>
+                        Сменить почту
+                    </Button>
+                </Grid>
+                <Divider className={classes.divider} />
+                <Grid
+                    container
+                    direction="column"
+                    justifyContent="center"
+                    alignItems="flex-start"
+                >
+                    <Button variant="contained" className={classes.changeButton}>
+                        Сменить пароль
+                    </Button>
                 </Grid>
                 <Divider className={classes.divider} />
             </Grid>

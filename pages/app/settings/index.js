@@ -1,5 +1,5 @@
 import React from 'react';
-import { Divider, withStyles, Paper, Grid, FormControlLabel, makeStyles, useTheme, Menu, Hidden, IconButton, InputBase, Switch, Typography } from '@material-ui/core'
+import { CircularProgress, Divider, withStyles, Paper, Grid, FormControlLabel, makeStyles, useTheme, Menu, Hidden, IconButton, InputBase, Switch, Typography } from '@material-ui/core'
 import Head from 'next/head'
 // import DialogsList from '../../components/FriendsPage/DialogsList';
 import MuiAccordion from '@material-ui/core/Accordion';
@@ -16,11 +16,19 @@ import { inject, observer } from 'mobx-react'
 const useStyles = makeStyles((theme) => ({
   root: {
     width: '100%',
+    //height: 'calc(100vh - 72px)',
     height: '100vh',
     margin: 0,
     padding: 0,
     backgroundColor: theme.main.palette.main.background,
   },
+  gridLoadig: {
+    width: '100%',
+    //height: 'calc(100vh - 72px)',
+    height: '100vh',
+    margin: 0,
+    padding: 0,
+  }
 }));
 
 const Settings = inject('store')(observer(({ store }) => {
@@ -28,17 +36,20 @@ const Settings = inject('store')(observer(({ store }) => {
   const theme = useTheme();
 
   React.useEffect(() => {
-    store.getData(`${store.url}/settings/`)
+    store.setSettingsEmailValues()
+    //store.setIsFetchLoading("settings", false)
+    store.getDataScr(`${store.url}/settings/`)
       .then((data) => {
-        console.log(data)
-        if (data.message != undefined) {
-          console.log( "Проблемы с сервером" )
-        }
-        else if (data != undefined) {
+        store.setIsFetchLoading("settings", true)
+        //console.log(data)
+        // if (data.message != undefined) {
+        //   console.log(data.message)
+        // }
+        if (data != undefined) {
           store.settings = data
-          store.settingsNew = data 
+          store.settingsNew = data
         } else {
-          console.log( "Проблемы с сервером" )
+          console.log("Проблемы с сервером")
         }
       });
 
@@ -50,13 +61,24 @@ const Settings = inject('store')(observer(({ store }) => {
         <title>Ξ Настройки</title>
       </Head>
       <NavigationAll>
+
         <div className={classes.root}>
-          <Hidden mdUp>
+          {!store.isFetchLoading.settings && <Grid
+            className={classes.gridLoadig}
+            container
+            direction="column"
+            justifyContent="center"
+            alignItems="center"
+            
+          >
+            <CircularProgress />
+          </Grid>}
+          {store.isFetchLoading.settings && <Hidden mdUp>
             <SettingsDown />
-          </Hidden>
-          <Hidden mdDown>
+          </Hidden>}
+          {store.isFetchLoading.settings && <Hidden mdDown>
             <SettingsUp />
-          </Hidden>
+          </Hidden>}
         </div>
       </NavigationAll>
 

@@ -97,6 +97,9 @@ class Store {
     secondName: '',
     patronymic: '',
     email: '',
+    emailBefore: '',
+    emailBeforeHidden: '',
+    emailAfter: '',
     password: '',
     darkTheme: true,
     appLanguage: '',
@@ -109,14 +112,26 @@ class Store {
     firstName: '',
     secondName: '',
     patronymic: '',
-    email: '',
+    email: 'test@test.com',
+    emailBefore: '',
+    emailBeforeHidden: '',
+    emailAfter: '',
     password: '',
     darkTheme: true,
-    appLanguage: '',
+    language: '',
   }
 
   @action setSettingsValues = (name, value) => {
     this.settingsNew[name] = value
+  }
+
+  @action setSettingsEmailValues = () => {
+    let emailArr = this.settingsNew.email.split("@", 2)
+    this.settingsNew.emailBefore = emailArr[0]
+    this.settingsNew.emailAfter = "@" + emailArr[1]
+    this.settings.emailBefore = emailArr[0]
+    this.settings.emailAfter = "@" + emailArr[1]
+
   }
 
   // // UI Data and Functions
@@ -219,6 +234,18 @@ class Store {
   }
 
   // "/app/" (main app page)
+  // isFetchLoading
+
+  @observable isFetchLoading = {
+    settings: false,
+    main: false,
+
+  }
+
+  @action setIsFetchLoading = (name, value) => {
+    this.isFetchLoading[name] = value
+  }
+
   // Education social UI (UI example)
   @observable todoList = [
     { key: 0, time: '10:30', task: 'Математика', info: 'Курс', done: false },
@@ -296,6 +323,14 @@ class Store {
     this.chipsList[key].clicked = true
   }
 
+  // "/app/settings
+  @observable settingsUI = {
+    hiddenEmail: true,
+  }
+
+  @action setSettingsUIValues = (name, value) => {
+    this.settingsUI[name] = value
+  }
 
   // // Const Data 
 
