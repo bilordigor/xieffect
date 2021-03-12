@@ -36,7 +36,7 @@ const Settings = inject('store')(observer(({ store }) => {
   const theme = useTheme();
 
   React.useEffect(() => {
-    store.setSettingsEmailValues()
+    
     //store.setIsFetchLoading("settings", false)
     store.getDataScr(`${store.url}/settings/`)
       .then((data) => {
@@ -46,11 +46,16 @@ const Settings = inject('store')(observer(({ store }) => {
         //   console.log(data.message)
         // }
         if (data != undefined) {
-          store.settings = data
-          store.settingsNew = data
+          // store.settings = data
+          // store.settingsNew = data
+          store.SettingsNew.username = data.username
+          store.SettingsNew.email = data.email
+          store.setSettingsEmailValues()
+          console.log(store.SettingsNew)
         } else {
           console.log("Проблемы с сервером")
         }
+        
       });
 
   }, [])

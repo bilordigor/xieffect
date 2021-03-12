@@ -128,7 +128,7 @@ class Store {
   @action setSettingsEmailValues = () => {
     let emailArr = this.settingsNew.email.split("@", 2)
     this.settingsNew.emailBefore = emailArr[0]
-    this.settingsNew.emailAfter = "@" + emailArr[1]
+    this.settingsNew.emailAfter = "@" + emailArr[1] 
     this.settings.emailBefore = emailArr[0]
     this.settings.emailAfter = "@" + emailArr[1]
 
