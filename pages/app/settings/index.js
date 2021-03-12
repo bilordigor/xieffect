@@ -49,9 +49,9 @@ const Settings = inject('store')(observer(({ store }) => {
           console.log(data)
           // store.settings = data
           // store.settingsNew = data
-          store.SettingsNew.username = data.username
-          store.SettingsNew.email = data.email
-          store.setSettingsEmailValues()
+          //store.SettingsNew.username = data.username
+          //store.SettingsNew.email = data.email
+          //store.setSettingsEmailValues()
           console.log(store.SettingsNew)
         } else {
           console.log("Проблемы с сервером")
