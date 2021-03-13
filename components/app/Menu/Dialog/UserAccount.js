@@ -209,6 +209,15 @@ const UserAccount = inject('store')(observer(({ store }) => {
         event.preventDefault();
     };
 
+    const clickReadyPassword = () => {
+
+    }
+
+    const clickReadyEmail = () => {
+        
+    }
+
+
 
     return (
         <>
@@ -533,7 +542,7 @@ const UserAccount = inject('store')(observer(({ store }) => {
                         </DialogContent>
                         <DialogActions>
                             <Button className={classes.cancelButton} onClick={() => setOpenEmailChangeDialog(false)}>отмена</Button>
-                            <Button variant="contained" onClick={handleClose}>Готово</Button>
+                            <Button variant="contained" onClick={clickReadyEmail}>Готово</Button>
                         </DialogActions>
                     </Dialog>
                 </Grid>
@@ -615,7 +624,7 @@ const UserAccount = inject('store')(observer(({ store }) => {
                         </DialogContent>
                         <DialogActions>
                             <Button className={classes.cancelButton} onClick={() => setOpenPasswordChangeDialog(false)}>отмена</Button>
-                            <Button variant="contained" onClick={handleClosePassword}>Готово</Button>
+                            <Button variant="contained" onClick={clickReadyPassword}>Готово</Button>
                         </DialogActions>
                     </Dialog>
                 </Grid>
