@@ -124,6 +124,10 @@ class Store {
     password: '',
     darkTheme: true,
     language: '',
+    passwordEmailChange: '',
+    newEmailChange: '',
+    passwordOldChange: '',
+    passwordNewChange: '',
   }
 
   @action setSettingsNewValues = (name, value) => {
@@ -331,6 +335,9 @@ class Store {
   // "/app/settings
   @observable settingsUI = {
     hiddenEmail: true,
+    showPasswordChangeEmail: false,
+    showPasswordOldChange: false,
+    showPasswordNewChange: false,
   }
 
   @action setSettingsUIValues = (name, value) => {

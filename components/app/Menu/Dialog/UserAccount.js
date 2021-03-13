@@ -9,6 +9,8 @@ import Context from '../../../../store'
 import ImageUploading from "react-images-uploading";
 import SaveIcon from '@material-ui/icons/Save';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
+import Visibility from '@material-ui/icons/Visibility';
+import VisibilityOff from '@material-ui/icons/VisibilityOff';
 
 
 
@@ -144,7 +146,11 @@ const useStyles = makeStyles((theme) => ({
     gridRootDialogItem: {
         width: '100%',
         paddingRight: 24,
-    }
+    },
+    // icons: {
+    //     zIndex: 999,
+    //     color: 'rgb(142,146,151)',
+    // },
 
 
 }));
@@ -155,7 +161,7 @@ const UserAccount = inject('store')(observer(({ store }) => {
 
 
     const handleChange = (name) => (event) => {
-        store.setSettingsValues(name, event.target.value)
+        store.setSettingsNewValues(name, event.target.value)
     };
 
     // const [isDarkMode, setIsDarkMode] = useState(() => false);
@@ -215,6 +221,10 @@ const UserAccount = inject('store')(observer(({ store }) => {
     const handleClosePassword = () => {
         setOpenPasswordChangeDialog(false)
     }
+
+    const handleMouseDownPassword = (event) => {
+        event.preventDefault();
+    };
 
 
     return (
@@ -474,8 +484,7 @@ const UserAccount = inject('store')(observer(({ store }) => {
                         <DialogTitle id="form-dialog-title">Изменение адреса электронной почты </DialogTitle>
                         <DialogContent>
                             <DialogContentText>
-                                To subscribe to this website, please enter your email address here. We
-                                will send updates occasionally.
+                                Чтобы изменить адрес электронной почты, введите сначала текущий пароль, а затем введите новый адрес электронной почты. Мы отпра
                             </DialogContentText>
                             <Grid
                                 className={classes.gridRootDialogItem}
@@ -489,23 +498,21 @@ const UserAccount = inject('store')(observer(({ store }) => {
                                         <InputLabel className={classes.inputLabel} htmlFor="outlined-adornment-password"> <Typography className={classes.textFieldTypography}>Пароль</Typography> </InputLabel>
                                         <OutlinedInput
                                             className={classes.OutlinedInput}
-                                            type='text'
-                                            value={store.settingsNew.username}
-                                            onChange={handleChange('username')}
-                                            // endAdornment={  
-                                            //     <InputAdornment position="end">
-                                            //         <IconButton
-                                            //             aria-label="toggle password visibility"
-                                            //             // onClick={handleClickShowPassword}
-                                            //             // onMouseDown={handleMouseDownPassword}
-                                            //             edge="end"
-                                            //         >
-                                            //             <Tooltip title="Сохранить изменения" arrow>
-                                            //                 <SaveIcon className={classes.icons} />
-                                            //             </Tooltip>
-                                            //         </IconButton>
-                                            //     </InputAdornment>
-                                            // }
+                                            type={store.settingsUI.showPasswordChangeEmail ? 'text' : 'password'}
+                                            value={store.settingsNew.passwordEmailChange}
+                                            onChange={handleChange('passwordEmailChange')}
+                                            endAdornment={
+                                                <InputAdornment position="end">
+                                                    <IconButton
+                                                        aria-label="toggle password visibility"
+                                                        onClick={() => store.setSettingsUIValues("showPasswordChangeEmail", !store.settingsUI.showPasswordChangeEmail)}
+                                                        onMouseDown={handleMouseDownPassword}
+                                                        edge="end"
+                                                    >
+                                                        {store.settingsUI.showPasswordChangeEmail ? <Visibility className={classes.icons} /> : <VisibilityOff className={classes.icons} />}
+                                                    </IconButton>
+                                                </InputAdornment>
+                                            }
                                             labelWidth={210}
 
                                         />
@@ -517,8 +524,8 @@ const UserAccount = inject('store')(observer(({ store }) => {
                                         <OutlinedInput
                                             className={classes.OutlinedInput}
                                             type='text'
-                                            value={store.settingsNew.username}
-                                            onChange={handleChange('username')}
+                                            value={store.settingsNew.newEmail}
+                                            onChange={handleChange('newEmail')}
                                             // endAdornment={  
                                             //     <InputAdornment position="end">
                                             //         <IconButton
@@ -575,23 +582,21 @@ const UserAccount = inject('store')(observer(({ store }) => {
                                         <InputLabel className={classes.inputLabel} htmlFor="outlined-adornment-password"> <Typography className={classes.textFieldTypography}>Текущий пароль</Typography> </InputLabel>
                                         <OutlinedInput
                                             className={classes.OutlinedInput}
-                                            type='text'
-                                            value={store.settingsNew.username}
-                                            onChange={handleChange('username')}
-                                            // endAdornment={  
-                                            //     <InputAdornment position="end">
-                                            //         <IconButton
-                                            //             aria-label="toggle password visibility"
-                                            //             // onClick={handleClickShowPassword}
-                                            //             // onMouseDown={handleMouseDownPassword}
-                                            //             edge="end"
-                                            //         >
-                                            //             <Tooltip title="Сохранить изменения" arrow>
-                                            //                 <SaveIcon className={classes.icons} />
-                                            //             </Tooltip>
-                                            //         </IconButton>
-                                            //     </InputAdornment>
-                                            // }
+                                            type={store.settingsUI.showPasswordOldChange ? 'text' : 'password'}
+                                            value={store.settingsNew.passwordOldChange}
+                                            onChange={handleChange('passwordOldChange')}
+                                            endAdornment={
+                                                <InputAdornment position="end">
+                                                    <IconButton
+                                                        aria-label="toggle password visibility"
+                                                        onClick={() => store.setSettingsUIValues("showPasswordOldChange", !store.settingsUI.showPasswordOldChange)}
+                                                        onMouseDown={handleMouseDownPassword}
+                                                        edge="end"
+                                                    >
+                                                        {store.settingsUI.showPasswordOldChange ? <Visibility className={classes.icons} /> : <VisibilityOff className={classes.icons} />}
+                                                    </IconButton>
+                                                </InputAdornment>
+                                            }
                                             labelWidth={210}
 
                                         />
@@ -602,23 +607,21 @@ const UserAccount = inject('store')(observer(({ store }) => {
                                         <InputLabel className={classes.inputLabel} htmlFor="outlined-adornment-password"> <Typography className={classes.textFieldTypography}>Новый пароль</Typography> </InputLabel>
                                         <OutlinedInput
                                             className={classes.OutlinedInput}
-                                            type='text'
-                                            value={store.settingsNew.username}
-                                            onChange={handleChange('username')}
-                                            // endAdornment={  
-                                            //     <InputAdornment position="end">
-                                            //         <IconButton
-                                            //             aria-label="toggle password visibility"
-                                            //             // onClick={handleClickShowPassword}
-                                            //             // onMouseDown={handleMouseDownPassword}
-                                            //             edge="end"
-                                            //         >
-                                            //             <Tooltip title="Сохранить изменения" arrow>
-                                            //                 <SaveIcon className={classes.icons} />
-                                            //             </Tooltip>
-                                            //         </IconButton>
-                                            //     </InputAdornment>
-                                            // }
+                                            type={store.settingsUI.showPasswordNewChange ? 'text' : 'password'}
+                                            value={store.settingsNew.passwordNewChange}
+                                            onChange={handleChange('passwordNewChange')}
+                                            endAdornment={
+                                                <InputAdornment position="end">
+                                                    <IconButton
+                                                        aria-label="toggle password visibility"
+                                                        onClick={() => store.setSettingsUIValues("showPasswordNewChange", !store.settingsUI.showPasswordNewChange)}
+                                                        onMouseDown={handleMouseDownPassword}
+                                                        edge="end"
+                                                    >
+                                                        {store.settingsUI.showPasswordNewChange ? <Visibility className={classes.icons} /> : <VisibilityOff className={classes.icons} />}
+                                                    </IconButton>
+                                                </InputAdornment>
+                                            }
                                             labelWidth={210}
 
                                         />
