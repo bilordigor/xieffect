@@ -205,23 +205,6 @@ const UserAccount = inject('store')(observer(({ store }) => {
     const [openEmailChangeDialog, setOpenEmailChangeDialog] = React.useState(false)
     const [openPasswordChangeDialog, setOpenPasswordChangeDialog] = React.useState(false)
 
-
-    const clickedChangeEmailButton = () => {
-        setOpenEmailChangeDialog(true)
-    }
-
-    const clickedChangePasswordButton = () => {
-        setOpenPasswordChangeDialog(true)
-    }
-
-    const handleCloseEmail = () => {
-        setOpenEmailChangeDialog(false)
-    }
-
-    const handleClosePassword = () => {
-        setOpenPasswordChangeDialog(false)
-    }
-
     const handleMouseDownPassword = (event) => {
         event.preventDefault();
     };
@@ -477,14 +460,15 @@ const UserAccount = inject('store')(observer(({ store }) => {
                     justifyContent="center"
                     alignItems="flex-start"
                 >
-                    <Button variant="contained" onClick={clickedChangeEmailButton} className={classes.changeButton}>
+                    <Button variant="contained" onClick={() => setOpenEmailChangeDialog(true)} className={classes.changeButton}>
                         Сменить почту
                     </Button>
                     <Dialog open={openEmailChangeDialog} onClose={handleClose} aria-labelledby="form-dialog-title">
                         <DialogTitle id="form-dialog-title">Изменение адреса электронной почты </DialogTitle>
                         <DialogContent>
                             <DialogContentText>
-                                Чтобы изменить адрес электронной почты, введите сначала текущий пароль, а затем введите новый адрес электронной почты. Мы отпра
+                                Чтобы изменить адрес электронной почты, введите сначала текущий пароль, а затем введите новый адрес электронной почты.
+                                Мы отправим письмо-подтверждение на новый адрес электроной почты. Откройте письмо и перейдите по ссылке. 
                             </DialogContentText>
                             <Grid
                                 className={classes.gridRootDialogItem}
@@ -548,7 +532,7 @@ const UserAccount = inject('store')(observer(({ store }) => {
                             </Grid>
                         </DialogContent>
                         <DialogActions>
-                            <Button className={classes.cancelButton} onClick={handleCloseEmail}>отмена</Button>
+                            <Button className={classes.cancelButton} onClick={() => setOpenEmailChangeDialog(false)}>отмена</Button>
                             <Button variant="contained" onClick={handleClose}>Готово</Button>
                         </DialogActions>
                     </Dialog>
@@ -560,7 +544,7 @@ const UserAccount = inject('store')(observer(({ store }) => {
                     justifyContent="center"
                     alignItems="flex-start"
                 >
-                    <Button variant="contained" onClick={clickedChangePasswordButton} className={classes.changeButton}>
+                    <Button variant="contained" onClick={() => setOpenPasswordChangeDialog(true)} className={classes.changeButton}>
                         Сменить пароль
                     </Button>
                     <Dialog open={openPasswordChangeDialog} onClose={handleClose} aria-labelledby="form-dialog-title">
@@ -630,7 +614,7 @@ const UserAccount = inject('store')(observer(({ store }) => {
                             </Grid>
                         </DialogContent>
                         <DialogActions>
-                            <Button className={classes.cancelButton} onClick={handleClosePassword}>отмена</Button>
+                            <Button className={classes.cancelButton} onClick={() => setOpenPasswordChangeDialog(false)}>отмена</Button>
                             <Button variant="contained" onClick={handleClosePassword}>Готово</Button>
                         </DialogActions>
                     </Dialog>
