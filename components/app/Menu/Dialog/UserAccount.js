@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import UploadFileIcon from '@material-ui/icons/UploadFile';
-import { Link, InputAdornment, Tooltip, IconButton, ClickAwayListener, Divider, ButtonGroup, MenuList, MenuItem, Avatar, Paper, Grow, Popper, Badge, Grid, withStyles, FormControl, InputLabel, TextField, OutlinedInput, FormControlLabel, Switch, AppBar, Tabs, Tab, Typography, Box, Button } from '@material-ui/core'
+import { Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, Link, InputAdornment, Tooltip, IconButton, ClickAwayListener, Divider, ButtonGroup, MenuList, MenuItem, Avatar, Paper, Grow, Popper, Badge, Grid, withStyles, FormControl, InputLabel, TextField, OutlinedInput, FormControlLabel, Switch, AppBar, Tabs, Tab, Typography, Box, Button } from '@material-ui/core'
 import { useFileUpload } from "use-file-upload"
 import { inject, observer } from 'mobx-react'
 import Image from 'next/image'
@@ -73,6 +73,12 @@ const useStyles = makeStyles((theme) => ({
         width: "calc(100% - 160px)",
         backgroundColor: theme.main.palette.content.reverseText,
     },
+    textFieldDialog: {
+        marginLeft: 12,
+        marginRight: 0,
+        width: "100%",
+        backgroundColor: theme.main.palette.content.reverseText,
+    },
     OutlinedInput: {
         zIndex: 999,
         color: theme.main.palette.content.text,
@@ -119,13 +125,25 @@ const useStyles = makeStyles((theme) => ({
     },
     link: {
         color: '#637bfe',
-        cursor: 'default',
+        cursor: 'pointer',
         paddingLeft: 4,
         paddingTop: 4,
     },
     changeButton: {
         width: 180,
         marginTop: 8,
+    },
+    cancelButton: {
+        color: theme.main.palette.content.text
+    },
+    gridDialogItem: {
+        width: '100%',
+        paddingTop: 16,
+        paddingLeft: -4,
+    },
+    gridRootDialogItem: {
+        width: '100%',
+        paddingRight: 24,
     }
 
 
@@ -177,6 +195,26 @@ const UserAccount = inject('store')(observer(({ store }) => {
 
         setOpen(false);
     };
+
+    const [openEmailChangeDialog, setOpenEmailChangeDialog] = React.useState(false)
+    const [openPasswordChangeDialog, setOpenPasswordChangeDialog] = React.useState(false)
+
+
+    const clickedChangeEmailButton = () => {
+        setOpenEmailChangeDialog(true)
+    }
+
+    const clickedChangePasswordButton = () => {
+        setOpenPasswordChangeDialog(true)
+    }
+
+    const handleCloseEmail = () => {
+        setOpenEmailChangeDialog(false)
+    }
+
+    const handleClosePassword = () => {
+        setOpenPasswordChangeDialog(false)
+    }
 
 
     return (
@@ -429,9 +467,84 @@ const UserAccount = inject('store')(observer(({ store }) => {
                     justifyContent="center"
                     alignItems="flex-start"
                 >
-                    <Button variant="contained" className={classes.changeButton}>
+                    <Button variant="contained" onClick={clickedChangeEmailButton} className={classes.changeButton}>
                         Сменить почту
                     </Button>
+                    <Dialog open={openEmailChangeDialog} onClose={handleClose} aria-labelledby="form-dialog-title">
+                        <DialogTitle id="form-dialog-title">Изменение адреса электронной почты </DialogTitle>
+                        <DialogContent>
+                            <DialogContentText>
+                                To subscribe to this website, please enter your email address here. We
+                                will send updates occasionally.
+                            </DialogContentText>
+                            <Grid
+                                className={classes.gridRootDialogItem}
+                                container
+                                direction="column"
+                                justifyContent="center"
+                                alignItems="center"
+                            >
+                                <Grid className={classes.gridDialogItem}>
+                                    <FormControl className={classes.textFieldDialog} variant="outlined">
+                                        <InputLabel className={classes.inputLabel} htmlFor="outlined-adornment-password"> <Typography className={classes.textFieldTypography}>Пароль</Typography> </InputLabel>
+                                        <OutlinedInput
+                                            className={classes.OutlinedInput}
+                                            type='text'
+                                            value={store.settingsNew.username}
+                                            onChange={handleChange('username')}
+                                            // endAdornment={  
+                                            //     <InputAdornment position="end">
+                                            //         <IconButton
+                                            //             aria-label="toggle password visibility"
+                                            //             // onClick={handleClickShowPassword}
+                                            //             // onMouseDown={handleMouseDownPassword}
+                                            //             edge="end"
+                                            //         >
+                                            //             <Tooltip title="Сохранить изменения" arrow>
+                                            //                 <SaveIcon className={classes.icons} />
+                                            //             </Tooltip>
+                                            //         </IconButton>
+                                            //     </InputAdornment>
+                                            // }
+                                            labelWidth={210}
+
+                                        />
+                                    </FormControl>
+                                </Grid>
+                                <Grid className={classes.gridDialogItem}>
+                                    <FormControl className={classes.textFieldDialog} variant="outlined">
+                                        <InputLabel className={classes.inputLabel} htmlFor="outlined-adornment-password"> <Typography className={classes.textFieldTypography}>Новый адрес почты</Typography> </InputLabel>
+                                        <OutlinedInput
+                                            className={classes.OutlinedInput}
+                                            type='text'
+                                            value={store.settingsNew.username}
+                                            onChange={handleChange('username')}
+                                            // endAdornment={  
+                                            //     <InputAdornment position="end">
+                                            //         <IconButton
+                                            //             aria-label="toggle password visibility"
+                                            //             // onClick={handleClickShowPassword}
+                                            //             // onMouseDown={handleMouseDownPassword}
+                                            //             edge="end"
+                                            //         >
+                                            //             <Tooltip title="Сохранить изменения" arrow>
+                                            //                 <SaveIcon className={classes.icons} />
+                                            //             </Tooltip>
+                                            //         </IconButton>
+                                            //     </InputAdornment>
+                                            // }
+                                            labelWidth={210}
+
+                                        />
+                                    </FormControl>
+                                </Grid>
+                            </Grid>
+                        </DialogContent>
+                        <DialogActions>
+                            <Button className={classes.cancelButton} onClick={handleCloseEmail}>отмена</Button>
+                            <Button variant="contained" onClick={handleClose}>Готово</Button>
+                        </DialogActions>
+                    </Dialog>
                 </Grid>
                 <Divider className={classes.divider} />
                 <Grid
@@ -440,9 +553,84 @@ const UserAccount = inject('store')(observer(({ store }) => {
                     justifyContent="center"
                     alignItems="flex-start"
                 >
-                    <Button variant="contained" className={classes.changeButton}>
+                    <Button variant="contained" onClick={clickedChangePasswordButton} className={classes.changeButton}>
                         Сменить пароль
                     </Button>
+                    <Dialog open={openPasswordChangeDialog} onClose={handleClose} aria-labelledby="form-dialog-title">
+                        <DialogTitle id="form-dialog-title">Изменение пароля</DialogTitle>
+                        <DialogContent>
+                            <DialogContentText>
+                                Чтобы изменить пароль, введите сначала текущий пароль, а затем введите новый.
+                            </DialogContentText>
+                            <Grid
+                                className={classes.gridRootDialogItem}
+
+                                container
+                                direction="column"
+                                justifyContent="center"
+                                alignItems="center"
+                            >
+                                <Grid className={classes.gridDialogItem}>
+                                    <FormControl className={classes.textFieldDialog} variant="outlined">
+                                        <InputLabel className={classes.inputLabel} htmlFor="outlined-adornment-password"> <Typography className={classes.textFieldTypography}>Текущий пароль</Typography> </InputLabel>
+                                        <OutlinedInput
+                                            className={classes.OutlinedInput}
+                                            type='text'
+                                            value={store.settingsNew.username}
+                                            onChange={handleChange('username')}
+                                            // endAdornment={  
+                                            //     <InputAdornment position="end">
+                                            //         <IconButton
+                                            //             aria-label="toggle password visibility"
+                                            //             // onClick={handleClickShowPassword}
+                                            //             // onMouseDown={handleMouseDownPassword}
+                                            //             edge="end"
+                                            //         >
+                                            //             <Tooltip title="Сохранить изменения" arrow>
+                                            //                 <SaveIcon className={classes.icons} />
+                                            //             </Tooltip>
+                                            //         </IconButton>
+                                            //     </InputAdornment>
+                                            // }
+                                            labelWidth={210}
+
+                                        />
+                                    </FormControl>
+                                </Grid>
+                                <Grid className={classes.gridDialogItem}>
+                                    <FormControl className={classes.textFieldDialog} variant="outlined">
+                                        <InputLabel className={classes.inputLabel} htmlFor="outlined-adornment-password"> <Typography className={classes.textFieldTypography}>Новый пароль</Typography> </InputLabel>
+                                        <OutlinedInput
+                                            className={classes.OutlinedInput}
+                                            type='text'
+                                            value={store.settingsNew.username}
+                                            onChange={handleChange('username')}
+                                            // endAdornment={  
+                                            //     <InputAdornment position="end">
+                                            //         <IconButton
+                                            //             aria-label="toggle password visibility"
+                                            //             // onClick={handleClickShowPassword}
+                                            //             // onMouseDown={handleMouseDownPassword}
+                                            //             edge="end"
+                                            //         >
+                                            //             <Tooltip title="Сохранить изменения" arrow>
+                                            //                 <SaveIcon className={classes.icons} />
+                                            //             </Tooltip>
+                                            //         </IconButton>
+                                            //     </InputAdornment>
+                                            // }
+                                            labelWidth={210}
+
+                                        />
+                                    </FormControl>
+                                </Grid>
+                            </Grid>
+                        </DialogContent>
+                        <DialogActions>
+                            <Button className={classes.cancelButton} onClick={handleClosePassword}>отмена</Button>
+                            <Button variant="contained" onClick={handleClosePassword}>Готово</Button>
+                        </DialogActions>
+                    </Dialog>
                 </Grid>
                 <Divider className={classes.divider} />
             </Grid>
