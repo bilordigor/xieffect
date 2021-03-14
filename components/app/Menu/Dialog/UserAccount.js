@@ -239,20 +239,21 @@ const UserAccount = inject('store')(observer(({ store }) => {
                 break
             }
         }
-        store.postDataScr(`${store.url}/password-change/`, { "password": Crypto.SHA384(store.settingsNew.passwordOldChange).toString() , "new_password": Crypto.SHA384(store.settingsNew.passwordNewChange).toString() }) // postData /auth
-            .then((data) => {
-                console.log(data)
-                if (data != undefined) {
-                    if (data.a == "Success") { //userId //"Success"
-                        setOpenPasswordChangeDialog(false)
-                    } else if (data.a == "User doesn't exist") { //"User doesn't exist"
-                        store.setLoginValuesUI("passwordChangeError", true)
+        if (!store.settingsUI.passwordChangeSymError && !store.settingsUI.passwordChangeLengthError) {
+            store.postDataScr(`${store.url}/password-change/`, { "password": Crypto.SHA384(store.settingsNew.passwordOldChange).toString(), "new_password": Crypto.SHA384(store.settingsNew.passwordNewChange).toString() }) // postData /auth
+                .then((data) => {
+                    console.log(data)
+                    if (data != undefined) {
+                        if (data.a == "Success") { //userId //"Success"
+                            setOpenPasswordChangeDialog(false)
+                        } else if (data.a == "User doesn't exist") { //"User doesn't exist"
+                            store.setLoginValuesUI("passwordChangeError", true)
+                        }
+                    } else {
+                        store.setLoginValuesUI("passwordChangeServerError", true)
                     }
-                } else {
-                    store.setLoginValuesUI("passwordChangeServerError", true)
-                }
-            });
-
+                });
+        }
     }
 
     const clickReadyEmail = () => {

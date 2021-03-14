@@ -453,6 +453,7 @@ class Store {
 
   @action async getDataScr(url) { // mode, cache, credentials, redirect, referrerPolicy
     // Default options are marked with *
+    console.log(this.getCookie('csrf_access_token'))
     try {
       const response = await fetch(url, {
         method: "GET", // *GET, POST, PUT, DELETE, etc.
@@ -483,6 +484,7 @@ class Store {
 
   @action async postDataScr(url, data) { // mode, cache, credentials, redirect, referrerPolicy
     // Default options are marked with *
+    console.log(this.getCookie('csrf_access_token'))
     try {
       const response = await fetch(url, {
         method: "POST", // *GET, POST, PUT, DELETE, etc.
