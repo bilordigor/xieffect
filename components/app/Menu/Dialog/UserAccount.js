@@ -228,7 +228,7 @@ const UserAccount = inject('store')(observer(({ store }) => {
         store.setSettingsUIValues("passwordChangeSymError", false)
         store.setSettingsUIValues("passwordChangeError", false)
         store.setLoginValuesUI("passwordChangeServerError", false)
-        let sym = '1234567890qwertyuiopasdfghjklzxcvbnm_QWERTYUIOPASDFGHJKLZXCVBNM'
+        let sym = "1234567890qwertyuiopasdfghjklzxcvbnm_QWERTYUIOPASDFGHJKLZXCVBNM"
         if (store.settingsNew.passwordNewChange.length < 6) {
             store.setSettingsUIValues("passwordChangeLengthError", true)
         }
