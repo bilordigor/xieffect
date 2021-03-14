@@ -137,7 +137,7 @@ class Store {
   @action setSettingsEmailValues = () => {
     let emailArr = this.settingsNew.email.split("@", 2)
     this.settingsNew.emailBefore = emailArr[0]
-    this.settingsNew.emailAfter = "@" + emailArr[1] 
+    this.settingsNew.emailAfter = "@" + emailArr[1]
     this.settings.emailBefore = emailArr[0]
     this.settings.emailAfter = "@" + emailArr[1]
 
@@ -453,8 +453,8 @@ class Store {
 
   @action async getDataScr(url) { // mode, cache, credentials, redirect, referrerPolicy
     // Default options are marked with *
-    console.log(this.getCookie('csrf_access_token'))
     try {
+      console.log("Печенье:", this.getCookie('csrf_access_token'))
       const response = await fetch(url, {
         method: "GET", // *GET, POST, PUT, DELETE, etc.
         //mode: 'no-cors', // no-cors, *cors, same-origin
@@ -484,8 +484,8 @@ class Store {
 
   @action async postDataScr(url, data) { // mode, cache, credentials, redirect, referrerPolicy
     // Default options are marked with *
-    console.log(this.getCookie('csrf_access_token'))
     try {
+      console.log("Печенье:", this.getCookie('csrf_access_token'))
       const response = await fetch(url, {
         method: "POST", // *GET, POST, PUT, DELETE, etc.
         //mode: 'no-cors', // no-cors, *cors, same-origin
