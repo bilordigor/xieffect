@@ -150,7 +150,19 @@ const useStyles = makeStyles((theme) => ({
     // icons: {
     //     zIndex: 999,
     //     color: 'rgb(142,146,151)',
-    // },
+    // },,
+    ErrorLabel: {
+        zIndex: 999,
+        fontSize: 16,
+        color: theme.main.palette.help.red,
+    },
+    gridErrorLabel: {
+        zIndex: 999,
+        marginTop: 4,
+        paddingLeft: 20,
+        paddingRight: 20,
+
+    },
 
 
 }));
@@ -210,11 +222,38 @@ const UserAccount = inject('store')(observer(({ store }) => {
     };
 
     const clickReadyPassword = () => {
+        store.setSettingsUIValues("passwordChangeLengthError", false)
+        store.setSettingsUIValues("passwordChangeSymError", false)
+        store.setSettingsUIValues("passwordChangeError", false)
+        store.setLoginValuesUI("passwordChangeServerError", false)
+        let sym = '1234567890qwertyuiopasdfghjklzxcvbnm_'
+        if (store.settingsNew.passwordNewChange.length < 6) {
+            store.setSettingsUIValues("passwordChangeLengthError", true)
+        }
+        for (let i = 0; i < store.settingsNew.passwordNewChange; i++) {
+            if (sym.includes(store.settingsNew.passwordNewChange[i].toLowerCase())) continue
+            else {
+                store.setSettingsUIValues("passwordChangeSymError", true)
+                break
+            }
+        }
+        store.postDataScr(`${store.url}/password-change/`, { "password": store.settingsNew.passwordOldChange, "new_password": store.settingsNew.passwordNewChange }) // postData /auth
+            .then((data) => {
+                if (data != undefined) {
+                    if (data.a == "Success") { //userId //"Success"
+                        setOpenPasswordChangeDialog(false)
+                    } else if (data.a == "User doesn't exist") { //"User doesn't exist"
+                        store.setLoginValuesUI("passwordChangeError", true)
+                    }
+                } else {
+                    store.setLoginValuesUI("passwordChangeServerError", true)
+                }
+            });
 
     }
 
     const clickReadyEmail = () => {
-        
+
     }
 
 
@@ -477,7 +516,7 @@ const UserAccount = inject('store')(observer(({ store }) => {
                         <DialogContent>
                             <DialogContentText>
                                 Чтобы изменить адрес электронной почты, введите сначала текущий пароль, а затем введите новый адрес электронной почты.
-                                Мы отправим письмо-подтверждение на новый адрес электроной почты. Откройте письмо и перейдите по ссылке. 
+                                Мы отправим письмо-подтверждение на новый адрес электроной почты. Откройте письмо и перейдите по ссылке.
                             </DialogContentText>
                             <Grid
                                 className={classes.gridRootDialogItem}
@@ -595,6 +634,9 @@ const UserAccount = inject('store')(observer(({ store }) => {
                                         />
                                     </FormControl>
                                 </Grid>
+                                {store.settingsUI.passwordChangeError && <Grid item container direction="column" justifyContent="center" alignItems="flex-start" className={classes.gridErrorLabel}>
+                                    <Typography className={classes.ErrorLabel}> Не сработало! Проверьте правильность текущего пароля </Typography>
+                                </Grid>}
                                 <Grid className={classes.gridDialogItem}>
                                     <FormControl className={classes.textFieldDialog} variant="outlined">
                                         <InputLabel className={classes.inputLabel} htmlFor="outlined-adornment-password"> <Typography className={classes.textFieldTypography}>Новый пароль</Typography> </InputLabel>
@@ -620,6 +662,15 @@ const UserAccount = inject('store')(observer(({ store }) => {
                                         />
                                     </FormControl>
                                 </Grid>
+                                {store.settingsUI.passwordChangeLengthError && <Grid item container direction="column" justifyContent="center" alignItems="flex-start" className={classes.gridErrorLabel}>
+                                    <Typography className={classes.ErrorLabel}> Недопустим пароль менее 6 символов </Typography>
+                                </Grid>}
+                                {store.settingsUI.passwordChangeSymError && <Grid item container direction="column" justifyContent="center" alignItems="flex-start" className={classes.gridErrorLabel}>
+                                    <Typography className={classes.ErrorLabel}> Недопустимые символы в пароле </Typography>
+                                </Grid>}
+                                {store.settingsUI.errorServer && <Grid item container direction="column" justifyContent="center" alignItems="flex-start" className={classes.gridErrorLabel}>
+                                    <Typography className={classes.passwordChangeServerError}> Ошибка сервера :( </Typography>
+                                </Grid>}
                             </Grid>
                         </DialogContent>
                         <DialogActions>

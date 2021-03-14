@@ -338,6 +338,11 @@ class Store {
     showPasswordChangeEmail: false,
     showPasswordOldChange: false,
     showPasswordNewChange: false,
+    passwordChangeLengthError: false,
+    passwordChangeSymError: false,
+    passwordChangeError: false,
+    passwordChangeServerError: false,
+
   }
 
   @action setSettingsUIValues = (name, value) => {

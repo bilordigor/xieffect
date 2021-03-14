@@ -202,17 +202,11 @@ const Login = inject('store')(observer(({ store }) => {
                 .then((data) => {
                     if (data != undefined) {
                         if (data.a == "Success") { //userId //"Success"
-                            store.setLoginValuesFalse()
-                            store.setLoginValuesUI("loginSuccess", true)
-                            const router = Router
-                            router.push('/app')
+                            
                         } else if (data.a == "User doesn't exist") { //"User doesn't exist"
-                            store.setLoginValuesUI("errorEmail", true)
                         } else if (data.a == "Wrong password") { //
-                            store.setLoginValuesUI("errorPassword", true)
                         }
                     } else {
-                        store.setLoginValuesUI("errorServer", true)
                     }
                 });
         }
