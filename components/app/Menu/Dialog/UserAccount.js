@@ -237,7 +237,7 @@ const UserAccount = inject('store')(observer(({ store }) => {
                 break
             }
         }
-        store.postDataScr(`${store.url}/password-change/`, { "password": store.settingsNew.passwordOldChange, "new_password": store.settingsNew.passwordNewChange }) // postData /auth
+        store.postDataScr(`${store.url}/password-change/`, { "password": Crypto.SHA384(store.settingsNew.passwordOldChange).toString() , "new_password": Crypto.SHA384(store.settingsNew.passwordNewChange).toString() }) // postData /auth
             .then((data) => {
                 if (data != undefined) {
                     if (data.a == "Success") { //userId //"Success"
