@@ -241,6 +241,7 @@ const UserAccount = inject('store')(observer(({ store }) => {
         }
         store.postDataScr(`${store.url}/password-change/`, { "password": Crypto.SHA384(store.settingsNew.passwordOldChange).toString() , "new_password": Crypto.SHA384(store.settingsNew.passwordNewChange).toString() }) // postData /auth
             .then((data) => {
+                console.log(data)
                 if (data != undefined) {
                     if (data.a == "Success") { //userId //"Success"
                         setOpenPasswordChangeDialog(false)
