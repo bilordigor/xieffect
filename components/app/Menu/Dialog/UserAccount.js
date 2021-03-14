@@ -222,6 +222,8 @@ const UserAccount = inject('store')(observer(({ store }) => {
     };
 
     const clickReadyPassword = () => {
+        console.log(store.settingsNew.passwordOldChange)
+        console.log(store.settingsNew.passwordNewChange)
         store.setSettingsUIValues("passwordChangeLengthError", false)
         store.setSettingsUIValues("passwordChangeSymError", false)
         store.setSettingsUIValues("passwordChangeError", false)
