@@ -189,24 +189,28 @@ const Login = inject('store')(observer(({ store }) => {
     }
 
     React.useEffect(() => {
-        
+
     }, [])
 
     const clickEnterButton = () => {
         //console.log("clicked")
         store.setLoginValuesFalse()
         if (store.loginValues.email.length > 0 && store.loginValues.password.length > 0) {
-            
+
             store.goToHexLogin()
             store.postData(`${store.url}/auth/`, { "email": store.loginValues.email, "password": store.loginValues.passwordHash }) // postData /auth
                 .then((data) => {
                     if (data != undefined) {
                         if (data.a == "Success") { //userId //"Success"
-                            
+                            const router = Router
+                            router.push('/app')
                         } else if (data.a == "User doesn't exist") { //"User doesn't exist"
+                            store.setLoginValuesUI("errorEmail", true)
                         } else if (data.a == "Wrong password") { //
+                            store.setLoginValuesUI("errorPassword", true)
                         }
                     } else {
+                        store.setLoginValuesUI("errorServer", true)
                     }
                 });
         }
