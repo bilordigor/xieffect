@@ -232,7 +232,7 @@ class Store {
     this.registrationValuesUI.errorEmailNotFounedReset = false
     this.registrationValuesUI.errorSymbolsReset = false
     this.registrationValuesUI.errorPasswordLengthReset = false
-    this.registrationValuesUI.errorUsername = false
+    
 
 
   }
@@ -245,6 +245,7 @@ class Store {
     this.registrationValuesUI.errorServer = false
     this.registrationValuesUI.errorServerEmail = false
     this.registrationValuesUI.errorServerUser = false
+    this.registrationValuesUI.errorUsername = false
   }
 
 
