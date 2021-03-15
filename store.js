@@ -202,6 +202,7 @@ class Store {
     isSecondName: false,
     errorSymSecondName: false,
     isNickName: false,
+    errorUsername: false,
     errorSymNickName: false,
     errorEmailReset: false,
     errorEmailNotFounedReset: false,
@@ -229,6 +230,9 @@ class Store {
     this.registrationValuesUI.errorEmailNotFounedReset = false
     this.registrationValuesUI.errorSymbolsReset = false
     this.registrationValuesUI.errorPasswordLengthReset = false
+    this.registrationValuesUI.errorUsername = false
+
+
   }
 
   @action setRegistrationValuesFalse = () => {

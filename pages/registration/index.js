@@ -4,7 +4,7 @@ import Head from 'next/head'
 import Link from 'next/link'
 import Router from 'next/router'
 import Page from 'react-page-loading'
-import { Grid, TextField, InputLabel, InputAdornment, IconButton, FormControl, OutlinedInput, FormControlLabel, Switch, AppBar, Tabs, Tab, Typography, Box, Button, Paper } from '@material-ui/core';
+import { Tooltip, Grid, TextField, InputLabel, InputAdornment, IconButton, FormControl, OutlinedInput, FormControlLabel, Switch, AppBar, Tabs, Tab, Typography, Box, Button, Paper } from '@material-ui/core';
 import { Link as LinkUI } from '@material-ui/core'
 
 import { makeStyles } from '@material-ui/core/styles'
@@ -14,7 +14,7 @@ import { inject, observer } from 'mobx-react'
 import Visibility from '@material-ui/icons/Visibility'
 import VisibilityOff from '@material-ui/icons/VisibilityOff'
 import EmailIcon from '@material-ui/icons/Email'
-
+import HelpIcon from '@material-ui/icons/Help';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -195,6 +195,9 @@ const Registration = inject('store')(observer(({ store }) => {
     const clickRegistartionButton = () => {
         store.setRegistrationValuesFalse()
         let sym = '1234567890qwertyuiopasdfghjklzxcvbnm_'
+        if (store.registrationValues.username.length == 0) {
+            store.setRegistrationValuesUI("errorUsername")
+        }
         if (!store.registrationValues.email.includes('@') || !store.registrationValues.email.includes('.') || store.registrationValues.email.length < 5) {
             store.setRegistrationValuesUI("errorEmail", true)
         }
@@ -208,25 +211,25 @@ const Registration = inject('store')(observer(({ store }) => {
                 break
             }
         }
-        if (!store.registrationValuesUI.errorPasswordLength && !store.registrationValuesUI.errorSymbols && !store.registrationValuesUI.errorEmail) {
+        if (!store.registrationValuesUI.errorUsername && !store.registrationValuesUI.errorPasswordLength && !store.registrationValuesUI.errorSymbols && !store.registrationValuesUI.errorEmail) {
 
             store.goToHex()
 
-            store.postData(`${store.url}/reg/${store.registrationValues.emailHash}/`, { "email": 1 }) ///registration/newemail
+            store.postData(`${store.url}/reg/`, { "email": store.registrationValues.email, "password": store.registrationValues.passwordHash, "username": store.registrationValues.username }) ///registration/newemail
                 .then((data) => {
                     if (data != undefined) {
-                        if (data.a === true) { //true
+                        if (data.a) { //true
                             const router = Router
-                            router.push('/registration/step/email')
-                            setTimeout(() => store.setRegistrationValuesClear(), 1000)
-                        } else if (data.a === false) { //false
-                            store.setRegistrationValuesUI("emailAlreadyUsed", true)
+                            router.push('/app')
+                            // } else if (data.a === false) { //false
+                            //     props.store.setRegistrationValues("emailAlreadyUsed", true)
+                        } else {
+                            store.setLoginValuesUI("emailAlreadyUsed", true)
                         }
                     } else {
-                        store.setRegistrationValuesUI("errorServer", true)
+                        store.setLoginValuesUI("errorServerUser", true)
                     }
                 });
-
         }
     }
 
@@ -255,6 +258,36 @@ const Registration = inject('store')(observer(({ store }) => {
                                     <Typography className={classes.typographyMain}> Регистрация </Typography>
                                     <Typography className={classes.typographyMainly}> Начните свой путь в цифровом образовании! </Typography>
                                 </Grid>
+                                <Grid item container direction="column" justifyContent="center" alignItems="flex-start" className={classes.gridTextField}>
+                                    <FormControl className={classes.textField} variant="outlined">
+                                        <InputLabel className={classes.inputLabel} htmlFor="outlined-adornment-password"> <Typography className={classes.textFieldTypography}>Имя пользователя</Typography> </InputLabel>
+                                        <OutlinedInput
+                                            className={classes.OutlinedInput}
+                                            type='text'
+                                            value={store.registrationValues.username}
+                                            onChange={handleChange('username')}
+                                            endAdornment={
+                                                <InputAdornment position="end">
+                                                    <IconButton
+                                                        aria-label="toggle password visibility"
+                                                        // onClick={handleClickShowPassword}
+                                                        // onMouseDown={handleMouseDownPassword}
+                                                        edge="end"
+                                                    >
+                                                        <Tooltip title="Придумайте себе Имя пользователя, это ваше основное имя на просторах нашего портала." arrow>
+                                                            <HelpIcon className={classes.icons} />
+                                                        </Tooltip>
+                                                    </IconButton>
+                                                </InputAdornment>
+                                            }
+                                            labelWidth={210}
+
+                                        />
+                                    </FormControl>
+                                </Grid>
+                                {store.registrationValuesUI.errorUsername && <Grid item container direction="column" justifyContent="center" alignItems="flex-start" className={classes.gridForgotPassword}>
+                                    <Typography className={classes.ErrorLabel}> Это поле не может быть пустым! </Typography>
+                                </Grid>}
                                 <Grid item container direction="column" justifyContent="center" alignItems="flex-start" className={classes.gridTextField}>
                                     <FormControl className={classes.textField} variant="outlined">
                                         <InputLabel className={classes.inputLabel} htmlFor="outlined-adornment-password"> <Typography className={classes.textFieldTypography}>Адрес Электронной почты</Typography></InputLabel>

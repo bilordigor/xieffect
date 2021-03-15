@@ -123,10 +123,10 @@ const Email = inject('store')(observer((props) => {
     }
 
     const acceptButtonClicked = () => {
-        props.store.postData(`${props.store.url}/reg/confirm/`, { "code": id })
+        props.store.postData(`${props.store.url}/email-confirm/`, { "code": id })
             .then((data) => {
-                console.log(data)
-                if (data.a === true) { //"Success"
+                //console.log(data)
+                if (data.a) { //"Success"
                     props.store.setEmailCheckValues("serverAnswer", true)
                 }
             })
