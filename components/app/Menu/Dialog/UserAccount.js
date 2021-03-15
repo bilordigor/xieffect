@@ -241,12 +241,6 @@ const UserAccount = inject('store')(observer(({ store }) => {
         }
         if (!store.settingsUI.passwordChangeSymError && !store.settingsUI.passwordChangeLengthError) {
             store.goToHexPasswordChange()
-            store.postDataScr(`${store.url}/test/`, { "test": "smth" }) //{"access_token": props.store.token.access_token}
-                .then((data) => {
-                    console.log("9)")
-                    console.log(data.a);
-                    console.log(data)
-                });
             store.postDataScr(`${store.url}/password-change/`, { "password": store.settingsNew.passwordOldChangeHex, "new_password": store.settingsNew.passwordNewChangeHex }) // postData /auth //Crypto.SHA384(store.settingsNew.passwordOldChange).toString() //Crypto.SHA384(store.settingsNew.passwordNewChange).toString()
                 .then((data) => {
                     console.log(data)
