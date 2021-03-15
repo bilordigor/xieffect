@@ -129,10 +129,18 @@ class Store {
     newEmailChange: '',
     passwordOldChange: '',
     passwordNewChange: '',
+    passwordOldChangeHex: '',
+    passwordNewChangeHex: '',
   }
 
   @action setSettingsNewValues = (name, value) => {
     this.settingsNew[name] = value
+  }
+
+  @action goToHexPasswordChange = () => {
+    this.settingsNew.passwordOldChangeHex = Crypto.SHA384(this.settingsNew.passwordOldChange).toString()
+    this.settingsNew.passwordNewChangeHex = Crypto.SHA384(this.settingsNew.passwordNewChange).toString()
+
   }
 
   @action setSettingsEmailValues = () => {
