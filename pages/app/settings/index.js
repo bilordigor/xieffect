@@ -35,37 +35,38 @@ const Settings = inject('store')(observer(({ store }) => {
   const classes = useStyles();
   const theme = useTheme();
 
-  // React.useEffect(() => {
+  React.useEffect(() => {
+    store.setIsFetchLoading("settings", true)
     
-  //   //store.setIsFetchLoading("settings", false)
-  //   store.getDataScr(`${store.url}/settings/`)
-  //     .then((data) => {
-  //       store.setIsFetchLoading("settings", true)
-  //       //console.log(data)
-  //       // if (data.message != undefined) {
-  //       //   console.log(data.message)
-  //       // }
-  //       if (data != undefined) {
-  //         console.log(data)
-  //         store.setSettingsNewValues("username", data.username)
-  //         store.setSettingsNewValues("email", data.email)
-  //         store.setSettingsNewValues("darkTheme", data["dark-theme"])
-  //         store.setSettingsValues("username", data.username)
-  //         store.setSettingsValues("email", data.email)
-  //         store.setSettingsValues("darkTheme", data["dark-theme"])
-  //         // store.settings = data
-  //         // store.settingsNew = data
-  //         //store.SettingsNew.username = data.username
-  //         //store.SettingsNew.email = data.email
-  //         store.setSettingsEmailValues()
-  //         console.log(store.settingsNew)
-  //       } else {
-  //         console.log("Проблемы с сервером")
-  //       }
+    //store.setIsFetchLoading("settings", false)
+    // store.getDataScr(`${store.url}/settings/`)
+    //   .then((data) => {
+    //     store.setIsFetchLoading("settings", true)
+    //     //console.log(data)
+    //     // if (data.message != undefined) {
+    //     //   console.log(data.message)
+    //     // }
+    //     if (data != undefined) {
+    //       console.log(data)
+    //       store.setSettingsNewValues("username", data.username)
+    //       store.setSettingsNewValues("email", data.email)
+    //       store.setSettingsNewValues("darkTheme", data["dark-theme"])
+    //       store.setSettingsValues("username", data.username)
+    //       store.setSettingsValues("email", data.email)
+    //       store.setSettingsValues("darkTheme", data["dark-theme"])
+    //       // store.settings = data
+    //       // store.settingsNew = data
+    //       //store.SettingsNew.username = data.username
+    //       //store.SettingsNew.email = data.email
+    //       store.setSettingsEmailValues()
+    //       console.log(store.settingsNew)
+    //     } else {
+    //       console.log("Проблемы с сервером")
+    //     }
         
-  //     });
+    //   });
 
-  // }, [])
+  }, [])
 
   return (
     <>
