@@ -240,7 +240,7 @@ const UserAccount = inject('store')(observer(({ store }) => {
             }
         }
         if (!store.settingsUI.passwordChangeSymError && !store.settingsUI.passwordChangeLengthError) {
-            store.postDataScr(`${store.url}/email-change/`, { "password": Crypto.SHA384(store.settingsNew.passwordOldChange).toString(), "new_password": Crypto.SHA384(store.settingsNew.passwordNewChange).toString() }) // postData /auth
+            store.postDataScr(`${store.url}/password-change/`, { "password": Crypto.SHA384(store.settingsNew.passwordOldChange).toString(), "new_password": Crypto.SHA384(store.settingsNew.passwordNewChange).toString() }) // postData /auth
                 .then((data) => {
                     console.log(data)
                     if (data != undefined) {
