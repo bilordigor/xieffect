@@ -35,8 +35,8 @@ class Store {
 
   // // Global Data and Functions
   // URL-adress server
-  @observable url = 'https://bc92e4f24c45.ngrok.io'
-  //@observable url = 'https://qwert45hi.pythonanywhere.com'
+  //@observable url = 'https://bc92e4f24c45.ngrok.io'
+  @observable url = 'https://qwert45hi.pythonanywhere.com'
 
   // // App&User Data and Functions
 
