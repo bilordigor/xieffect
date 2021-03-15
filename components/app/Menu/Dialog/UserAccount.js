@@ -251,9 +251,9 @@ const UserAccount = inject('store')(observer(({ store }) => {
                 .then((data) => {
                     console.log(data)
                     if (data != undefined) {
-                        if (data.a == "Success") { //userId //"Success"
+                        if (data.a == true) { //userId //"Success"
                             setOpenPasswordChangeDialog(false)
-                        } else if (data.a == "User doesn't exist") { //"User doesn't exist"
+                        } else if (data.a == false) { //"User doesn't exist"
                             store.setLoginValuesUI("passwordChangeError", true)
                         }
                     } else {
