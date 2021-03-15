@@ -232,7 +232,7 @@ const UserAccount = inject('store')(observer(({ store }) => {
         if (store.settingsNew.passwordNewChange.length < 6) {
             store.setSettingsUIValues("passwordChangeLengthError", true)
         }
-        for (let i = 0; i < store.settingsNew.passwordNewChange; i++) {
+        for (let i = 0; i < store.settingsNew.passwordNewChange.length; i++) {
             if (sym.includes(store.settingsNew.passwordNewChange[i])) continue
             else {
                 store.setSettingsUIValues("passwordChangeSymError", true)
