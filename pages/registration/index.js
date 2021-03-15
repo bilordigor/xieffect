@@ -196,7 +196,7 @@ const Registration = inject('store')(observer(({ store }) => {
         store.setRegistrationValuesFalse()
         let sym = '1234567890qwertyuiopasdfghjklzxcvbnm_'
         if (store.registrationValues.username.length == 0) {
-            store.setRegistrationValuesUI("errorUsername")
+            store.setRegistrationValuesUI("errorUsername", true)
         }
         if (!store.registrationValues.email.includes('@') || !store.registrationValues.email.includes('.') || store.registrationValues.email.length < 5) {
             store.setRegistrationValuesUI("errorEmail", true)
