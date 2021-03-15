@@ -81,6 +81,8 @@ class Store {
   @action setRegistrationValuesClear = () => {
     this.registrationValues.email = ''
     this.registrationValues.password = ''
+    this.registrationValues.username = ''
+
   }
 
   @action goToHex = () => {

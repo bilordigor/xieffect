@@ -223,6 +223,7 @@ const Registration = inject('store')(observer(({ store }) => {
                             router.push('/app')
                             // } else if (data.a === false) { //false
                             //     props.store.setRegistrationValues("emailAlreadyUsed", true)
+                            store.setRegistrationValuesClear()
                         } else {
                             store.setLoginValuesUI("emailAlreadyUsed", true)
                         }
