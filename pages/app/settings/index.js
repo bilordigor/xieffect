@@ -36,24 +36,26 @@ const Settings = inject('store')(observer(({ store }) => {
   const theme = useTheme();
 
   React.useEffect(() => {
-    store.setIsFetchLoading("settings", true)
-    
+    // store.setIsFetchLoading("settings", true)
+
     //store.setIsFetchLoading("settings", false)
     store.getDataScr(`${store.url}/settings/`)
       .then((data) => {
-        store.setIsFetchLoading("settings", true)
         //console.log(data)
         // if (data.message != undefined) {
         //   console.log(data.message)
         // }
         if (data != undefined) {
+          store.setIsFetchLoading("settings", true)
           console.log(data)
           store.setSettingsNewValues("username", data.username)
           store.setSettingsNewValues("email", data.email)
           store.setSettingsNewValues("darkTheme", data["dark-theme"])
+          store.setSettingsNewValues("emailConfirmed", data["email-confirmed"])
           store.setSettingsValues("username", data.username)
           store.setSettingsValues("email", data.email)
           store.setSettingsValues("darkTheme", data["dark-theme"])
+          store.setSettingsValues("emailConfirmed", data["email-confirmed"])
           // store.settings = data
           // store.settingsNew = data
           //store.SettingsNew.username = data.username
@@ -63,7 +65,7 @@ const Settings = inject('store')(observer(({ store }) => {
         } else {
           console.log("Проблемы с сервером")
         }
-        
+
       });
 
   }, [])
@@ -82,7 +84,7 @@ const Settings = inject('store')(observer(({ store }) => {
             direction="column"
             justifyContent="center"
             alignItems="center"
-            
+
           >
             <CircularProgress />
           </Grid>}

@@ -12,7 +12,7 @@ import PublicIcon from '@material-ui/icons/Public';
 import MessageIcon from '@material-ui/icons/Message';
 import ArrowForwardIosSharpIcon from '@material-ui/icons/ArrowForwardIosSharp';
 import { experimentalStyled as styled } from '@material-ui/core/styles';
-import { Typography, Divider, makeStyles, useTheme } from '@material-ui/core';
+import { Typography, Divider, makeStyles, useTheme, Link, Alert } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 import MuiAccordion from '@material-ui/core/Accordion';
 import MuiAccordionSummary from '@material-ui/core/AccordionSummary';
@@ -26,7 +26,7 @@ import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import Context from '../../../../store'
 
 import Image from 'next/image'
-import Link from 'next/link'
+//import Link from 'next/link'
 import { useRouter } from 'next/router'
 import Router from 'next/router';
 
@@ -171,10 +171,14 @@ const useStylesDialogAll = makeStyles((theme) => ({
     label: {
         paddingLeft: 4,
         fontSize: 20,
+    },
+    link: {
+        color: theme.main.palette.content.text,
+        cursor: "pointer",
     }
 }));
 
-const SettingsDown = inject('store')(observer((props) => {
+const SettingsDown = inject('store')(observer(({ store }) => {
     const classes = useStylesDialogAll();
     const theme = useTheme();
 
@@ -185,11 +189,17 @@ const SettingsDown = inject('store')(observer((props) => {
     };
 
     const goBack = () => {
-        setTimeout(props.store.setDialogMenu, 500)
+        setTimeout(store.setDialogMenu, 500)
+    }
+
+    const sendEmail = () => {
+        store.postDataScr(`${store.url}/email/${store.settingsNew.email}/`, {"email": store.settingsNew.email})
+        .then((data) => {})
     }
 
     return (
         <div>
+            {!store.settingsNew.emailConfirmed && <Alert severity="info"> {`Внимание! Адрес электронной почты ${store.settingsNew.email}, привязанный к этому аккаунту не был подтверждён. На этот адрес должно было придти письмо с ссылкой для подтверждения. Если вы не можете его найти, проверьте папку спам или`} <Link onClick={sendEmail} className={classes.link}> нажмите здесь для повторной отправки </Link> </Alert>}
             <Typography className={classes.menuTypography}> Настройки Пользователя </Typography>
             <Divider className={classes.divider} />
             <Accordion expanded={expanded === 'panel1'} onChange={handleChange('panel1')}>

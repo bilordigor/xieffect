@@ -11,7 +11,7 @@ import FireplaceIcon from '@material-ui/icons/Fireplace';
 import PublicIcon from '@material-ui/icons/Public';
 import MessageIcon from '@material-ui/icons/Message';
 
-import { SwipeableDrawer, Tabs, Tab, Dialog, TransitionProps, Slide, CssBaseline, Box, IconButton, InputBase, FormControlLabel, Switch, withStyles, Tooltip, Fab, BottomNavigation, BottomNavigationAction, Hidden, ClickAwayListener, AppBar, Toolbar, Typography, Drawer, List, Avatar, Grid, Paper, Button, Divider, ListItem, ListItemIcon, ListItemText, MenuItem, MenuList, Grow, Popper, makeStyles, useTheme } from '@material-ui/core';
+import { Alert, Link, SwipeableDrawer, Tabs, Tab, Dialog, TransitionProps, Slide, CssBaseline, Box, IconButton, InputBase, FormControlLabel, Switch, withStyles, Tooltip, Fab, BottomNavigation, BottomNavigationAction, Hidden, ClickAwayListener, AppBar, Toolbar, Typography, Drawer, List, Avatar, Grid, Paper, Button, Divider, ListItem, ListItemIcon, ListItemText, MenuItem, MenuList, Grow, Popper, makeStyles, useTheme } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
@@ -22,7 +22,7 @@ import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import Context from '../../../../store'
 
 import Image from 'next/image'
-import Link from 'next/link'
+//import Link from 'next/link'
 import { useRouter } from 'next/router'
 import Router from 'next/router';
 
@@ -131,20 +131,35 @@ const useStylesDialogAll = makeStyles((theme) => ({
         width: 500,
         height: "100%",
     },
+    contentAlert: {
+        marginTop: 24,
+        marginLeft: 24,
+        width: 500,
+        height: "100%",
+    },
     goBackButton: {
         position: 'fixed',
         top: 32,
         right: 32,
         cursor: 'pointer',
     },
+    link: {
+        color: theme.main.palette.content.text,
+        cursor: "pointer",
+    }
 }));
 
-const SettingsUp = inject('store')(observer((props) => {
+const SettingsUp = inject('store')(observer(({ store }) => {
     const classes = useStylesDialogAll();
     const theme = useTheme();
 
     const goBack = () => {
-        setTimeout(props.store.setDialogMenu, 500)
+        setTimeout(store.setDialogMenu, 500)
+    }
+
+    const sendEmail = () => {
+        store.postDataScr(`${store.url}/email/${store.settingsNew.email}/`, {"email": store.settingsNew.email})
+        .then((data) => {})
     }
 
     return (
@@ -167,24 +182,24 @@ const SettingsUp = inject('store')(observer((props) => {
                     <Scrollbars style={{ width: 230, height: window.innerHeight - 64 }}>
                         <>
                             <Typography className={classes.menuTypography}> Настройки Пользователя </Typography>
-                            <Button onClick={() => props.store.setDialogMenuItem(0)} className={clsx(classes.menuButton, { [classes.menuButtonClicked]: props.store.dialogMenuItem === 0, })}>
+                            <Button onClick={() => store.setDialogMenuItem(0)} className={clsx(classes.menuButton, { [classes.menuButtonClicked]: store.dialogMenuItem === 0, })}>
                                 <Typography className={classes.buttonLabel}> Учётная запись </Typography>
                             </Button>
-                            <Button onClick={() => props.store.setDialogMenuItem(1)} className={clsx(classes.menuButton, { [classes.menuButtonClicked]: props.store.dialogMenuItem === 1, })}>
+                            <Button onClick={() => store.setDialogMenuItem(1)} className={clsx(classes.menuButton, { [classes.menuButtonClicked]: store.dialogMenuItem === 1, })}>
                                 <Typography className={classes.buttonLabel}> Конфиденциальность </Typography>
                             </Button>
-                            <Button onClick={() => props.store.setDialogMenuItem(2)} className={clsx(classes.menuButton, { [classes.menuButtonClicked]: props.store.dialogMenuItem === 2, })}>
+                            <Button onClick={() => store.setDialogMenuItem(2)} className={clsx(classes.menuButton, { [classes.menuButtonClicked]: store.dialogMenuItem === 2, })}>
                                 <Typography className={classes.buttonLabel}> Boost Effect </Typography>
                             </Button>
                             <Divider className={classes.divider} />
                             <Typography className={classes.menuTypography}> Настройки Приложения </Typography>
-                            <Button onClick={() => props.store.setDialogMenuItem(3)} className={clsx(classes.menuButton, { [classes.menuButtonClicked]: props.store.dialogMenuItem === 3, })}>
+                            <Button onClick={() => store.setDialogMenuItem(3)} className={clsx(classes.menuButton, { [classes.menuButtonClicked]: store.dialogMenuItem === 3, })}>
                                 <Typography className={classes.buttonLabel}> Внешний вид </Typography>
                             </Button>
-                            <Button onClick={() => props.store.setDialogMenuItem(4)} className={clsx(classes.menuButton, { [classes.menuButtonClicked]: props.store.dialogMenuItem === 4, })}>
+                            <Button onClick={() => store.setDialogMenuItem(4)} className={clsx(classes.menuButton, { [classes.menuButtonClicked]: store.dialogMenuItem === 4, })}>
                                 <Typography className={classes.buttonLabel}> Уведомления </Typography>
                             </Button>
-                            <Button onClick={() => props.store.setDialogMenuItem(5)} className={clsx(classes.menuButton, { [classes.menuButtonClicked]: props.store.dialogMenuItem === 5, })}>
+                            <Button onClick={() => store.setDialogMenuItem(5)} className={clsx(classes.menuButton, { [classes.menuButtonClicked]: store.dialogMenuItem === 5, })}>
                                 <Typography className={classes.buttonLabel}> Язык </Typography>
                             </Button>
                             <Divider className={classes.divider} />
@@ -203,25 +218,28 @@ const SettingsUp = inject('store')(observer((props) => {
                     justifyContent="flex-start"
                     alignItems="flex-start"
                 >
-                    {props.store.dialogMenuItem === 0 && <div className={classes.content}>
+                    {!store.settingsNew.emailConfirmed && <div className={classes.contentAlert}>
+                        <Alert severity="info"> {`Внимание! Адрес электронной почты ${store.settingsNew.email}, привязанный к этому аккаунту не был подтверждён. На этот адрес должно было придти письмо с ссылкой для подтверждения. Если вы не можете его найти, проверьте папку спам или`} <Link onClick={sendEmail} className={classes.link}> нажмите здесь для повторной отправки </Link> </Alert>
+                    </div>}
+                    {store.dialogMenuItem === 0 && <div className={classes.content}>
                         <UserAccount />
                     </div>}
-                    {props.store.dialogMenuItem === 1 && <div className={classes.content}>
+                    {store.dialogMenuItem === 1 && <div className={classes.content}>
                         1
                         </div>}
-                    {props.store.dialogMenuItem === 2 && <div className={classes.content}>
+                    {store.dialogMenuItem === 2 && <div className={classes.content}>
                         2
                         </div>}
-                    {props.store.dialogMenuItem === 3 && <div className={classes.content}>
+                    {store.dialogMenuItem === 3 && <div className={classes.content}>
                         <Castomize />
                     </div>}
-                    {props.store.dialogMenuItem === 4 && <div className={classes.content}>
+                    {store.dialogMenuItem === 4 && <div className={classes.content}>
                         4
                         </div>}
-                    {props.store.dialogMenuItem === 5 && <div className={classes.content}>
+                    {store.dialogMenuItem === 5 && <div className={classes.content}>
                         5
                         </div>}
-                    {props.store.dialogMenuItem === 6 && <div className={classes.content}>
+                    {store.dialogMenuItem === 6 && <div className={classes.content}>
                         6
                         </div>}
                 </Grid>
