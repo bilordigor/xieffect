@@ -250,15 +250,36 @@ const UserAccount = inject('store')(observer(({ store }) => {
                         } else { //"User doesn't exist"
                             store.setLoginValuesUI("passwordChangeError", true)
                         }
-                    } else {
-                        store.setLoginValuesUI("passwordChangeServerError", true)
                     }
                 });
         }
     }
 
     const clickReadyEmail = () => {
-
+        console.log(store.settingsNew.passwordOldChange)
+        console.log(store.settingsNew.passwordNewChange)
+        store.setSettingsUIValues("emailChangeEmailError", false)
+        store.setSettingsUIValues("emailChangePasswordError", false)
+        store.setSettingsUIValues("emailChangeSymError", false)
+        let sym = "1234567890qwertyuiopasdfghjklzxcvbnm_QWERTYUIOPASDFGHJKLZXCVBNM"
+        if (!store.settingsNew.newEmailChange.includes('@') || !store.settingsNew.newEmailChange.includes('.') || store.registrationValues.email.length < 5) {
+            store.setRegistrationValuesUI("emailChangeSymError", true)
+        }
+        if (!store.settingsUI.emailChangeSymError) {
+            store.postDataScr(`${store.url}/email-change/`, { "password": store.settingsNew.passwordEmailChange, "new_email": store.settingsNew.newEmailChange }) // postData /auth //Crypto.SHA384(store.settingsNew.passwordOldChange).toString() //Crypto.SHA384(store.settingsNew.passwordNewChange).toString()
+                .then((data) => {
+                    //console.log(data)
+                    if (data != undefined) {
+                        if (data.a == "Success") { //userId //"Success"
+                            setOpenEmailChangeDialog(false)
+                        } else if (data.a == "Email in use") { //"User doesn't exist"
+                            store.setSettingsNewValues("emailChangeEmailError", true)
+                        } else if (data.a == "Wrong password") { //"User doesn't exist"
+                            store.setSettingsNewValues("emailChangePasswordError", true)
+                        }
+                    }
+                });
+        }
     }
 
 
@@ -555,6 +576,9 @@ const UserAccount = inject('store')(observer(({ store }) => {
                                         />
                                     </FormControl>
                                 </Grid>
+                                {store.settingsUI.emailChangeEmailError && <Grid item container direction="column" justifyContent="center" alignItems="flex-start" className={classes.gridErrorLabel}>
+                                    <Typography className={classes.ErrorLabel}> Эта почта уже используется! </Typography>
+                                </Grid>}
                                 <Grid className={classes.gridDialogItem}>
                                     <FormControl className={classes.textFieldDialog} variant="outlined">
                                         <InputLabel className={classes.inputLabel} htmlFor="outlined-adornment-password"> <Typography className={classes.textFieldTypography}>Новый адрес почты</Typography> </InputLabel>
@@ -582,6 +606,9 @@ const UserAccount = inject('store')(observer(({ store }) => {
                                         />
                                     </FormControl>
                                 </Grid>
+                                {store.settingsUI.emailChangePasswordError && <Grid item container direction="column" justifyContent="center" alignItems="flex-start" className={classes.gridErrorLabel}>
+                                    <Typography className={classes.ErrorLabel}> Неверный пароль! </Typography>
+                                </Grid>}
                             </Grid>
                         </DialogContent>
                         <DialogActions>

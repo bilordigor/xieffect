@@ -360,6 +360,10 @@ class Store {
     passwordChangeSymError: false,
     passwordChangeError: false,
     passwordChangeServerError: false,
+    emailChangeEmailError: false,
+    emailChangePasswordError: false,
+    emailChangeSymError: false,
+
 
   }
 
