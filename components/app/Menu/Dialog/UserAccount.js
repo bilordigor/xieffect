@@ -585,8 +585,8 @@ const UserAccount = inject('store')(observer(({ store }) => {
                                         <OutlinedInput
                                             className={classes.OutlinedInput}
                                             type='text'
-                                            value={store.settingsNew.newEmail}
-                                            onChange={handleChange('newEmail')}
+                                            value={store.settingsNew.newEmailChange}
+                                            onChange={handleChange('newEmailChange')}
                                             // endAdornment={  
                                             //     <InputAdornment position="end">
                                             //         <IconButton
