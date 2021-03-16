@@ -265,7 +265,7 @@ const PasswordReset = inject('store')(observer(({store}) => {
                 .then((data) => {
                     //console.log(data)
                     if (data != undefined) {
-                        if (data.a === true) { //"Success"
+                        if (data.a == "Success") { //"Success"
                             store.setRegistrationValuesUI("emailResetOkay", true)
                         }
                     }
