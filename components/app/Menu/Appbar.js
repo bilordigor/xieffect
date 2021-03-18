@@ -131,7 +131,7 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-const Appbar = inject('store')(observer((props) => {
+const Appbar = inject('store')(observer(({store}) => {
     const classes = useStyles();
     const theme = useTheme();
     const { files, selectFiles } = React.useContext(Context)
@@ -145,14 +145,10 @@ const Appbar = inject('store')(observer((props) => {
     };
 
     const handleDrawerOpen = () => {
-        props.store.setOpenMenu()
+        store.setOpenMenu()
     };
 
     const router = useRouter()
-
-    const clickSaveButton = () => {
-
-    }
 
     return (
         <>
@@ -171,7 +167,7 @@ const Appbar = inject('store')(observer((props) => {
                         onClick={handleDrawerOpen}
                         edge="start"
                         className={clsx(classes.menuButton, {
-                            [classes.hide]: props.store.openMenu,
+                            [classes.hide]: store.openMenu,
                         })}
 
                     >
@@ -244,7 +240,7 @@ const Appbar = inject('store')(observer((props) => {
                 {
                     router.pathname === '/app/settings' && <>
                         <Tooltip title="Сохранить все изменения в настройках" arrow>
-                            <Button onClick={clickSaveButton} variant="contained" color="primary" className={classes.saveButtom}>
+                            <Button onClick={() => store.updateSettings()} variant="contained" color="primary" className={classes.saveButtom}>
                                 Сохранить изменения
                             </Button>
                         </Tooltip>

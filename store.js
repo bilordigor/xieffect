@@ -106,7 +106,13 @@ class Store {
     emailAfter: '',
     password: '',
     darkTheme: true,
-    appLanguage: '',
+    language: '',
+    passwordEmailChange: '',
+    newEmailChange: '',
+    passwordOldChange: '',
+    passwordNewChange: '',
+    passwordOldChangeHex: '',
+    passwordNewChangeHex: '',
   }
 
   @action setSettingsValues = (name, value) => {
@@ -121,7 +127,7 @@ class Store {
     firstName: '',
     secondName: '',
     patronymic: '',
-    email: 'test@test.test',
+    email: '',
     emailConfirmed: false,
     emailBefore: '',
     emailBeforeHidden: '',
@@ -154,6 +160,22 @@ class Store {
     this.settings.emailBefore = emailArr[0]
     this.settings.emailAfter = "@" + emailArr[1]
 
+  }
+
+   labelSettings = ["username", "darkTheme"]
+   update = {
+     "changed": {}
+   }
+
+  @action updateSettings = () => {
+    labelSettings.map((name) => {
+      if (this.settingsNew[name] != this.settings[name]) {
+        this.update[name] = this.settingsNew[name]
+        this.settings[name] = this.settingsNew[name]
+      }
+    })
+    console.log(update)
+    this.postDataScr(`${this.url}/settings/`, update)
   }
 
   // // UI Data and Functions
