@@ -162,15 +162,16 @@ class Store {
 
   }
 
-  @observable labelSettings = ["username", "darkTheme"]
-  @observable update = {
-     "changed": {}
-   }
+  labelSettings = ["username", "darkTheme"]
+  labelServerSettings = ["username", "dark-theme"]
+  update = {
+    "changed": {}
+  }
 
   @action updateSettings = () => {
-    this.labelSettings.map((name) => {
+    this.labelSettings.map((name, index) => {
       if (this.settingsNew[name] != this.settings[name]) {
-        this.update.changed[name] = this.settingsNew[name]
+        this.update.changed[this.labelServerSettings[index]] = this.settingsNew[name]
         this.settings[name] = this.settingsNew[name]
       }
     })
@@ -256,7 +257,7 @@ class Store {
     this.registrationValuesUI.errorEmailNotFounedReset = false
     this.registrationValuesUI.errorSymbolsReset = false
     this.registrationValuesUI.errorPasswordLengthReset = false
-    
+
 
 
   }
