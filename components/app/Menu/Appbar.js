@@ -166,6 +166,10 @@ const Appbar = inject('store')(observer(({ store }) => {
                     enqueueSnackbar('Успешно', {
                         variant: 'success',
                     });
+                } else {
+                    enqueueSnackbar('Ошибка', {
+                        variant: 'error',
+                    });
                 }
             })
     }
