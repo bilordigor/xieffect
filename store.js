@@ -170,7 +170,7 @@ class Store {
   @action updateSettings = () => {
     this.labelSettings.map((name) => {
       if (this.settingsNew[name] != this.settings[name]) {
-        this.update[name] = this.settingsNew[name]
+        this.update.changed[name] = this.settingsNew[name]
         this.settings[name] = this.settingsNew[name]
       }
     })
