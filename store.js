@@ -162,13 +162,13 @@ class Store {
 
   }
 
-   labelSettings = ["username", "darkTheme"]
+  @observable labelSettings = ["username", "darkTheme"]
    update = {
      "changed": {}
    }
 
   @action updateSettings = () => {
-    labelSettings.map((name) => {
+    this.labelSettings.map((name) => {
       if (this.settingsNew[name] != this.settings[name]) {
         this.update[name] = this.settingsNew[name]
         this.settings[name] = this.settingsNew[name]
