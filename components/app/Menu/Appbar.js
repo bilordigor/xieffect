@@ -131,7 +131,7 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-const Appbar = inject('store')(observer(({store}) => {
+const Appbar = inject('store')(observer(({ store }) => {
     const classes = useStyles();
     const theme = useTheme();
     const { files, selectFiles } = React.useContext(Context)
@@ -147,7 +147,7 @@ const Appbar = inject('store')(observer(({store}) => {
     const handleDrawerOpen = () => {
         store.setOpenMenu()
     };
-
+    const { enqueueSnackbar } = useSnackbar();
     const router = useRouter()
 
     const clickedSaveSettings = () => {
@@ -156,9 +156,16 @@ const Appbar = inject('store')(observer(({store}) => {
                 store.update.changed[store.labelServerSettings[index]] = store.settingsNew[name]
                 store.settings[name] = store.settingsNew[name]
             }
-          })
-          console.log(store.update)
-          store.postDataScr(`${store.url}/settings/`, store.update)
+        })
+        console.log(store.update)
+        store.postDataScr(`${store.url}/settings/`, store.update)
+            .then((data) => {
+                if (data.a) {
+                    enqueueSnackbar('Успешно', {
+                        'success',
+                    });
+                }
+            })
     }
 
     return (

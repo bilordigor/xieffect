@@ -11,7 +11,7 @@ import { useFileUpload } from "use-file-upload";
 import SwipeableViews from 'react-swipeable-views';
 import { inject, observer } from 'mobx-react'
 import CssBaseline from '@material-ui/core/CssBaseline';
-
+import { SnackbarProvider, useSnackbar } from 'notistack';
 
 const MyApp = (observer(({ Component, pageProps }) => {
 
@@ -111,10 +111,12 @@ const MyApp = (observer(({ Component, pageProps }) => {
       <Context.Provider value={{ files, selectFiles }}>
         <Provider store={store}>
           <ThemeProvider theme={theme}>
-            {/* <MenuLayout> */}
-            <CssBaseline />
-            <Component {...pageProps} />
-            {/* </MenuLayout> */}
+            <SnackbarProvider maxSnack={3}>
+              {/* <MenuLayout> */}
+              <CssBaseline />
+              <Component {...pageProps} />
+              {/* </MenuLayout> */}
+            </SnackbarProvider>
           </ThemeProvider>
         </Provider>
       </Context.Provider>
