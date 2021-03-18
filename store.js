@@ -163,7 +163,7 @@ class Store {
   }
 
   @observable labelSettings = ["username", "darkTheme"]
-   update = {
+  @observable update = {
      "changed": {}
    }
 
@@ -174,8 +174,8 @@ class Store {
         this.settings[name] = this.settingsNew[name]
       }
     })
-    console.log(update)
-    this.postDataScr(`${this.url}/settings/`, update)
+    console.log(this.update)
+    this.postDataScr(`${this.url}/settings/`, this.update)
   }
 
   // // UI Data and Functions
