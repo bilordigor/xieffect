@@ -111,7 +111,12 @@ const MyApp = (observer(({ Component, pageProps }) => {
       <Context.Provider value={{ files, selectFiles }}>
         <Provider store={store}>
           <ThemeProvider theme={theme}>
-            <SnackbarProvider maxSnack={3}>
+            <SnackbarProvider
+              anchorOrigin={{
+                vertical: 'bottom',
+                horizontal: 'center',
+              }}
+              maxSnack={3}>
               {/* <MenuLayout> */}
               <CssBaseline />
               <Component {...pageProps} />

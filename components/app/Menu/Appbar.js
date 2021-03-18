@@ -162,7 +162,7 @@ const Appbar = inject('store')(observer(({ store }) => {
             .then((data) => {
                 if (data.a) {
                     enqueueSnackbar('Успешно', {
-                        'success',
+                        variant: 'success',
                     });
                 }
             })
