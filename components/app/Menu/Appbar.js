@@ -150,6 +150,17 @@ const Appbar = inject('store')(observer(({store}) => {
 
     const router = useRouter()
 
+    const clickedSaveSettings = () => {
+        store.labelSettings.map((name, index) => {
+            if (store.settingsNew[name] != store.settings[name]) {
+                store.update.changed[store.labelServerSettings[index]] = store.settingsNew[name]
+                store.settings[name] = store.settingsNew[name]
+            }
+          })
+          console.log(store.update)
+          store.postDataScr(`${store.url}/settings/`, store.update)
+    }
+
     return (
         <>
             {/* Кнопка-иконка меню (Отображается всегда, при этом на мобильных платформах исчезает т.к. меню переносится вниз в горизонтальное положение) */}
@@ -240,7 +251,7 @@ const Appbar = inject('store')(observer(({store}) => {
                 {
                     router.pathname === '/app/settings' && <>
                         <Tooltip title="Сохранить все изменения в настройках" arrow>
-                            <Button onClick={() => store.updateSettings()} variant="contained" color="primary" className={classes.saveButtom}>
+                            <Button onClick={clickedSaveSettings} variant="contained" color="primary" className={classes.saveButtom}>
                                 Сохранить изменения
                             </Button>
                         </Tooltip>

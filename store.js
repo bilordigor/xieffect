@@ -168,17 +168,6 @@ class Store {
     "changed": {}
   }
 
-  @action updateSettings = () => {
-    this.labelSettings.map((name, index) => {
-      if (this.settingsNew[name] != this.settings[name]) {
-        this.update.changed[this.labelServerSettings[index]] = this.settingsNew[name]
-        this.settings[name] = this.settingsNew[name]
-      }
-    })
-    console.log(this.update)
-    this.postDataScr(`${this.url}/settings/`, this.update)
-  }
-
   // // UI Data and Functions
   // "/" (main page) 
   @observable alertData = {
