@@ -17,6 +17,8 @@ import { useRouter } from 'next/router'
 
 import { inject, observer } from 'mobx-react'
 
+import { SnackbarProvider, useSnackbar } from 'notistack';
+
 const drawerWidth = 220;
 
 const useStyles = makeStyles((theme) => ({
