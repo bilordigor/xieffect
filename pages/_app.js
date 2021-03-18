@@ -17,7 +17,7 @@ const MyApp = (observer(({ Component, pageProps }) => {
 
   const store = useStore(pageProps.initialState)
   const [files, selectFiles] = useFileUpload()
-  let dark = store.userData.isDarkMode
+  let dark = store.settingsNew.darkTheme
 
   // const theme = createMuiTheme({
   //   palette: {
