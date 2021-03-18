@@ -31,7 +31,7 @@ const useStylesProfile = makeStyles((theme) => ({
     }
 }));
 
-const Castomize = inject('store')(observer((props) => {
+const Castomize = inject('store')(observer(({store}) => {
     const classes = useStylesProfile();
     // const [isDarkMode, setIsDarkMode] = useState(() => false);
 
@@ -42,8 +42,8 @@ const Castomize = inject('store')(observer((props) => {
                     <Grid item container direction="row" className={classes.gridDarkModeToggle}>
                         <Grid>
                             <DarkModeToggle
-                                onChange={props.store.setIsDarkMode}
-                                checked={props.store.userData.isDarkMode}
+                                onChange={() => store.setSettingsNewValues("darkTheme", !store.settingsNew.darkTheme)}
+                                checked={store.settingsNew.darkTheme}
                                 size={80}
                             />
                         </Grid>
