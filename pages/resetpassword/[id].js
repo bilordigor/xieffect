@@ -264,7 +264,8 @@ const PasswordReset = inject('store')(observer(({store}) => {
         }
         if (!store.registrationValuesUI.errorSymbolsReset && !store.registrationValuesUI.errorPasswordLengthReset) {
             let password = Crypto.SHA384(store.registrationValues.passwordReset)
-            store.postData(`${store.url}/password-reset/confirm/`, { "code": id, "password": password, })
+            console.log(password)
+            store.postData(`${store.url}/password-reset/confirm/`, { "code": id, "password": password})
                 .then((data) => {
                     //console.log(data)
                     if (data != undefined) {
