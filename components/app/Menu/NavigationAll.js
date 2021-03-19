@@ -560,8 +560,8 @@ const NavigationAll = inject('store')(observer((props) => {
                             <Link href='/app/settings' className={classes.aNavLink}>
                                 <ListItem button>
                                     <ListItemIcon className={classes.Image}>
-                                        {props.store.userData.isDarkMode && <UseAnimations className={classes.toolIcons} strokeColor={'#e0e0e0'} animation={settings} size={36} />}
-                                        {!props.store.userData.isDarkMode && <UseAnimations className={classes.toolIcons} strokeColor={'#424242'} animation={settings} size={36} />}
+                                        {props.store.settingsNew.darkTheme && <UseAnimations className={classes.toolIcons} strokeColor={'#e0e0e0'} animation={settings} size={36} />}
+                                        {!props.store.settingsNew.darkTheme && <UseAnimations className={classes.toolIcons} strokeColor={'#424242'} animation={settings} size={36} />}
                                     </ListItemIcon>
                                     {props.store.openMenu && <ListItemText primary={<Typography className={classes.ImageTextTypography}> Настройки </Typography>} className={classes.ImageText} />}
                                     {router.pathname === '/app/settings' && <Divider orientation="vertical" className={classes.nowPageDivider} />}
@@ -652,8 +652,8 @@ const NavigationAll = inject('store')(observer((props) => {
                                     <Link href='/app/settings' className={classes.aNavLink}>
                                         <ListItem button>
                                             <ListItemIcon className={classes.Image}>
-                                                {props.store.userData.isDarkMode && <UseAnimations className={classes.toolIcons} strokeColor={'#e0e0e0'} animation={settings} size={36} />}
-                                                {!props.store.userData.isDarkMode && <UseAnimations className={classes.toolIcons} strokeColor={'#424242'} animation={settings} size={36} />}
+                                                {props.store.settingsNew.darkTheme && <UseAnimations className={classes.toolIcons} strokeColor={'#e0e0e0'} animation={settings} size={36} />}
+                                                {!props.store.settingsNew.darkTheme && <UseAnimations className={classes.toolIcons} strokeColor={'#424242'} animation={settings} size={36} />}
                                             </ListItemIcon>
                                             {props.store.openMenu && <ListItemText primary={<Typography className={classes.ImageTextTypography}> Настройки </Typography>} className={classes.ImageText} />}
                                             {router.pathname === '/app/settings' && <Divider orientation="vertical" className={classes.nowPageDivider} />}
