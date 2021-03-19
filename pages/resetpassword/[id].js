@@ -12,6 +12,8 @@ import { inject, observer } from 'mobx-react'
 import Navigation from '../../components/main/Menu/Navigation';
 import Background from '../../components/app/help/background/background';
 
+let Crypto = require('crypto-js')
+
 const useStyles = makeStyles((theme) => ({
     root: {
         height: '100vh',
@@ -261,7 +263,7 @@ const PasswordReset = inject('store')(observer(({store}) => {
             }
         }
         if (!store.registrationValuesUI.errorSymbolsReset && !store.registrationValuesUI.errorPasswordLengthReset) {
-            store.postData(`${store.url}/password-reset/confirm/`, { "code": id, "password": store.registrationValues.passwordReset, })
+            store.postData(`${store.url}/password-reset/confirm/`, { "code": id, "password": Crypto.SHA384(store.registrationValues.passwordReset), })
                 .then((data) => {
                     //console.log(data)
                     if (data != undefined) {
