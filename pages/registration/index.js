@@ -218,6 +218,7 @@ const Registration = inject('store')(observer(({ store }) => {
 
             store.postData(`${store.url}/reg/`, { "email": store.registrationValues.email, "password": store.registrationValues.passwordHash, "username": store.registrationValues.username }) ///registration/newemail
                 .then((data) => {
+                    console.log(data)
                     if (data != undefined) {
                         if (data.a) { //true
                             const router = Router
