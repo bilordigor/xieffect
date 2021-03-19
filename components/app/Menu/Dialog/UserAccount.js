@@ -266,7 +266,7 @@ const UserAccount = inject('store')(observer(({ store }) => {
             store.setRegistrationValuesUI("emailChangeSymError", true)
         }
         if (!store.settingsUI.emailChangeSymError) {
-            store.postDataScr(`${store.url}/email-change/`, { "password": store.settingsNew.passwordEmailChange, "new_email": store.settingsNew.newEmailChange }) // postData /auth //Crypto.SHA384(store.settingsNew.passwordOldChange).toString() //Crypto.SHA384(store.settingsNew.passwordNewChange).toString()
+            store.postDataScr(`${store.url}/email-change/`, { "password":  Crypto.SHA384(store.settingsNew.passwordEmailChange).toString(), "new_email": store.settingsNew.newEmailChange }) // postData /auth //Crypto.SHA384(store.settingsNew.passwordOldChange).toString() //Crypto.SHA384(store.settingsNew.passwordNewChange).toString()
                 .then((data) => {
                     //console.log(data)
                     if (data != undefined) {
