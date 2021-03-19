@@ -227,10 +227,10 @@ const Registration = inject('store')(observer(({ store }) => {
                             //     props.store.setRegistrationValues("emailAlreadyUsed", true)
                             store.setRegistrationValuesClear()
                         } else {
-                            store.setLoginValuesUI("emailAlreadyUsed", true)
+                            store.setRegistrationValuesUI("emailAlreadyUsed", true)
                         }
                     } else {
-                        store.setLoginValuesUI("errorServerUser", true)
+                        store.setRegistrationValuesUI("errorServerUser", true)
                     }
                 });
         }
