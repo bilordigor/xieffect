@@ -114,7 +114,7 @@ const MyApp = (observer(({ Component, pageProps }) => {
             <SnackbarProvider
               anchorOrigin={{
                 vertical: 'bottom',
-                horizontal: 'center',
+                horizontal: 'right',
               }}
               maxSnack={3}>
               {/* <MenuLayout> */}
