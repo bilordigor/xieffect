@@ -196,8 +196,9 @@ const Login = inject('store')(observer(({ store }) => {
         //console.log("clicked")
         store.setLoginValuesFalse()
         if (store.loginValues.email.length > 0 && store.loginValues.password.length > 0) {
-
+            console.log(store.loginValues.password)
             store.goToHexLogin()
+            console.log(store.loginValues.passwordHash)
             store.postData(`${store.url}/auth/`, { "email": store.loginValues.email, "password": store.loginValues.passwordHash }) // postData /auth
                 .then((data) => {
                     if (data != undefined) {
