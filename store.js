@@ -345,22 +345,69 @@ class Store {
   }
 
   // Filters for courses
-  @observable chipsList = [
-    { key: 0, title: "Все", clicked: true },
-    { key: 1, title: "Ваши курсы", clicked: false },
-    { key: 2, title: "Избранное", clicked: false },
-    { key: 3, title: "Популярное", clicked: false },
-    { key: 4, title: "Рекомендации", clicked: false },
-    { key: 5, title: "Школьные курсы", clicked: false },
-    { key: 6, title: "ЕГЭ", clicked: false },
-    { key: 7, title: "Кружок", clicked: false },
+  @observable chipsGlobalList = [
+    { key: 0, title: "Избранное", clicked: true },
+    { key: 1, title: "Закреплённое", clicked: false },
+    { key: 2, title: "Собственное", clicked: false },
+    { key: 3, title: "Начатое", clicked: false },
   ]
 
-  @action chipperClick = (key) => {
-    for (let i = 0; i < this.chipsList.length; i++) {
-      this.chipsList[i].clicked = false
+  @observable chipsCategoryList = [
+    { key: 0, title: "Средняя школа", clicked: true },
+    { key: 1, title: "Основная школа", clicked: false },
+    { key: 2, title: "Высшая школа", clicked: false },
+    { key: 3, title: "Высшее образование", clicked: false },
+    { key: 4, title: "Кружки", clicked: false },
+    { key: 5, title: "Хобби", clicked: false },
+    { key: 6, title: "ОГЭ", clicked: false },
+    { key: 7, title: "ЕГЭ", clicked: false },
+    { key: 8, title: "Профессиональные навыки", clicked: false },
+    // { key: 7, title: "Кружок", clicked: false },
+    // { key: 7, title: "Кружок", clicked: false },
+
+  ]
+
+  @observable chipsThemeList = [
+    { key: 0, title: "Математика", clicked: true },
+    { key: 1, title: "Алгебра", clicked: false },
+    { key: 2, title: "Геометрия", clicked: false },
+    { key: 3, title: "Языки", clicked: false },
+    { key: 4, title: "Физика", clicked: false },
+    { key: 5, title: "Химия", clicked: false },
+    { key: 6, title: "Биология", clicked: false },
+    { key: 7, title: "География", clicked: false },
+    { key: 8, title: "История", clicked: false },
+    { key: 9, title: "Обществознание", clicked: false },
+    { key: 10, title: "Искусства", clicked: false },
+    { key: 11, title: "Информатика", clicked: false },
+
+  ]
+
+  @observable chipsDifficultyList = [
+    { key: 0, title: "Обзорный", clicked: true },
+    { key: 1, title: "Новичок", clicked: false },
+    { key: 2, title: "Любитель", clicked: false },
+    { key: 3, title: "Энтузиаст", clicked: false },
+    { key: 4, title: "Профи", clicked: false },
+    { key: 5, title: "Эксперт", clicked: false },
+
+  ]
+
+
+
+  @action chipperClickOne = (key) => {
+    if (!this.chipsGlobalList[key].clicked) {
+      for (let i = 0; i < this.chipsGlobalList.length; i++) {
+        this.chipsGlobalList[i].clicked = false
+      }
+      this.chipsGlobalList[key].clicked = true
+    } else {
+      this.chipsGlobalList[key].clicked = false
     }
-    this.chipsList[key].clicked = true
+  }
+
+  @action chipperClickAny = (name, key) => {
+    this[name][key].clicked = !this[name][key].clicked
   }
 
   // "/app/settings

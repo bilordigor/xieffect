@@ -45,7 +45,7 @@
     "react-custom-scrollbars": "^4.2.1",
     "react-dark-mode-toggle": "0.0.10",
     "react-date-picker": "^8.0.6",
-    "react-dom": "^16.9.0",
+    "react-dom": "^17.0.1",
     "react-dropzone": "^11.3.1",
     "react-emojione": "^5.0.1",
     "react-horizontal-scrolling-menu": "^0.7.9",

@@ -34,15 +34,15 @@ const useStyles = makeStyles((theme) => ({
     //paddingBottom: "100px",
   },
   gridCoursesList: {
-    [theme.breakpoints.up('md')]: {
-      marginTop: 30,
-    },
-    [theme.breakpoints.only('md')]: {
-      marginTop: 60,
-    },
-    [theme.breakpoints.down('md')]: {
-      marginTop: 100,
-    },  
+    // [theme.breakpoints.up('md')]: {
+    //   marginTop: 30,
+    // },
+    // [theme.breakpoints.only('md')]: {
+    //   marginTop: 60,
+    // },
+    // [theme.breakpoints.down('md')]: {
+    //   marginTop: 100,
+    // },  
   }
 
 }));
@@ -107,12 +107,12 @@ const Education = inject('store')(observer(({ store }) => {
           {/* {props.store.userData.isBackgroundImageInEducation && <Background src="https://wallpapercave.com/wp/wp5440815.png" />} */}
           {/* <Background src="https://wallpapercave.com/wp/wp5440815.png" /> */}
           <Grid container direction="column" className={classes.main}>
-            <Grid className={classes.gridChipper}>
+            {/* <Grid className={classes.gridChipper}> */}
               <Chipper />
-            </Grid>
-            <Grid className={classes.gridCoursesList}>
+            {/* </Grid>
+            <Grid className={classes.gridCoursesList}> */}
               <CoursesList />
-            </Grid>
+            {/* </Grid> */}
           </Grid>
 
         </div >
