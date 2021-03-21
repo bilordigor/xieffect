@@ -58,6 +58,7 @@ const useStyles = makeStyles((theme) => ({
     },
     labelTypography: {
         //marginTop: '8px',
+        paddingRight: 4,
         fontSize: 22,
         color: theme.main.palette.content.text,
     },
