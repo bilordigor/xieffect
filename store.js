@@ -346,14 +346,14 @@ class Store {
 
   // Filters for courses
   @observable chipsGlobalList = [
-    { key: 0, title: "Избранное", clicked: true },
+    { key: 0, title: "Избранное", clicked: false },
     { key: 1, title: "Закреплённое", clicked: false },
     { key: 2, title: "Собственное", clicked: false },
     { key: 3, title: "Начатое", clicked: false },
   ]
 
   @observable chipsCategoryList = [
-    { key: 0, title: "Средняя школа", clicked: true },
+    { key: 0, title: "Средняя школа", clicked: false },
     { key: 1, title: "Основная школа", clicked: false },
     { key: 2, title: "Высшая школа", clicked: false },
     { key: 3, title: "Высшее образование", clicked: false },
@@ -368,7 +368,7 @@ class Store {
   ]
 
   @observable chipsThemeList = [
-    { key: 0, title: "Математика", clicked: true },
+    { key: 0, title: "Математика", clicked: false },
     { key: 1, title: "Алгебра", clicked: false },
     { key: 2, title: "Геометрия", clicked: false },
     { key: 3, title: "Языки", clicked: false },
@@ -384,7 +384,7 @@ class Store {
   ]
 
   @observable chipsDifficultyList = [
-    { key: 0, title: "Обзорный", clicked: true },
+    { key: 0, title: "Обзорный", clicked: false },
     { key: 1, title: "Новичок", clicked: false },
     { key: 2, title: "Любитель", clicked: false },
     { key: 3, title: "Энтузиаст", clicked: false },
@@ -393,6 +393,23 @@ class Store {
 
   ]
 
+  @observable chipsSortList = [
+    { key: 0, title: "По популярности", clicked: true },
+    { key: 1, title: "По дате посещения: сначала недавние", clicked: false },
+    { key: 2, title: "По дате создания: сначала новые", clicked: false },
+
+  ]
+
+  @action chipperClickOneSort = (key) => {
+    if (!this.chipsSortList[key].clicked) {
+      for (let i = 0; i < this.chipsSortList.length; i++) {
+        this.chipsSortList[i].clicked = false
+      }
+      this.chipsSortList[key].clicked = true
+    } else {
+      this.chipsSortList[key].clicked = false
+    }
+  }
 
 
   @action chipperClickOne = (key) => {

@@ -71,12 +71,13 @@ const useStyles = makeStyles((theme) => ({
         paddingLeft: 8,
     },
     labelFilterColumn: {
+        paddingTop: 16,
         paddingLeft: 12,
         fontSize: 20,
         color: theme.main.palette.content.text,
     },
     gridFilters: {
-        marginTop: 8,
+        marginTop: 0,
         marginBottom: 8,
         //width: "100vw",
         // height: "300px",
@@ -86,7 +87,7 @@ const useStyles = makeStyles((theme) => ({
 
 
 
-const Chipper = inject('store')(observer(({store}) => {
+const Chipper = inject('store')(observer(({ store }) => {
     const classes = useStyles();
     const theme = useTheme()
     const [open, setOpen] = React.useState(false);
@@ -100,14 +101,14 @@ const Chipper = inject('store')(observer(({store}) => {
                     <TuneIcon className={classes.icons} />
                 </Button>
             </Grid>
-            <Divider/>
+            <Divider />
             { open && <Grid
                 item
                 className={classes.gridFilters}
                 container
                 direction="row"
-                //justifyContent="flex-start"
-                //alignItems="center"
+            //justifyContent="flex-start"
+            //alignItems="center"
             >
                 <Grid
                     //item
@@ -220,6 +221,37 @@ const Chipper = inject('store')(observer(({store}) => {
                                 })}
                                 //clickable
                                 onClick={() => store.chipperClickAny("chipsDifficultyList", chip.key)}
+                                label={
+                                    <Typography
+                                        className={clsx(classes.chipTypography, {
+                                            [classes.chipTypographyClicked]: chip.clicked,
+                                            [classes.chipTypographyNotClicked]: !chip.clicked,
+                                        })}
+
+                                    >
+                                        {chip.title}
+                                    </Typography>} />
+                        </Grid>
+                    ))}
+                </Grid>
+                <Grid
+                    //item
+                    className={classes.filterColumn}
+                    //container
+                    direction="column"
+                    justifyContent="flex-start"
+                    alignItems="flex-start"
+                >
+                    <Typography className={classes.labelFilterColumn}> Сортировка: </Typography>
+                    {store.chipsSortList.map((chip) => (
+                        <Grid className={classes.gridChip} key={chip.key}>
+                            <Chip
+                                //variant="outlined"
+                                className={clsx(classes.chip, {
+                                    [classes.chipClicked]: chip.clicked,
+                                })}
+                                //clickable
+                                onClick={() => store.chipperClickOneSort(chip.key)}
                                 label={
                                     <Typography
                                         className={clsx(classes.chipTypography, {
