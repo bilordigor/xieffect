@@ -54,7 +54,7 @@ const useStyles = makeStyles((theme) => ({
         // [theme.breakpoints.only('xs')]: {
         //     paddingLeft: theme.spacing(2),
         // },
-        marginBottom: theme.spacing(12),
+        //marginBottom: 16,
         height: '100%',
         width: '100%',
         marginRight: '-50px',
@@ -210,9 +210,7 @@ const CoursesList = inject('store')(observer(({ store }) => {
     //         store.setCourseList(data)
     //     }
     // });
-
     useEffect(() => {
-
         if (window.location.href.includes('local')) {
             fetch("http://localhost:4200/courses")
                 .then((response) => response.json())
@@ -233,7 +231,12 @@ const CoursesList = inject('store')(observer(({ store }) => {
             ]
             store.setCourseList(list)
         }
-    }, [])
+
+
+
+
+        
+    }, []);
 
     return (
 

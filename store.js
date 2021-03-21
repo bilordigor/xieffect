@@ -344,52 +344,75 @@ class Store {
     this.courseList = data
   }
 
+  // newCourseLoading 
+
+  @observable isLoading = false
+
+  @action setIsLoading = () => {
+    this.isLoading = !this.isLoading
+  }
+
   // Filters for courses
   @observable chipsGlobalList = [
-    { key: 0, title: "Избранное", clicked: false },
-    { key: 1, title: "Закреплённое", clicked: false },
-    { key: 2, title: "Собственное", clicked: false },
-    { key: 3, title: "Начатое", clicked: false },
+    { key: 0, title: "Избранное", clicked: false, name: "starred" },
+    { key: 1, title: "Закреплённое", clicked: false, name: "pinned" },
+    { key: 2, title: "Собственное", clicked: false, name: "owned" },
+    { key: 3, title: "Начатое", clicked: false, name: "started" },
   ]
 
+  @action setFiltersGlobal = (data) => {
+    if (data.indexOf("starred")) {
+      this.chipsGlobalList[0].clicked = true
+    }
+    if (data.indexOf("pinned")) {
+      this.chipsGlobalList[1].clicked = true
+    }
+    if (data.indexOf("owned")) {
+      this.chipsGlobalList[2].clicked = true
+    }
+    if (data.indexOf("started")) {
+      this.chipsGlobalList[3].clicked = true
+    }
+  }
+
   @observable chipsCategoryList = [
-    { key: 0, title: "Средняя школа", clicked: false },
-    { key: 1, title: "Основная школа", clicked: false },
-    { key: 2, title: "Высшая школа", clicked: false },
-    { key: 3, title: "Высшее образование", clicked: false },
-    { key: 4, title: "Кружки", clicked: false },
-    { key: 5, title: "Хобби", clicked: false },
-    { key: 6, title: "ОГЭ", clicked: false },
-    { key: 7, title: "ЕГЭ", clicked: false },
-    { key: 8, title: "Профессиональные навыки", clicked: false },
+    { key: 0, title: "Средняя школа", clicked: false, name: "middle-school" },
+    { key: 1, title: "Основная школа", clicked: false, name: "main-school" },
+    { key: 2, title: "Высшая школа", clicked: false, name: "high-school" },
+    { key: 3, title: "Высшее образование", clicked: false, name: "clubs" },
+    { key: 4, title: "Кружки", clicked: false, name: "hobby" },
+    { key: 5, title: "Хобби", clicked: false, name: "bne" },
+    { key: 6, title: "ОГЭ", clicked: false, name: "une" },
+    { key: 7, title: "ЕГЭ", clicked: false, name: "university" },
+    { key: 8, title: "Профессиональные навыки", clicked: false, name: "prof-skills" },
     // { key: 7, title: "Кружок", clicked: false },
     // { key: 7, title: "Кружок", clicked: false },
 
   ]
 
   @observable chipsThemeList = [
-    { key: 0, title: "Математика", clicked: false },
-    { key: 1, title: "Алгебра", clicked: false },
-    { key: 2, title: "Геометрия", clicked: false },
-    { key: 3, title: "Языки", clicked: false },
-    { key: 4, title: "Физика", clicked: false },
-    { key: 5, title: "Химия", clicked: false },
-    { key: 6, title: "Биология", clicked: false },
-    { key: 7, title: "География", clicked: false },
-    { key: 8, title: "История", clicked: false },
-    { key: 9, title: "Обществознание", clicked: false },
-    { key: 10, title: "Искусства", clicked: false },
-    { key: 11, title: "Информатика", clicked: false },
+    { key: 0, title: "Математика", clicked: false, name: "math" },
+    { key: 1, title: "Алгебра", clicked: false, name: "algebra" },
+    { key: 2, title: "Геометрия", clicked: false, name: "geometry" },
+    { key: 3, title: "Языки", clicked: false, name: "languages" },
+    { key: 4, title: "Физика", clicked: false, name: "physics" },
+    { key: 5, title: "Химия", clicked: false, name: "chemistry" },
+    { key: 6, title: "Биология", clicked: false, name: "biology" },
+    { key: 7, title: "География", clicked: false, name: "geography" },
+    { key: 8, title: "История", clicked: false, name: "history" },
+    { key: 9, title: "Обществознание", clicked: false, name: "social-science" },
+    { key: 10, title: "Искусства", clicked: false, name: "arts" },
+    { key: 11, title: "Информатика", clicked: false, name: "informatics" },
 
   ]
 
   @observable chipsDifficultyList = [
-    { key: 0, title: "Обзорный", clicked: false },
-    { key: 1, title: "Новичок", clicked: false },
-    { key: 2, title: "Любитель", clicked: false },
-    { key: 3, title: "Энтузиаст", clicked: false },
-    { key: 4, title: "Профи", clicked: false },
-    { key: 5, title: "Эксперт", clicked: false },
+    { key: 0, title: "Обзорный", clicked: false, name: "review" },
+    { key: 1, title: "Новичок", clicked: false, name: "newbie" },
+    { key: 2, title: "Любитель", clicked: false, name: "amature" },
+    { key: 3, title: "Энтузиаст", clicked: false, name: "enthusiast" },
+    { key: 4, title: "Профи", clicked: false, name: "professional" },
+    { key: 5, title: "Эксперт", clicked: false, name: "expert" },
 
   ]
 
@@ -399,6 +422,8 @@ class Store {
     { key: 2, title: "По дате создания: сначала новые", clicked: false },
 
   ]
+
+
 
   @action chipperClickOneSort = (key) => {
     if (!this.chipsSortList[key].clicked) {

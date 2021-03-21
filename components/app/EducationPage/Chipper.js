@@ -67,8 +67,9 @@ const useStyles = makeStyles((theme) => ({
 
     },
     filterColumn: {
-        //width: '240px',
+        width: 'auto',
         paddingLeft: 8,
+        paddingRight: 8,
     },
     labelFilterColumn: {
         paddingTop: 16,
@@ -111,9 +112,9 @@ const Chipper = inject('store')(observer(({ store }) => {
             //alignItems="center"
             >
                 <Grid
-                    //item
+                    item
                     className={classes.filterColumn}
-                    //container
+                    container
                     direction="column"
                     justifyContent="flex-start"
                     alignItems="flex-start"
@@ -127,7 +128,7 @@ const Chipper = inject('store')(observer(({ store }) => {
                                     [classes.chipClicked]: chip.clicked,
                                 })}
                                 //clickable
-                                onClick={() => store.chipperClickOne(chip.key)}
+                                onClick={() => store.chipperClickAny("chipsGlobalList", chip.key)}
                                 label={
                                     <Typography
                                         className={clsx(classes.chipTypography, {
@@ -142,9 +143,9 @@ const Chipper = inject('store')(observer(({ store }) => {
                     ))}
                 </Grid>
                 <Grid
-                    //item
+                    item
                     className={classes.filterColumn}
-                    //container
+                    container
                     direction="column"
                     justifyContent="flex-start"
                     alignItems="flex-start"
@@ -173,9 +174,9 @@ const Chipper = inject('store')(observer(({ store }) => {
                     ))}
                 </Grid>
                 <Grid
-                    //item
+                    item
                     className={classes.filterColumn}
-                    //container
+                    container
                     direction="column"
                     justifyContent="flex-start"
                     alignItems="flex-start"
@@ -204,9 +205,9 @@ const Chipper = inject('store')(observer(({ store }) => {
                     ))}
                 </Grid>
                 <Grid
-                    //item
+                    item
                     className={classes.filterColumn}
-                    //container
+                    container
                     direction="column"
                     justifyContent="flex-start"
                     alignItems="flex-start"
@@ -235,9 +236,9 @@ const Chipper = inject('store')(observer(({ store }) => {
                     ))}
                 </Grid>
                 <Grid
-                    //item
+                    item
                     className={classes.filterColumn}
-                    //container
+                    container
                     direction="column"
                     justifyContent="flex-start"
                     alignItems="flex-start"

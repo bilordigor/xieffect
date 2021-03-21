@@ -1,6 +1,6 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react';
 import Head from 'next/head'
-import { Divider, Paper, Grid, FormControlLabel, makeStyles, useTheme, Menu, Hidden, IconButton, InputBase, Switch, Typography } from '@material-ui/core'
+import {CircularProgress, Divider, Paper, Grid, FormControlLabel, makeStyles, useTheme, Menu, Hidden, IconButton, InputBase, Switch, Typography } from '@material-ui/core'
 import SearchIcon from '@material-ui/icons/Search';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import CoursesList from '../../../components/app/EducationPage/CoursesList';
@@ -11,6 +11,7 @@ import Background from '../../../components/app/help/background/background';
 
 import { inject, observer } from 'mobx-react'
 
+import { useBottomScrollListener } from 'react-bottom-scroll-listener';
 
 import Page from 'react-page-loading'
 import NavigationAll from '../../../components/app/Menu/NavigationAll';
@@ -43,6 +44,11 @@ const useStyles = makeStyles((theme) => ({
     // [theme.breakpoints.down('md')]: {
     //   marginTop: 100,
     // },  
+  },
+  gridLoading: {
+    marginTop: 8,
+    marginBottom: 8,
+    height: 96,
   }
 
 }));
@@ -95,6 +101,38 @@ const Education = inject('store')(observer(({ store }) => {
     setAnchorElHeader(null);
   };
 
+  useEffect(() => {
+     store.getDataScr(`${store.url}/filters/`)
+       .then((data) => {
+         console.log(data)
+         if (data != undefined) {
+           store.setFilters(data)
+         }
+       });
+  }, []);
+
+  useBottomScrollListener(() => loadingMoreCourses());
+
+  // function handleScroll() {
+  //   console.log("innerHeight", window.innerHeight)
+  //   console.log("document.documentElement.scrollTop", document.documentElement.scrollTop)
+  //   console.log("document.documentElement.offsetHeight", document.documentElement.offsetHeight)
+  //   if (window.innerHeight + document.documentElement.scrollTop !== document.documentElement.offsetHeight) return;
+  //   console.log('Fetch more list items!');
+  // }
+
+  const loadingMoreCourses = () => {
+    store.setIsLoading()
+    // store.postDataScr(`${store.url}/courses/`, {})
+    //   .then((data) => {
+    //     console.log(data)
+    //     if (data != undefined) {
+    //       store.setIsLoading()
+
+
+    //     }
+    //   });
+  }
 
   return (
     <>
@@ -107,12 +145,21 @@ const Education = inject('store')(observer(({ store }) => {
           {/* {props.store.userData.isBackgroundImageInEducation && <Background src="https://wallpapercave.com/wp/wp5440815.png" />} */}
           {/* <Background src="https://wallpapercave.com/wp/wp5440815.png" /> */}
           <Grid container direction="column" className={classes.main}>
-            {/* <Grid className={classes.gridChipper}> */}
+            <Grid className={classes.gridChipper}>
               <Chipper />
-            {/* </Grid>
-            <Grid className={classes.gridCoursesList}> */}
+            </Grid>
+            <Grid className={classes.gridCoursesList}>
               <CoursesList />
-            {/* </Grid> */}
+            </Grid>
+            <Grid
+              className={classes.gridLoading}
+              container
+              direction="row"
+              justifyContent="center"
+              alignItems="center"
+            >
+              { store.isLoading && <CircularProgress />}
+            </Grid>
           </Grid>
 
         </div >
