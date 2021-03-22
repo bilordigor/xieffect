@@ -117,7 +117,11 @@ const Education = inject('store')(observer(({ store }) => {
     loadingMoreCourses()
   }
 
-  useBottomScrollListener(bottomLoading);
+  useBottomScrollListener(bottomLoading, {
+    offset: 200,
+    // debounce: 0,
+    // triggerOnNoScroll: true
+  });
 
   
 
