@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Head from 'next/head'
-import {CircularProgress, Divider, Paper, Grid, FormControlLabel, makeStyles, useTheme, Menu, Hidden, IconButton, InputBase, Switch, Typography } from '@material-ui/core'
+import { CircularProgress, Divider, Paper, Grid, FormControlLabel, makeStyles, useTheme, Menu, Hidden, IconButton, InputBase, Switch, Typography } from '@material-ui/core'
 import SearchIcon from '@material-ui/icons/Search';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import CoursesList from '../../../components/app/EducationPage/CoursesList';
@@ -102,16 +102,24 @@ const Education = inject('store')(observer(({ store }) => {
   };
 
   useEffect(() => {
-     store.getDataScr(`${store.url}/filters/`)
-       .then((data) => {
-         console.log(data)
-         if (data != undefined) {
-           store.setFilters(data)
-         }
-       });
+    store.getDataScr(`${store.url}/filters/`)
+      .then((data) => {
+        console.log(data)
+        if (data != undefined) {
+          store.setFilters(data)
+          loadingMoreCourses()
+        }
+      });
   }, []);
 
-  useBottomScrollListener(() => loadingMoreCourses());
+  const bottomLoading = () => {
+    store.coursesFilters.conuter++
+    loadingMoreCourses()
+  }
+
+  useBottomScrollListener(bottomLoading);
+
+  
 
   // function handleScroll() {
   //   console.log("innerHeight", window.innerHeight)
@@ -122,16 +130,20 @@ const Education = inject('store')(observer(({ store }) => {
   // }
 
   const loadingMoreCourses = () => {
-    store.setIsLoading()
-    // store.postDataScr(`${store.url}/courses/`, {})
-    //   .then((data) => {
-    //     console.log(data)
-    //     if (data != undefined) {
-    //       store.setIsLoading()
+    console.log("loading new courses")
+    store.setIsLoading(true)
+    store.collectFilters()
+    store.postDataScr(`${store.url}/courses/`, store.coursesFilters)
+      .then((data) => {
+        console.log(data)
+        if (data != undefined) {
+          store.setIsLoading(false)
+          store.addItemsCoursesList(data)
 
 
-    //     }
-    //   });
+
+        }
+      });
   }
 
   return (
@@ -158,7 +170,7 @@ const Education = inject('store')(observer(({ store }) => {
               justifyContent="center"
               alignItems="center"
             >
-              { store.isLoading && <CircularProgress />}
+              {store.isLoading && <CircularProgress />}
             </Grid>
           </Grid>
 

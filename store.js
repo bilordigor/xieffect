@@ -348,8 +348,8 @@ class Store {
 
   @observable isLoading = false
 
-  @action setIsLoading = () => {
-    this.isLoading = !this.isLoading
+  @action setIsLoading = (value) => {
+    this.isLoading = value
   }
 
   // Filters for courses
@@ -385,8 +385,6 @@ class Store {
     { key: 6, title: "ОГЭ", clicked: false, name: "une" },
     { key: 7, title: "ЕГЭ", clicked: false, name: "university" },
     { key: 8, title: "Профессиональные навыки", clicked: false, name: "prof-skills" },
-    // { key: 7, title: "Кружок", clicked: false },
-    // { key: 7, title: "Кружок", clicked: false },
 
   ]
 
@@ -420,12 +418,12 @@ class Store {
     { key: 0, title: "По популярности", clicked: true },
     { key: 1, title: "По дате посещения: сначала недавние", clicked: false },
     { key: 2, title: "По дате создания: сначала новые", clicked: false },
-
   ]
 
 
 
   @action chipperClickOneSort = (key) => {
+    this.coursesFilters.conuter = 0
     if (!this.chipsSortList[key].clicked) {
       for (let i = 0; i < this.chipsSortList.length; i++) {
         this.chipsSortList[i].clicked = false
@@ -438,6 +436,7 @@ class Store {
 
 
   @action chipperClickOne = (key) => {
+    this.coursesFilters.conuter = 0
     if (!this.chipsGlobalList[key].clicked) {
       for (let i = 0; i < this.chipsGlobalList.length; i++) {
         this.chipsGlobalList[i].clicked = false
@@ -449,7 +448,79 @@ class Store {
   }
 
   @action chipperClickAny = (name, key) => {
+    this.coursesFilters.conuter = 0
     this[name][key].clicked = !this[name][key].clicked
+  }
+
+  @observable list0 = [
+    { key: 1 },
+    { key: 2 },
+    { key: 3 },
+    { key: 4 },
+  ]
+
+  @observable list1 = [
+    { key: 5 },
+    { key: 6 },
+    { key: 7 },
+    { key: 8 },
+  ]
+
+  @observable coursesList = [
+
+  ]
+
+  @observable coursesFilters = {
+    "filters": {
+      "global": [],
+      "difficulty": [],
+      "category": [],
+      "theme": [],
+    },
+    "sort": "popularity",
+    "search": "поикс",
+    "conuter": 0,
+  }
+
+  @action collectFilters = () => {
+    this.coursesFilters = {
+      "filters": {
+        "global": [],
+        "difficulty": [],
+        "category": [],
+        "theme": [],
+      },
+      "sort": "popularity",
+      "search": "поикс",
+      "conuter": 0,
+    }
+    for (let i = 0; i < 4; i++) {
+      this.chipsGlobalList[i].clicked && this.coursesFilters.filters.global.push(this.chipsGlobalList[i].name)
+    }
+    for (let i = 0; i < 9; i++) {
+      this.chipsCategoryList[i].clicked && this.coursesFilters.filters.category.push(this.chipsCategoryList[i].name)
+    }
+    for (let i = 0; i < 12; i++) {
+      this.chipsThemeList[i].clicked && this.coursesFilters.filters.theme.push(this.chipsThemeList[i].name)
+    }
+    for (let i = 0; i < 6; i++) {
+      this.chipsDifficultyList[i].clicked && this.coursesFilters.filters.difficulty.push(this.chipsDifficultyList[i].name)
+    }
+    for (let i = 0; i < 4; i++) {
+      if (this.chipsSortList[i].clicked) {
+        this.coursesFilters.sort = this.chipsSortList[i].name
+        break
+      }
+    }
+    console.log(this.coursesFilters)
+     
+  }
+
+  @action addItemsCoursesList = () => {
+    this.coursesList.push(...this.list0)
+    this.coursesList.push(...this.list1)
+    console.log(this.coursesList)
+
   }
 
   // "/app/settings
