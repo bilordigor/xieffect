@@ -19,15 +19,15 @@ import NavigationAll from '../../../components/app/Menu/NavigationAll';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    width: '100%',
-    height: '100%',
+    //width: '100vw',
+    //height: '100vh',
     margin: 0,
     padding: 0,
     //backgroundColor: theme.main.palette.main.background,
   },
   main: {
-    width: '100%',
-    height: '100%',
+    //width: '100vw',
+    //height: '100vh',
     margin: 0,
     padding: 0,
     //backgroundColor: theme.main.palette.main.background,
@@ -104,16 +104,16 @@ const Education = inject('store')(observer(({ store }) => {
   useEffect(() => {
     store.getDataScr(`${store.url}/filters/`)
       .then((data) => {
-        console.log(data)
+        console.log("filters:", data)
         if (data != undefined) {
-          store.setFilters(data)
+          store.setFiltersGlobal(data)
           loadingMoreCourses()
         }
       });
   }, []);
 
   const bottomLoading = () => {
-    store.coursesFilters.conuter++
+    store.counterUp()
     loadingMoreCourses()
   }
 
@@ -133,15 +133,13 @@ const Education = inject('store')(observer(({ store }) => {
     console.log("loading new courses")
     store.setIsLoading(true)
     store.collectFilters()
-    store.postDataScr(`${store.url}/courses/`, store.coursesFilters)
+    let filters = store.coursesFilters
+    store.postDataScr(`${store.url}/courses/`, filters)
       .then((data) => {
-        console.log(data)
+        //console.log("courses:", data)
         if (data != undefined) {
           store.setIsLoading(false)
           store.addItemsCoursesList(data)
-
-
-
         }
       });
   }
@@ -158,7 +156,7 @@ const Education = inject('store')(observer(({ store }) => {
           {/* <Background src="https://wallpapercave.com/wp/wp5440815.png" /> */}
           <Grid container direction="column" className={classes.main}>
             <Grid className={classes.gridChipper}>
-              <Chipper />
+              <Chipper loadingMoreCourses={loadingMoreCourses}/>
             </Grid>
             <Grid className={classes.gridCoursesList}>
               <CoursesList />

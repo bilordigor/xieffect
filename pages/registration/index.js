@@ -212,9 +212,9 @@ const Registration = inject('store')(observer(({ store }) => {
             }
         }
         if (!store.registrationValuesUI.errorUsername && !store.registrationValuesUI.errorPasswordLength && !store.registrationValuesUI.errorSymbols && !store.registrationValuesUI.errorEmail) {
-            console.log(store.registrationValues.password)
+            //console.log(store.registrationValues.password)
             store.goToHex()
-            console.log(store.registrationValues.passwordHash)
+            //console.log(store.registrationValues.passwordHash)
 
             store.postData(`${store.url}/reg/`, { "email": store.registrationValues.email, "password": store.registrationValues.passwordHash, "username": store.registrationValues.username }) ///registration/newemail
                 .then((data) => {

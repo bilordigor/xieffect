@@ -35,8 +35,8 @@ class Store {
 
   // // Global Data and Functions
   // URL-adress server
-  //@observable url = 'https://4b181b3d0838.ngrok.io'
-  @observable url = 'https://qwert45hi.pythonanywhere.com'
+  @observable url = 'https://2371b07ef0f9.ngrok.io'
+  //@observable url = 'https://qwert45hi.pythonanywhere.com'
 
   // // App&User Data and Functions
 
@@ -338,11 +338,11 @@ class Store {
 
   //  "/app/education" (Education Page)
   // Courses loading 
-  @observable courseList = [{ key: '1' }, { key: '2' }, { key: '3' }, { key: '4' }, { key: '5' }, { key: '6' }, { key: '7' }, { key: '8' },]
+  // @observable courseList = [{ key: '1' }, { key: '2' }, { key: '3' }, { key: '4' }, { key: '5' }, { key: '6' }, { key: '7' }, { key: '8' },]
 
-  @action setCourseList = (data) => {
-    this.courseList = data
-  }
+  // @action setCourseList = (data) => {
+  //   this.courseList = data
+  // }
 
   // newCourseLoading 
 
@@ -361,16 +361,17 @@ class Store {
   ]
 
   @action setFiltersGlobal = (data) => {
-    if (data.indexOf("starred")) {
+    //console.log("IndexOF:", data.indexOf("starred"))
+    if (data.indexOf("starred") !== -1) {
       this.chipsGlobalList[0].clicked = true
     }
-    if (data.indexOf("pinned")) {
+    if (data.indexOf("pinned") !== -1) {
       this.chipsGlobalList[1].clicked = true
     }
-    if (data.indexOf("owned")) {
+    if (data.indexOf("owned") !== -1) {
       this.chipsGlobalList[2].clicked = true
     }
-    if (data.indexOf("started")) {
+    if (data.indexOf("started") !== -1) {
       this.chipsGlobalList[3].clicked = true
     }
   }
@@ -379,11 +380,11 @@ class Store {
     { key: 0, title: "Средняя школа", clicked: false, name: "middle-school" },
     { key: 1, title: "Основная школа", clicked: false, name: "main-school" },
     { key: 2, title: "Высшая школа", clicked: false, name: "high-school" },
-    { key: 3, title: "Высшее образование", clicked: false, name: "clubs" },
-    { key: 4, title: "Кружки", clicked: false, name: "hobby" },
-    { key: 5, title: "Хобби", clicked: false, name: "bne" },
-    { key: 6, title: "ОГЭ", clicked: false, name: "une" },
-    { key: 7, title: "ЕГЭ", clicked: false, name: "university" },
+    { key: 3, title: "Высшее образование", clicked: false, name: "university" },
+    { key: 4, title: "Кружки", clicked: false, name: "clubs" },
+    { key: 5, title: "Хобби", clicked: false, name: "hobby" },
+    { key: 6, title: "ОГЭ", clicked: false, name: "bne" },
+    { key: 7, title: "ЕГЭ", clicked: false, name: "une" },
     { key: 8, title: "Профессиональные навыки", clicked: false, name: "prof-skills" },
 
   ]
@@ -401,13 +402,14 @@ class Store {
     { key: 9, title: "Обществознание", clicked: false, name: "social-science" },
     { key: 10, title: "Искусства", clicked: false, name: "arts" },
     { key: 11, title: "Информатика", clicked: false, name: "informatics" },
-
+    { key: 12, title: "Литература", clicked: false, name: "literature" },
+    { key: 13, title: "Философия", clicked: false, name: "philosophy" },
   ]
 
   @observable chipsDifficultyList = [
     { key: 0, title: "Обзорный", clicked: false, name: "review" },
     { key: 1, title: "Новичок", clicked: false, name: "newbie" },
-    { key: 2, title: "Любитель", clicked: false, name: "amature" },
+    { key: 2, title: "Любитель", clicked: false, name: "amateur" },
     { key: 3, title: "Энтузиаст", clicked: false, name: "enthusiast" },
     { key: 4, title: "Профи", clicked: false, name: "professional" },
     { key: 5, title: "Эксперт", clicked: false, name: "expert" },
@@ -415,15 +417,15 @@ class Store {
   ]
 
   @observable chipsSortList = [
-    { key: 0, title: "По популярности", clicked: true },
-    { key: 1, title: "По дате посещения: сначала недавние", clicked: false },
-    { key: 2, title: "По дате создания: сначала новые", clicked: false },
+    { key: 0, title: "По популярности", clicked: true, name: "popularity" },
+    { key: 1, title: "По дате посещения: сначала недавние", clicked: false, name: "visit-date" },
+    { key: 2, title: "По дате создания: сначала новые", clicked: false, name: "creation-date" },
   ]
 
 
 
   @action chipperClickOneSort = (key) => {
-    this.coursesFilters.conuter = 0
+    this.coursesFilters.counter = 0
     if (!this.chipsSortList[key].clicked) {
       for (let i = 0; i < this.chipsSortList.length; i++) {
         this.chipsSortList[i].clicked = false
@@ -436,7 +438,7 @@ class Store {
 
 
   @action chipperClickOne = (key) => {
-    this.coursesFilters.conuter = 0
+    this.coursesFilters.counter = 0
     if (!this.chipsGlobalList[key].clicked) {
       for (let i = 0; i < this.chipsGlobalList.length; i++) {
         this.chipsGlobalList[i].clicked = false
@@ -448,27 +450,26 @@ class Store {
   }
 
   @action chipperClickAny = (name, key) => {
-    this.coursesFilters.conuter = 0
+    this.coursesFilters.counter = 0
+    console.log(this[name][key])
+    console.log(this[name][key].clicked)
     this[name][key].clicked = !this[name][key].clicked
+    console.log(this[name][key].clicked)
   }
 
-  @observable list0 = [
-    { key: 1 },
-    { key: 2 },
-    { key: 3 },
-    { key: 4 },
-  ]
 
-  @observable list1 = [
-    { key: 5 },
-    { key: 6 },
-    { key: 7 },
-    { key: 8 },
-  ]
 
-  @observable coursesList = [
 
-  ]
+  @observable counterCourses = 0
+
+  @action counterZero = () => {
+    this.counterCourses = 0
+  }
+
+  @action counterUp = () => {
+    this.counterCourses = this.counterCourses + 1
+    //console.log("counter", this.counterCourses)
+  }
 
   @observable coursesFilters = {
     "filters": {
@@ -478,11 +479,12 @@ class Store {
       "theme": [],
     },
     "sort": "popularity",
-    "search": "поикс",
-    "conuter": 0,
+    "search": "",
+    "counter": 0,
   }
 
   @action collectFilters = () => {
+    console.log("Collect")
     this.coursesFilters = {
       "filters": {
         "global": [],
@@ -491,35 +493,51 @@ class Store {
         "theme": [],
       },
       "sort": "popularity",
-      "search": "поикс",
-      "conuter": 0,
+      "search": "",
+      "counter": 0,
     }
     for (let i = 0; i < 4; i++) {
-      this.chipsGlobalList[i].clicked && this.coursesFilters.filters.global.push(this.chipsGlobalList[i].name)
+       if (this.chipsGlobalList[i].clicked) this.coursesFilters["filters"]["global"].push(this.chipsGlobalList[i].name)
     }
     for (let i = 0; i < 9; i++) {
-      this.chipsCategoryList[i].clicked && this.coursesFilters.filters.category.push(this.chipsCategoryList[i].name)
+      console.log("loop")
+      console.log(this.chipsCategoryList[i].clicked)
+      if (this.chipsCategoryList[i].clicked) {
+        this.coursesFilters["filters"]["category"].push(this.chipsCategoryList[i].name)
+        console.log("YESQ")
+      }
     }
-    for (let i = 0; i < 12; i++) {
+    for (let i = 0; i < 14; i++) {
       this.chipsThemeList[i].clicked && this.coursesFilters.filters.theme.push(this.chipsThemeList[i].name)
     }
     for (let i = 0; i < 6; i++) {
       this.chipsDifficultyList[i].clicked && this.coursesFilters.filters.difficulty.push(this.chipsDifficultyList[i].name)
     }
-    for (let i = 0; i < 4; i++) {
+    for (let i = 0; i < 3; i++) {
       if (this.chipsSortList[i].clicked) {
         this.coursesFilters.sort = this.chipsSortList[i].name
         break
       }
     }
-    console.log(this.coursesFilters)
-     
+    this.coursesFilters.counter = this.counterCourses
+    console.log("coursesFilters:", this.coursesFilters)
+
   }
 
-  @action addItemsCoursesList = () => {
-    this.coursesList.push(...this.list0)
-    this.coursesList.push(...this.list1)
-    console.log(this.coursesList)
+  @observable coursesList = [
+
+  ]
+
+  @action clearCoursesList = (data) => {
+    this.coursesList = [
+
+    ]
+
+  }
+
+  @action addItemsCoursesList = (data) => {
+    this.coursesList.push(...data)
+    console.log("coursesList", this.coursesList)
 
   }
 
@@ -734,12 +752,6 @@ class Store {
 
 
   //    ДАННЫЕ
-
-
-
-
-
-
 
   //Интерфейс
 

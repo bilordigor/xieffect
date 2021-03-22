@@ -4,7 +4,7 @@ import Link from "next/link";
 
 import cx from 'clsx';
 import axios from 'axios';
-import { Divider, IconButton, CardMedia, Avatar, CardContent, CardHeader, Menu, MenuItem, Button, Card, CardActions, Grid, Box, Typography, makeStyles, useTheme } from '@material-ui/core';
+import { Divider, IconButton, Skeleton, CardMedia, Avatar, CardContent, CardHeader, Menu, MenuItem, Button, Card, CardActions, Grid, Box, Typography, makeStyles, useTheme } from '@material-ui/core';
 
 // import { useContainedCardHeaderStyles } from '@mui-treasury/styles/cardHeader/contained';
 // import { useSoftRiseShadowStyles } from '@mui-treasury/styles/shadow/softRise';
@@ -190,74 +190,27 @@ const CoursesList = inject('store')(observer(({ store }) => {
         // enqueueSnackbar('Ссылка на курс успешно скопирована в буффер обмена', { variant });
     };
 
-    // React.useEffect = () => {
-    //     async function fetchData() {
-    //         const res = await fetch(`http://localhost:4200/courses`)
-    //         const data = await res.json()
-    //         console.log(data)
-    //         store.setCourseList(data)
-    //     }
-    // }
-
-    // useEffect(() => {
-    //     // const result = await axios(
-    //     //     'http://localhost:4200/courses',
-    //     // );
-    //     async function fetchData() {
-    //         const res = await fetch(`http://localhost:4200/courses`)
-    //         const data = await res.json()
-    //         console.log(data)
-    //         store.setCourseList(data)
-    //     }
-    // });
-    useEffect(() => {
-        if (window.location.href.includes('local')) {
-            fetch("http://localhost:4200/courses")
-                .then((response) => response.json())
-                .then((data) => {
-                    store.setCourseList(data) // new
-                })
-        }
-        else {
-            const list = [
-                { key: '1', id: '62461354', nameCourse: 'Английский язык', secondNameCourse: 'Школьный курс', courseAvatar: "/education/bigben1.jpg", createrName: 'Ξ Effect', createrAvatar: 'Ξ' },
-                { key: '2', id: '21245676', nameCourse: 'История', secondNameCourse: 'ЕГЭ', courseAvatar: "/education/historyEGE.jpeg", createrName: 'Ξ Effect', createrAvatar: 'Ξ' },
-                { key: '3', id: '31135789', nameCourse: 'Цифровая Культура', secondNameCourse: 'Школьный курс', courseAvatar: "/education/internetculture.jpg", createrName: 'Ξ Effect', createrAvatar: 'Ξ' },
-                { key: '4', id: '42345613', nameCourse: 'История', secondNameCourse: 'Школьный курс', createrName: 'Ξ Effect', courseAvatar: "/education/historyjpg.jpg", createrAvatar: 'Ξ' },
-                { key: '5', id: '51114563', nameCourse: 'Литература', secondNameCourse: 'Школьный курс', courseAvatar: "/education/literature.jpg", createrName: 'Ξ Effect', createrAvatar: 'Ξ' },
-                { key: "6", id: "69831442", nameCourse: "Робототехника", secondNameCourse: "Курс сообщества", courseAvatar: "/education/robotechnik.jpg", createrName: "Ξ Effect", createrAvatar: "Ξ" },
-                { key: "7", id: "71269341", nameCourse: "Профильная Математика", secondNameCourse: "ЕГЭ", courseAvatar: "/education/math.jpg", createrName: "Ξ Effect", createrAvatar: "Ξ" },
-                { key: "8", id: "88832561", nameCourse: "Веб Дизайн", secondNameCourse: "Курс сообщества", courseAvatar: "/education/webdesign.jpg", createrName: "Ξ Effect", createrAvatar: "Ξ" }
-            ]
-            store.setCourseList(list)
-        }
-
-
-
-
-        
-    }, []);
-
     return (
 
         <Grid container className={classes.cardbegin}>
             {
-                store.courseList.map((course) => (
-                    <Grid xs={12} sm={12} md={6} lg={4} xl={3} item className={classes.gridCard} container key={course.key}>
-                        <Card className={cx(classes.card)} key={course.key}>
+                store.coursesList.map((course) => (
+                    <Grid xs={12} sm={12} md={6} lg={4} xl={3} item className={classes.gridCard} container key={course.id}>
+                        <Card className={cx(classes.card)} key={course.id}>
                             <Box className={classes.boxCardHeader}>
                                 <CardHeader
                                     className={classes.cardHeader}
-                                    title={<Typography className={classes.title}>{course.nameCourse}</Typography>}
-                                    subheader={<Typography className={classes.subtitle}>{course.secondNameCourse}</Typography>}
+                                    title={<Typography className={classes.title}>{course.name}</Typography>}
+                                    //subheader={<Typography className={classes.subtitle}>{course.secondNameCourse}</Typography>}
                                 />
                             </Box>
                             <div className={classes.Page}>
                                 <Page loader="bar" color={"#4452b8"} size={16}>
-                                    <CardMedia
+                                    {/* <CardMedia
                                         className={classes.media}
-                                        image={course.courseAvatar}
-                                    />
+                                        //image={}
+                                    /> */}
+                                    <Skeleton animation={false} variant="rectangular"  height={320} /> 
                                 </Page>
                             </div>
 
@@ -271,7 +224,7 @@ const CoursesList = inject('store')(observer(({ store }) => {
                                         <Grid><Avatar className={classes.avatar}>{course.createrAvatar}</Avatar></Grid>
                                         <Grid className={classes.gridcreater}>
                                             <Typography className={classes.overline}>Создатель</Typography>
-                                            <Typography className={classes.name}>{course.createrName}</Typography>
+                                            <Typography className={classes.name}>{course["author-name"]}</Typography>
                                         </Grid>
                                     </Grid>
 

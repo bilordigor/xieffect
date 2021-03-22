@@ -376,7 +376,7 @@ const useStyles = makeStyles((theme) => ({
         paddingLeft: theme.spacing(2),
         paddingRight: theme.spacing(2),
         width: '100%',
-        height: '100%',
+        minHeight: '100vh',
         zIndex: 1,
     },
     toolIconButton: {

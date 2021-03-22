@@ -49,6 +49,11 @@ const useStyles = makeStyles((theme) => ({
         //color: theme.main.palette.content.text,
         cursor: 'pointer',
     },
+    chipTypographyTheme: {
+        fontSize: 16,
+        //color: theme.main.palette.content.text,
+        cursor: 'pointer',
+    },
     chipTypographyClicked: {
         color: theme.main.palette.content.reverseText,
 
@@ -88,10 +93,26 @@ const useStyles = makeStyles((theme) => ({
 
 
 
-const Chipper = inject('store')(observer(({ store }) => {
+const Chipper = inject('store')(observer(({ store, loadingMoreCourses }) => {
     const classes = useStyles();
     const theme = useTheme()
     const [open, setOpen] = React.useState(false);
+
+    const chipClickedA = (name, key) => {
+        store.clearCoursesList()
+        store.counterZero()
+        store.chipperClickAny(name, key)
+        loadingMoreCourses()
+    }
+
+    const chipClickedO = (key) => {
+        store.clearCoursesList()
+        store.counterZero()
+        store.chipperClickOneSort(key)
+        loadingMoreCourses()
+    }
+
+
 
     return (
 
@@ -128,7 +149,7 @@ const Chipper = inject('store')(observer(({ store }) => {
                                     [classes.chipClicked]: chip.clicked,
                                 })}
                                 //clickable
-                                onClick={() => store.chipperClickAny("chipsGlobalList", chip.key)}
+                                onClick={() => chipClickedA("chipsGlobalList", chip.key)}
                                 label={
                                     <Typography
                                         className={clsx(classes.chipTypography, {
@@ -159,7 +180,7 @@ const Chipper = inject('store')(observer(({ store }) => {
                                     [classes.chipClicked]: chip.clicked,
                                 })}
                                 //clickable
-                                onClick={() => store.chipperClickAny("chipsCategoryList", chip.key)}
+                                onClick={() => chipClickedA("chipsCategoryList", chip.key)}
                                 label={
                                     <Typography
                                         className={clsx(classes.chipTypography, {
@@ -190,10 +211,10 @@ const Chipper = inject('store')(observer(({ store }) => {
                                     [classes.chipClicked]: chip.clicked,
                                 })}
                                 //clickable
-                                onClick={() => store.chipperClickAny("chipsThemeList", chip.key)}
+                                onClick={() => chipClickedA("chipsThemeList", chip.key)}
                                 label={
                                     <Typography
-                                        className={clsx(classes.chipTypography, {
+                                        className={clsx(classes.chipTypographyTheme, {
                                             [classes.chipTypographyClicked]: chip.clicked,
                                             [classes.chipTypographyNotClicked]: !chip.clicked,
                                         })}
@@ -221,7 +242,7 @@ const Chipper = inject('store')(observer(({ store }) => {
                                     [classes.chipClicked]: chip.clicked,
                                 })}
                                 //clickable
-                                onClick={() => store.chipperClickAny("chipsDifficultyList", chip.key)}
+                                onClick={() => chipClickedA("chipsDifficultyList", chip.key)}
                                 label={
                                     <Typography
                                         className={clsx(classes.chipTypography, {
@@ -252,7 +273,7 @@ const Chipper = inject('store')(observer(({ store }) => {
                                     [classes.chipClicked]: chip.clicked,
                                 })}
                                 //clickable
-                                onClick={() => store.chipperClickOneSort(chip.key)}
+                                onClick={() => chipClickedO(chip.key)}
                                 label={
                                     <Typography
                                         className={clsx(classes.chipTypography, {
