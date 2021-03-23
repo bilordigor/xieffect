@@ -143,7 +143,22 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-
+const coursesThemeList = {
+    "math": "Математика",
+    "algebra": "Алгебра",
+    "geometry": "Геометрия",
+    "languages": "Языки",
+    "physics": "Физика",
+    "chemistry": "Химия",
+    "biology": "Биология",
+    "geography": "География",
+    "history": "История",
+    "social-science": "Обществознание",
+    "philosophy": "Философия",
+    "literature": "Литература",
+    "arts": "Искусства",
+    "informatics": "Информатика",
+}
 
 const CoursesList = inject('store')(observer(({ store }) => {
     const classes = useStyles();
@@ -201,7 +216,7 @@ const CoursesList = inject('store')(observer(({ store }) => {
                                 <CardHeader
                                     className={classes.cardHeader}
                                     title={<Typography className={classes.title}>{course.name}</Typography>}
-                                    //subheader={<Typography className={classes.subtitle}>{course.secondNameCourse}</Typography>}
+                                    subheader={<Typography className={classes.subtitle}>{coursesThemeList[course.theme]}</Typography>}
                                 />
                             </Box>
                             <div className={classes.Page}>

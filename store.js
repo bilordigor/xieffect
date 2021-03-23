@@ -346,12 +346,18 @@ class Store {
 
   // newCourseLoading 
 
-  @observable isLoading = false
+  @observable isLoadingNewCourses = false
 
   @action setIsLoading = (value) => {
-    this.isLoading = value
+    this.isLoadingNewCourses = value
   }
 
+  @observable allLoading = false
+
+
+  @action setAllLoading = (value) => {
+    this.allLoading = value
+  }
   // Filters for courses
   @observable chipsGlobalList = [
     { key: 0, title: "Избранное", clicked: false, name: "starred" },
@@ -451,10 +457,10 @@ class Store {
 
   @action chipperClickAny = (name, key) => {
     this.coursesFilters.counter = 0
-    console.log(this[name][key])
-    console.log(this[name][key].clicked)
+    //console.log(this[name][key])
+    //console.log(this[name][key].clicked)
     this[name][key].clicked = !this[name][key].clicked
-    console.log(this[name][key].clicked)
+    //console.log(this[name][key].clicked)
   }
 
 
@@ -500,11 +506,11 @@ class Store {
        if (this.chipsGlobalList[i].clicked) this.coursesFilters["filters"]["global"].push(this.chipsGlobalList[i].name)
     }
     for (let i = 0; i < 9; i++) {
-      console.log("loop")
-      console.log(this.chipsCategoryList[i].clicked)
+      //console.log("loop")
+      //console.log(this.chipsCategoryList[i].clicked)
       if (this.chipsCategoryList[i].clicked) {
         this.coursesFilters["filters"]["category"].push(this.chipsCategoryList[i].name)
-        console.log("YESQ")
+        //console.log("YESQ")
       }
     }
     for (let i = 0; i < 14; i++) {

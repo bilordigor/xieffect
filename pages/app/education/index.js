@@ -49,6 +49,9 @@ const useStyles = makeStyles((theme) => ({
     marginTop: 8,
     marginBottom: 8,
     height: 96,
+  },
+  labelThatsAll: {
+    fontSize: 24,
   }
 
 }));
@@ -105,7 +108,7 @@ const Education = inject('store')(observer(({ store }) => {
     store.getDataScr(`${store.url}/filters/`)
       .then((data) => {
         console.log("filters:", data)
-        if (data != undefined) {
+        if (data !== undefined) {
           store.setFiltersGlobal(data)
           loadingMoreCourses()
         }
@@ -113,8 +116,10 @@ const Education = inject('store')(observer(({ store }) => {
   }, []);
 
   const bottomLoading = () => {
-    store.counterUp()
-    loadingMoreCourses()
+    if (!store.allLoading) {
+      store.counterUp()
+      loadingMoreCourses()
+    }
   }
 
   useBottomScrollListener(bottomLoading, {
@@ -123,7 +128,7 @@ const Education = inject('store')(observer(({ store }) => {
     // triggerOnNoScroll: true
   });
 
-  
+
 
   // function handleScroll() {
   //   console.log("innerHeight", window.innerHeight)
@@ -142,6 +147,10 @@ const Education = inject('store')(observer(({ store }) => {
       .then((data) => {
         //console.log("courses:", data)
         if (data != undefined) {
+          if (data.length < 12) {
+            store.setAllLoading(true)
+          }
+          //console.log(data.length)
           store.setIsLoading(false)
           store.addItemsCoursesList(data)
         }
@@ -160,7 +169,7 @@ const Education = inject('store')(observer(({ store }) => {
           {/* <Background src="https://wallpapercave.com/wp/wp5440815.png" /> */}
           <Grid container direction="column" className={classes.main}>
             <Grid className={classes.gridChipper}>
-              <Chipper loadingMoreCourses={loadingMoreCourses}/>
+              <Chipper loadingMoreCourses={loadingMoreCourses} />
             </Grid>
             <Grid className={classes.gridCoursesList}>
               <CoursesList />
@@ -172,7 +181,8 @@ const Education = inject('store')(observer(({ store }) => {
               justifyContent="center"
               alignItems="center"
             >
-              {store.isLoading && <CircularProgress />}
+              {store.isLoadingNewCourses && <CircularProgress />}
+              {store.allLoading && <Typography className={classes.labelThatsAll}> На этом пока всё </Typography>}
             </Grid>
           </Grid>
 

@@ -67,6 +67,11 @@ const useStyles = makeStyles((theme) => ({
         fontSize: 22,
         color: theme.main.palette.content.text,
     },
+    labelTypographyAccept: {
+        paddingRight: 4,
+        fontSize: 18,
+        color: theme.main.palette.content.text,
+    },
     icons: {
         color: theme.main.palette.content.text,
 
@@ -87,6 +92,10 @@ const useStyles = makeStyles((theme) => ({
         marginBottom: 8,
         //width: "100vw",
         // height: "300px",
+    },
+    gridLabelTypographyAccept: {
+        paddingTop: 4,
+        paddingBottom: 4,
     }
 
 }));
@@ -99,19 +108,22 @@ const Chipper = inject('store')(observer(({ store, loadingMoreCourses }) => {
     const [open, setOpen] = React.useState(false);
 
     const chipClickedA = (name, key) => {
-        store.clearCoursesList()
         store.counterZero()
         store.chipperClickAny(name, key)
-        loadingMoreCourses()
     }
 
     const chipClickedO = (key) => {
-        store.clearCoursesList()
         store.counterZero()
         store.chipperClickOneSort(key)
-        loadingMoreCourses()
+        
     }
 
+    const clickedLoadingCourses = () => {
+        store.setAllLoading(false)
+        store.clearCoursesList()
+        loadingMoreCourses()
+        setOpen(false)
+    }
 
 
     return (
@@ -313,6 +325,13 @@ const Chipper = inject('store')(observer(({ store, loadingMoreCourses }) => {
                     </Grid>
                 ))
             } */}
+            {/* { open && <Divider />} */}
+            { open && <Grid className={classes.gridLabelTypographyAccept} container>
+                <Button variant="outlined" onClick={clickedLoadingCourses}>
+                    <Typography className={classes.labelTypographyAccept}> Применить </Typography>
+                </Button>
+            </Grid>}
+            { open && <Divider />}
         </Grid>
     )
 }));

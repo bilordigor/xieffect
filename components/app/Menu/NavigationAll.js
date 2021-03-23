@@ -5,11 +5,17 @@ import PropTypes from 'prop-types';
 
 //New icons 
 import HomeIcon from '@material-ui/icons/Home';
+import HomeOutlinedIcon from '@material-ui/icons/HomeOutlined';
 import AppsIcon from '@material-ui/icons/Apps';
+import AppsOutlinedIcon from '@material-ui/icons/AppsOutlined';
 import SchoolIcon from '@material-ui/icons/School';
+import SchoolOutlinedIcon from '@material-ui/icons/SchoolOutlined';
 import FireplaceIcon from '@material-ui/icons/Fireplace';
+import FireplaceOutlinedIcon from '@material-ui/icons/FireplaceOutlined';
 import PublicIcon from '@material-ui/icons/Public';
+import PublicOutlinedIcon from '@material-ui/icons/PublicOutlined';
 import MessageIcon from '@material-ui/icons/Message';
+import MessageOutlinedIcon from '@material-ui/icons/MessageOutlined';
 
 import { SwipeableDrawer, Tabs, Tab, Dialog, TransitionProps, Slide, CssBaseline, Box, IconButton, InputBase, FormControlLabel, Switch, withStyles, Tooltip, Fab, BottomNavigation, BottomNavigationAction, Hidden, ClickAwayListener, AppBar, Toolbar, Typography, Drawer, List, Avatar, Grid, Paper, Button, Divider, ListItem, ListItemIcon, ListItemText, MenuItem, MenuList, Grow, Popper, makeStyles, useTheme } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
@@ -422,6 +428,7 @@ const NavigationAll = inject('store')(observer((props) => {
             name: 'Главная',
             way: '/app',
             logo: <HomeIcon className={classes.icons} />,
+            outlogo: <HomeOutlinedIcon className={classes.icons} />,
             label: 'Главная',
             value: 'главная',
         },
@@ -429,6 +436,7 @@ const NavigationAll = inject('store')(observer((props) => {
             name: 'Образование',
             way: '/app/education',
             logo: <SchoolIcon className={classes.icons} />,
+            outlogo: <SchoolOutlinedIcon className={classes.icons} />,
             label: 'Образование',
             value: 'образование',
         },
@@ -436,6 +444,7 @@ const NavigationAll = inject('store')(observer((props) => {
             name: 'Новости',
             way: '/app/news',
             logo: <PublicIcon className={classes.icons} />,
+            outlogo: <PublicOutlinedIcon className={classes.icons} />,
             label: 'Новости',
             value: 'новости',
         },
@@ -443,6 +452,7 @@ const NavigationAll = inject('store')(observer((props) => {
             name: 'Друзья',
             way: '/app/friends',
             logo: <MessageIcon className={classes.icons} />,
+            outlogo: <MessageOutlinedIcon className={classes.icons} />,
             label: 'Друзья',
             value: 'друзья',
         },
@@ -450,6 +460,7 @@ const NavigationAll = inject('store')(observer((props) => {
             name: 'Сообщества',
             way: '/app/communities',
             logo: <FireplaceIcon className={classes.icons} />,
+            outlogo: <FireplaceOutlinedIcon className={classes.icons} />,
             label: 'Сообщества',
             value: 'сообщества',
         },
@@ -457,6 +468,7 @@ const NavigationAll = inject('store')(observer((props) => {
             name: 'Приложения',
             way: '/app/apps',
             logo: <AppsIcon className={classes.icons} />,
+            outlogo: <AppsOutlinedIcon className={classes.icons} />,
             label: 'Приложения',
             value: 'приложения',
         }
@@ -578,7 +590,7 @@ const NavigationAll = inject('store')(observer((props) => {
                                 <Link href={obj.way} className={classes.aNavLink} key={obj.name}>
                                     <ListItem button key={obj.name}>
                                         <ListItemIcon className={classes.Image}>
-                                            {obj.logo}
+                                        {router.pathname === obj.way ? obj.logo : obj.outlogo}
                                         </ListItemIcon>
                                         {props.store.openMenu && <ListItemText primary={<Typography className={classes.ImageTextTypography}>{obj.name}</Typography>} className={classes.ImageText} />}
                                         {router.pathname === obj.way && <Divider orientation="vertical" className={classes.nowPageDivider} />}
@@ -671,7 +683,7 @@ const NavigationAll = inject('store')(observer((props) => {
                                         <Link href={obj.way} className={classes.aNavLink} key={obj.name}>
                                             <ListItem button key={obj.name}>
                                                 <ListItemIcon className={classes.Image}>
-                                                    {obj.logo}
+                                                    {router.pathname === obj.way ? obj.logo : obj.outlogo}
                                                 </ListItemIcon>
                                                 {props.store.openMenu && <ListItemText primary={<Typography className={classes.ImageTextTypography}>{obj.name}</Typography>} className={classes.ImageText} />}
                                                 {router.pathname === obj.way && <Divider orientation="vertical" className={classes.nowPageDivider} />}
