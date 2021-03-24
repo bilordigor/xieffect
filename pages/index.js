@@ -19,13 +19,17 @@ import { WallpaperSharp } from '@material-ui/icons';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    //backgroundColor: '#2b2b2b',
-    //position: 'absolute',
+    backgroundColor: '#2b2b2b',
+    position: 'fixed',
     height: '100vh',
     width: '100vw',
     zIndex: '-1',
-    overflowY: 'auto',
-    overflowX: 'hidden',
+    //position: 'absolute',
+    // height: '100vh',
+    // width: '100vw',
+    // zIndex: '-1',
+    // overflowY: 'auto',
+    // overflowX: 'hidden',
   },
   main: {
     zIndex: 999,
@@ -211,7 +215,7 @@ const Home = inject('store')(observer((props) => {
             </Button> */}
           </Grid>
           <Grid item container direction="column" alignItems="center" className={classes.gridAlert}>
-            { props.store.alertData.text != '' && <Alert severity={alertList[props.store.alertData.type]}>{props.store.alertData.text}</Alert>}
+            {props.store.alertData.text != '' && <Alert severity={alertList[props.store.alertData.type]}>{props.store.alertData.text}</Alert>}
           </Grid>
         </Grid>
       </div>

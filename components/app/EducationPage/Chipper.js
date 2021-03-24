@@ -16,11 +16,14 @@ import { inject, observer } from 'mobx-react'
 const useStyles = makeStyles((theme) => ({
     root: {
         marginTop: 8,
-        marginLeft: 8,
-        //marginRight: 8,
+        marginLeft: 2,
+        //paddingRight: 16,
+        marginRight: 16,
         marginBottom: 8,
-        //width: '100%',
+        width: "calc(100% - 12px)",
         //height: 30,
+        borderRadius: 4,    
+        background: theme.main.palette.content.background,
     },
     gridChip: {
         marginLeft: '6px',
@@ -70,7 +73,7 @@ const useStyles = makeStyles((theme) => ({
     labelTypographyAccept: {
         paddingRight: 4,
         fontSize: 18,
-        color: theme.main.palette.content.text,
+        //color: theme.main.palette.content.text,
     },
     icons: {
         color: theme.main.palette.content.text,
@@ -94,8 +97,9 @@ const useStyles = makeStyles((theme) => ({
         // height: "300px",
     },
     gridLabelTypographyAccept: {
-        paddingTop: 4,
-        paddingBottom: 4,
+        paddingTop: 8,
+        paddingLeft: 8,
+        paddingBottom: 8,
     }
 
 }));
@@ -327,7 +331,7 @@ const Chipper = inject('store')(observer(({ store, loadingMoreCourses }) => {
             } */}
             {/* { open && <Divider />} */}
             { open && <Grid className={classes.gridLabelTypographyAccept} container>
-                <Button variant="outlined" onClick={clickedLoadingCourses}>
+                <Button variant="contained" onClick={clickedLoadingCourses}>
                     <Typography className={classes.labelTypographyAccept}> Применить </Typography>
                 </Button>
             </Grid>}
