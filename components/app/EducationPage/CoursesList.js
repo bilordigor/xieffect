@@ -160,6 +160,31 @@ const coursesThemeList = {
     "informatics": "Информатика",
 }
 
+const coursesImgList = {
+    "Робототехника": "/education/robotechnik.jpg",
+    "Безопасность в интернете": "/education/secureInInternet.jpg",
+    "Математика ЕГЭ": "/education/mathEGE.jpg",
+    "English ABCs": "/education/EnglishABC.jpg",
+    "Веб Дизайн": "/education/webdesign.jpg",
+    "Классическая Музыка": "/education/musicClassic.jpg",
+    "География": "/education/geography.jpg",
+    "Геодезия": "/education/geodesia.jpg",
+    "Океанология": "/education/oceanology.jpg",
+    "Социология": "/education/sociology.jpg",
+    "нформатика 7 класс": "/education/informatica.jpg",
+    "Литература Европы XX века": "/education/literatureXX.jpg",
+    "Python": "/education/python.jpg",
+    "Ораторское искусство": "/education/publicSpeaking.jpg",
+    "стория ЕГЭ": "/education/historyEGE.jpg",
+    "Немецкий язык": "/education/deutsch.jpg",
+    "Классическая философия": "/education/classicPhilosophy.jpg",
+    "Литература": "/education/literature.jpg",
+    "стория России": "/education/historyRussia.jpg",
+    "Арифметика": "/education/arifmetic.jpg",
+    "Архитектура XIX века": "/education/architecture.jpg",
+    "Матан": "/education/math.jpg",
+}
+
 const CoursesList = inject('store')(observer(({ store }) => {
     const classes = useStyles();
     const theme = useTheme();
@@ -221,11 +246,11 @@ const CoursesList = inject('store')(observer(({ store }) => {
                             </Box>
                             <div className={classes.Page}>
                                 <Page loader="bar" color={"#4452b8"} size={16}>
-                                    {/* <CardMedia
+                                    <CardMedia
                                         className={classes.media}
-                                        //image={}
-                                    /> */}
-                                    <Skeleton animation={false} variant="rectangular"  height={320} /> 
+                                        image={coursesImgList[course.name]}
+                                    />
+                                    {/* <Skeleton animation={false} variant="rectangular"  height={320} />  */}
                                 </Page>
                             </div>
 
