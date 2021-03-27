@@ -11,9 +11,12 @@ import { Divider, IconButton, Skeleton, CardMedia, Avatar, CardContent, CardHead
 // import { useFadedShadowStyles } from '@mui-treasury/styles/shadow/faded';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import ShareOutlinedIcon from '@material-ui/icons/ShareOutlined';
+import StarBorderIcon from '@material-ui/icons/StarBorder';
+import StarIcon from '@material-ui/icons/Star';
+import PushPinIcon from '@material-ui/icons/PushPin';
 import Page from 'react-page-loading'
 
-import { useSnackbar } from 'notistack';
+import { SnackbarProvider, useSnackbar } from 'notistack';
 
 import { inject, observer } from 'mobx-react'
 
@@ -113,6 +116,9 @@ const useStyles = makeStyles((theme) => ({
     },
     icons: {
         color: theme.main.palette.content.icon,
+    },
+    iconsPush: {
+        color: "#8bc34a",
     },
     Menu: {
         color: theme.main.palette.content.border,
@@ -223,12 +229,66 @@ const CoursesList = inject('store')(observer(({ store }) => {
         setAnchorEl(null);
     };
 
-    //const { enqueueSnackbar } = useSnackbar();
-
     const handleClickVariant = (variant) => () => {
         // variant could be success, error, warning, info, or default
-        // enqueueSnackbar('Ссылка на курс успешно скопирована в буффер обмена', { variant });
     };
+
+    const { enqueueSnackbar } = useSnackbar();
+
+    const setStarred = (id, bool) => {
+        //console.log(id, bool)
+        let answer
+        let value
+        if (bool) {
+            answer = { "a": "unstar" }
+            value = false
+        } else {
+            answer = { "a": "star" }
+            value = true
+        }
+        console.log(answer)
+        store.postDataScr(`${store.url}/courses/${id}/preference/`, answer)
+            .then((data) => {
+                //console.log(data)
+                if (data != undefined) {
+                    if (data.a == true) {
+                        store.setDataCoursesList(id, "starred", value)
+                        if (!bool) enqueueSnackbar('Курс успешно добавлен в избранное', { variant: 'success' });
+                        if (bool) enqueueSnackbar('Курс успешно убран из избранного', { variant: 'success' });
+                    } else {
+                        enqueueSnackbar('Что-то пошло не так', { variant: 'error' });
+                    }
+                }
+            });
+    }
+
+    const setPinned = (id, bool) => {
+        console.log(id, bool)
+        let answer
+        let value
+        if (bool) {
+            answer = { "a": "unpin" }
+            value = false
+        } else {
+            answer = { "a": "pin" }
+            value = true
+        }
+        console.log(answer)
+        store.postDataScr(`${store.url}/courses/${id}/preference/`, answer)
+            .then((data) => {
+                //console.log(data)
+                if (data != undefined) {
+
+                    if (data.a == true) {
+                        store.setDataCoursesList(id, "pinned", value)
+                        if (!bool) enqueueSnackbar('Курс успешно закреплён', { variant: 'success' });
+                        if (bool) enqueueSnackbar('Курс успешно откреплён', { variant: 'success' });
+                    } else {
+                        enqueueSnackbar('Что-то пошло не так', { variant: 'error' });
+                    }
+                }
+            });
+    }
 
     return (
 
@@ -269,8 +329,15 @@ const CoursesList = inject('store')(observer(({ store }) => {
                                     </Grid>
 
                                     <Grid className={classes.CardContentSmallActionButtom}>
-                                        <IconButton onClick={handleClickVariant('success')} color="primary" aria-label="add an alarm">
-                                            <ShareOutlinedIcon className={classes.icons} />
+                                        <IconButton onClick={() => setStarred(course.id, course.starred)} color="primary" aria-label="add an alarm">
+                                            {!course.starred && <StarBorderIcon className={classes.icons} />}
+                                            {course.starred && <StarIcon className={classes.icons} />}
+                                        </IconButton>
+                                    </Grid>
+                                    <Grid className={classes.CardContentSmallActionButtom}>
+                                        <IconButton onClick={() => setPinned(course.id, course.pinned)} color="primary" aria-label="add an alarm">
+                                            {!course.pinned && <PushPinIcon className={classes.icons} />}
+                                            {course.pinned && <PushPinIcon className={classes.iconsPush} />}
                                         </IconButton>
                                     </Grid>
                                     <Grid className={classes.CardContentSmallActionButtom}>
@@ -292,8 +359,8 @@ const CoursesList = inject('store')(observer(({ store }) => {
                                                 style: {
                                                     maxHeight: ITEM_HEIGHT * 4.5,
                                                     width: '30ch',
-                                                    backgroundColor: theme.main.palette.content.border,
-                                                    color: theme.main.palette.content.text,
+                                                    //backgroundColor: theme.main.palette.content.border,
+                                                    //color: theme.main.palette.content.text,
                                                 },
                                             }}
                                         >
@@ -312,7 +379,8 @@ const CoursesList = inject('store')(observer(({ store }) => {
                                     <Grid>
                                         <Link as={`/app/education/courses/${course.id}`} href="/app/education/courses/[id]">
                                             <Button variant="contained" color="primary" className={classes.CardActionsCenterButton}>
-                                                <Typography variant="subtitle1">Приступить к курсу</Typography>
+                                                {!course.started && <Typography variant="subtitle1">Приступить к курсу</Typography>}
+                                                {course.started && <Typography variant="subtitle1">Продолжить курс</Typography>}
                                             </Button>
                                         </Link>
                                     </Grid>

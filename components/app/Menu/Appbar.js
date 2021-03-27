@@ -215,50 +215,50 @@ const Appbar = inject('store')(observer(({ store }) => {
             < Grid container direction="row" justifyContent="flex-end" >
                 {/* Набор инструментов для вкладки Образование */}
                 {
-                    router.pathname === '/app/education' && <>
-                        {/* Поиск по курсам. Только НЕ для мобильной версии */}
-                        {!openSearch && <Hidden only={['xs', 'sm']}>
-                            <Paper component="form" className={classes.GridHeaderSearch}>
-                                <InputBase
-                                    className={classes.input}
-                                    placeholder="Поиск курсов"
-                                    inputProps={{ 'aria-label': 'Поиск курсов' }}
-                                />
-                                <Divider className={classes.divider} orientation="vertical" />
-                                <IconButton type="submit" className={classes.iconButton} aria-label="search">
-                                    <SearchIcon />  {/*  className={classes.iconButtonSearch} */}
-                                </IconButton>
-                            </Paper>
-                        </Hidden>}
-                        {/* Кнопка-иконка для открытия панели поиска в мобильной версии. (Видна только в мобильной версии)  */}
-                        {!openSearch && <Hidden mdUp>
-                            <IconButton onClick={setNewOpenSearch} className={classes.iconButton}>
-                                <SearchIcon className={classes.iconButtonSearch} />
-                            </IconButton>
-                        </Hidden>}
-                        {/* Панель поиска, открывающаяся для мобильной версии при нажатии кнопки-иконки поиска */}
-                        {openSearch && <Paper component="form" className={classes.gridHeaderSearchMobile}>
-                            <InputBase
-                                className={classes.input}
-                                placeholder="Поиск курсов"
-                                inputProps={{ 'aria-label': 'Поиск курсов' }}
-                            />
-                            <Divider className={classes.divider} orientation="vertical" />
-                            <IconButton type="submit" className={classes.iconButton} aria-label="search">
-                                <SearchIcon />  {/*  className={classes.iconButtonSearch} */}
-                            </IconButton>
-                            <Divider className={classes.divider} orientation="vertical" />
-                            <IconButton onClick={setNewOpenSearch} className={classes.iconButton}>
-                                <ExitToAppIcon />  {/*  className={classes.iconButtonSearch} */}
-                            </IconButton>
-                        </Paper>}
-                        {/* Кнопка-иконка создания новых курсов */}
-                        {/* <LightTooltip title="Создать курс">
-                            <Fab size="medium" aria-label="add" className={classes.addCourse}>
-                                <AddIcon />
-                            </Fab>
-                        </LightTooltip> */}
-                    </>
+                    // router.pathname === '/app/education' && <>
+                    //     {/* Поиск по курсам. Только НЕ для мобильной версии */}
+                    //     {!openSearch && <Hidden only={['xs', 'sm']}>
+                    //         <Paper component="form" className={classes.GridHeaderSearch}>
+                    //             <InputBase
+                    //                 className={classes.input}
+                    //                 placeholder="Поиск курсов"
+                    //                 inputProps={{ 'aria-label': 'Поиск курсов' }}
+                    //             />
+                    //             <Divider className={classes.divider} orientation="vertical" />
+                    //             <IconButton type="submit" className={classes.iconButton} aria-label="search">
+                    //                 <SearchIcon />  {/*  className={classes.iconButtonSearch} */}
+                    //             </IconButton>
+                    //         </Paper>
+                    //     </Hidden>}
+                    //     {/* Кнопка-иконка для открытия панели поиска в мобильной версии. (Видна только в мобильной версии)  */}
+                    //     {!openSearch && <Hidden mdUp>
+                    //         <IconButton onClick={setNewOpenSearch} className={classes.iconButton}>
+                    //             <SearchIcon className={classes.iconButtonSearch} />
+                    //         </IconButton>
+                    //     </Hidden>}
+                    //     {/* Панель поиска, открывающаяся для мобильной версии при нажатии кнопки-иконки поиска */}
+                    //     {openSearch && <Paper component="form" className={classes.gridHeaderSearchMobile}>
+                    //         <InputBase
+                    //             className={classes.input}
+                    //             placeholder="Поиск курсов"
+                    //             inputProps={{ 'aria-label': 'Поиск курсов' }}
+                    //         />
+                    //         <Divider className={classes.divider} orientation="vertical" />
+                    //         <IconButton type="submit" className={classes.iconButton} aria-label="search">
+                    //             <SearchIcon />  {/*  className={classes.iconButtonSearch} */}
+                    //         </IconButton>
+                    //         <Divider className={classes.divider} orientation="vertical" />
+                    //         <IconButton onClick={setNewOpenSearch} className={classes.iconButton}>
+                    //             <ExitToAppIcon />  {/*  className={classes.iconButtonSearch} */}
+                    //         </IconButton>
+                    //     </Paper>}
+                    //     {/* Кнопка-иконка создания новых курсов */}
+                    //     {/* <LightTooltip title="Создать курс">
+                    //         <Fab size="medium" aria-label="add" className={classes.addCourse}>
+                    //             <AddIcon />
+                    //         </Fab>
+                    //     </LightTooltip> */}
+                    // </>
 
                 }
                 {

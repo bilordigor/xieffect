@@ -541,6 +541,13 @@ class Store {
 
   }
 
+  @action setDataCoursesList = (id, name, value) => {
+    console.log("+", this.coursesList.find(course => course["id"] === id))
+    this.coursesList.find(course => course["id"] === id)[name] = value
+    console.log(this.coursesList.find(course => course["id"] === id)[name])
+    console.log("n", this.coursesList)
+  }
+
   @action addItemsCoursesList = (data) => {
     this.coursesList.push(...data)
     console.log("coursesList", this.coursesList)
