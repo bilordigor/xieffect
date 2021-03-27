@@ -503,7 +503,7 @@ class Store {
       "counter": 0,
     }
     for (let i = 0; i < 4; i++) {
-       if (this.chipsGlobalList[i].clicked) this.coursesFilters["filters"]["global"].push(this.chipsGlobalList[i].name)
+      if (this.chipsGlobalList[i].clicked) this.coursesFilters["filters"]["global"].push(this.chipsGlobalList[i].name)
     }
     for (let i = 0; i < 9; i++) {
       //console.log("loop")
@@ -538,14 +538,28 @@ class Store {
     this.coursesList = [
 
     ]
+  }
 
+  @action storeClickedMoreVertIcon = (id, value, event) => {
+    this.coursesList.find(course => course["id"] === id)["openMenu"] = value
+    this.coursesList.find(course => course["id"] === id)["openMenuTarget"] = event
+  }
+
+  @action setOneCourseHidden = (id) => {
+    console.log("idF", id)
+    const index = this.coursesList.findIndex(course => course["id"] === id);
+    console.log("index", index)
+    if (index !== -1) {
+      this.coursesList.splice(index, 1);
+    }
+    console.log("n1", this.coursesList)
   }
 
   @action setDataCoursesList = (id, name, value) => {
-    console.log("+", this.coursesList.find(course => course["id"] === id))
+    //console.log("+", this.coursesList.find(course => course["id"] === id))
     this.coursesList.find(course => course["id"] === id)[name] = value
-    console.log(this.coursesList.find(course => course["id"] === id)[name])
-    console.log("n", this.coursesList)
+    //console.log(this.coursesList.find(course => course["id"] === id)[name])
+    //console.log("n", this.coursesList)
   }
 
   @action addItemsCoursesList = (data) => {

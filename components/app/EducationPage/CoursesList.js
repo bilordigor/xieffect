@@ -1,10 +1,7 @@
 import React, { useState, useEffect } from 'react';
-
 import Link from "next/link";
-
 import cx from 'clsx';
-import axios from 'axios';
-import { Divider, IconButton, Skeleton, CardMedia, Avatar, CardContent, CardHeader, Menu, MenuItem, Button, Card, CardActions, Grid, Box, Typography, makeStyles, useTheme } from '@material-ui/core';
+import { Popper, MenuList, Paper, Grow, ClickAwayListener, Divider, IconButton, Skeleton, CardMedia, Avatar, CardContent, CardHeader, Menu, MenuItem, Button, Card, CardActions, Grid, Box, Typography, makeStyles, useTheme } from '@material-ui/core';
 
 // import { useContainedCardHeaderStyles } from '@mui-treasury/styles/cardHeader/contained';
 // import { useSoftRiseShadowStyles } from '@mui-treasury/styles/shadow/softRise';
@@ -146,7 +143,11 @@ const useStyles = makeStyles((theme) => ({
         paddingRight: 0,
         marinLeft: 0,
         marginRight: 0,
-    }
+    },
+    popper: {
+        zIndex: 1000,
+        //position: 'fixed',
+    },
 }));
 
 const coursesThemeList = {
@@ -189,6 +190,7 @@ const coursesImgList = {
     "Арифметика": "/education/arifmetic.jpg",
     "Архитектура XIX века": "/education/architecture.jpg",
     "Матан": "/education/math.jpg",
+    "Физика: термодинамика": "/education/phi.jpeg",
 }
 
 const CoursesList = inject('store')(observer(({ store }) => {
@@ -203,40 +205,23 @@ const CoursesList = inject('store')(observer(({ store }) => {
         'Закрепить',
     ];
 
-    const ITEM_HEIGHT = 48;
 
-    //const courseList = data.courseList
     const courseList = store.courseList
 
-    const [value, setValue] = React.useState(0);
-
-    const handleChange = (event, newValue) => {
-        setValue(newValue);
-    };
-
-    const handleChangeIndex = (index) => {
-        setValue(index);
-    };
-
-    const [anchorEl, setAnchorEl] = React.useState(null);
-    const open = Boolean(anchorEl);
-
-    const handleClick = (event) => {
-        setAnchorEl(event.currentTarget);
-    };
-
-    const handleClose = () => {
-        setAnchorEl(null);
-    };
-
-    const handleClickVariant = (variant) => () => {
-        // variant could be success, error, warning, info, or default
-    };
+    // const [anchorEl, setAnchorEl] = React.useState(null);
+    // const handleClick = (event) => {
+    //     setAnchorEl(anchorEl ? null : event.currentTarget);
+    //     //console.log( "event.currentTarget", event.currentTarget )
+    // };
+    // const handleClose = () => {
+    // };
+    // const open = Boolean(anchorEl);
+    // const idP = open ? 'simple-popper' : undefined;
 
     const { enqueueSnackbar } = useSnackbar();
 
     const setStarred = (id, bool) => {
-        //console.log(id, bool)
+        console.log("idSt", id, bool)
         let answer
         let value
         if (bool) {
@@ -290,6 +275,43 @@ const CoursesList = inject('store')(observer(({ store }) => {
             });
     }
 
+    const clickedHiddenCourse = (id, bool) => {
+        store.storeClickedMoreVertIcon(id, false)
+        console.log("id", id)
+        let answer = { "a": "hide" }
+        store.postDataScr(`${store.url}/courses/${id}/preference/`, answer)
+            .then((data) => {
+                console.log(data)
+                if (data != undefined) {
+
+                    if (data.a == true) {
+                        store.setOneCourseHidden(id)
+                        enqueueSnackbar('Курс успешно скрыт', { variant: 'success' });
+                    } else {
+                        enqueueSnackbar('Что-то пошло не так', { variant: 'error' });
+                    }
+                }
+            });
+
+    }
+
+    const clearHidden = () => {
+        store.getDataScr(`${store.url}/test/`).then(() => {
+
+        })
+    }
+
+    const [anchorEl, setAnchorEl] = React.useState(null);
+
+    const clickedMoreVertIcon = (id, openMenu, event) => {
+        if (openMenu == undefined) {
+            // setAnchorEl(anchorEl ? null : event.currentTarget)
+            store.storeClickedMoreVertIcon(id, true, event.currentTarget)
+        } else {
+            store.storeClickedMoreVertIcon(id, !openMenu, event.currentTarget)
+        }
+    }
+
     return (
 
         <Grid container className={classes.cardbegin}>
@@ -332,7 +354,7 @@ const CoursesList = inject('store')(observer(({ store }) => {
                                         <IconButton onClick={() => setStarred(course.id, course.starred)} color="primary" aria-label="add an alarm">
                                             {!course.starred && <StarBorderIcon className={classes.icons} />}
                                             {course.starred && <StarIcon className={classes.icons} />}
-                                        </IconButton>
+                                        </IconButton> 
                                     </Grid>
                                     <Grid className={classes.CardContentSmallActionButtom}>
                                         <IconButton onClick={() => setPinned(course.id, course.pinned)} color="primary" aria-label="add an alarm">
@@ -341,35 +363,21 @@ const CoursesList = inject('store')(observer(({ store }) => {
                                         </IconButton>
                                     </Grid>
                                     <Grid className={classes.CardContentSmallActionButtom}>
-                                        <IconButton
-                                            aria-label="more"
-                                            aria-controls="long-menu"
-                                            aria-haspopup="true"
-                                            onClick={handleClick}
-                                        >
+                                        <IconButton variant="contained" color="primary" onClick={(event) => clickedMoreVertIcon(course.id, course.openMenu, event)}>
                                             <MoreVertIcon className={classes.icons} />
                                         </IconButton>
-                                        <Menu
-                                            id="long-menu"
-                                            anchorEl={anchorEl}
-                                            keepMounted
-                                            open={open}
-                                            onClose={handleClose}
-                                            PaperProps={{
-                                                style: {
-                                                    maxHeight: ITEM_HEIGHT * 4.5,
-                                                    width: '30ch',
-                                                    //backgroundColor: theme.main.palette.content.border,
-                                                    //color: theme.main.palette.content.text,
-                                                },
-                                            }}
-                                        >
-                                            {options.map((option) => (
-                                                <MenuItem key={option} selected={option === 'Pyxis'} onClick={handleClose}>
-                                                    {option}
-                                                </MenuItem>
-                                            ))}
-                                        </Menu>
+                                        <Popper className={classes.popper} id={undefined} open={course.openMenu} anchorEl={course.openMenuTarget}>
+                                            <Paper className={classes.popper}>
+                                                <MenuList
+                                                    id="composition-menu"
+                                                    aria-labelledby="composition-button"
+                                                >
+                                                    <MenuItem onClick={() => clickedHiddenCourse(course.id, course.starred)}>Скрыть курс</MenuItem>
+                                                    <MenuItem onClick={() => clearHidden()}>Пожаловаться</MenuItem>
+                                                    {/* <MenuItem onClick={handleClose}>Logout</MenuItem> */}
+                                                </MenuList>
+                                            </Paper>
+                                        </Popper>
                                     </Grid>
                                 </Grid>
                             </CardContent>
