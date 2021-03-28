@@ -11,6 +11,7 @@ import ShareOutlinedIcon from '@material-ui/icons/ShareOutlined';
 import StarBorderIcon from '@material-ui/icons/StarBorder';
 import StarIcon from '@material-ui/icons/Star';
 import PushPinIcon from '@material-ui/icons/PushPin';
+import PushPinOutlinedIcon from '@material-ui/icons/PushPinOutlined';
 import Page from 'react-page-loading'
 
 import { SnackbarProvider, useSnackbar } from 'notistack';
@@ -114,7 +115,10 @@ const useStyles = makeStyles((theme) => ({
     icons: {
         color: theme.main.palette.content.icon,
     },
-    iconsPush: {
+    iconsStarPush: {
+        color: "#ffeb3b",
+    },
+    iconsPinPush: {
         color: "#8bc34a",
     },
     Menu: {
@@ -353,13 +357,13 @@ const CoursesList = inject('store')(observer(({ store }) => {
                                     <Grid className={classes.CardContentSmallActionButtom}>
                                         <IconButton onClick={() => setStarred(course.id, course.starred)} color="primary" aria-label="add an alarm">
                                             {!course.starred && <StarBorderIcon className={classes.icons} />}
-                                            {course.starred && <StarIcon className={classes.icons} />}
+                                            {course.starred && <StarIcon className={classes.iconsStarPush} />}
                                         </IconButton> 
                                     </Grid>
                                     <Grid className={classes.CardContentSmallActionButtom}>
                                         <IconButton onClick={() => setPinned(course.id, course.pinned)} color="primary" aria-label="add an alarm">
-                                            {!course.pinned && <PushPinIcon className={classes.icons} />}
-                                            {course.pinned && <PushPinIcon className={classes.iconsPush} />}
+                                            {!course.pinned && <PushPinOutlinedIcon className={classes.icons} />}
+                                            {course.pinned && <PushPinIcon className={classes.iconsPinPush} />}
                                         </IconButton>
                                     </Grid>
                                     <Grid className={classes.CardContentSmallActionButtom}>

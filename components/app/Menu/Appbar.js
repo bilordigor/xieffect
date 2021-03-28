@@ -3,7 +3,7 @@ import * as React from 'react';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
 
-import { SwipeableDrawer, Tabs, Tab, Dialog, TransitionProps, Slide, CssBaseline, Box, IconButton, InputBase, FormControlLabel, Switch, withStyles, Tooltip, Fab, BottomNavigation, BottomNavigationAction, Hidden, ClickAwayListener, AppBar, Toolbar, Typography, Drawer, List, Avatar, Grid, Paper, Button, Divider, ListItem, ListItemIcon, ListItemText, MenuItem, MenuList, Grow, Popper, makeStyles, useTheme } from '@material-ui/core';
+import { FormControl, Input, InputAdornment, SwipeableDrawer, Tabs, Tab, Dialog, TransitionProps, Slide, CssBaseline, Box, IconButton, InputBase, FormControlLabel, Switch, withStyles, Tooltip, Fab, BottomNavigation, BottomNavigationAction, Hidden, ClickAwayListener, AppBar, Toolbar, Typography, Drawer, List, Avatar, Grid, Paper, Button, Divider, ListItem, ListItemIcon, ListItemText, MenuItem, MenuList, Grow, Popper, makeStyles, useTheme } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 
 import AddIcon from '@material-ui/icons/Add';
@@ -130,7 +130,11 @@ const useStyles = makeStyles((theme) => ({
         '&:hover': {
             backgroundColor: theme.main.palette.help.green,
         }
-    }
+    },
+    icons: {
+        color: theme.main.palette.content.text,
+
+    },
 }));
 
 const Appbar = inject('store')(observer(({ store }) => {
@@ -174,6 +178,21 @@ const Appbar = inject('store')(observer(({ store }) => {
             })
     }
 
+    //education
+    const clickedSearch = (event) => {
+        event.preventDefault()
+        store.counterZero()
+        store.setAllLoading(false)
+        store.clearCoursesList()
+        console.log("filtersSerch:", store.coursesFilters)
+        loadingMoreCourses()
+    }
+
+    const handleChange = () => (event) => {
+        store.setSearchValue(event.target.value)
+        //setValues({ ...values, [prop]: event.target.value });
+    };
+
     return (
         <>
             {/* Кнопка-иконка меню (Отображается всегда, при этом на мобильных платформах исчезает т.к. меню переносится вниз в горизонтальное положение) */}
@@ -215,50 +234,27 @@ const Appbar = inject('store')(observer(({ store }) => {
             < Grid container direction="row" justifyContent="flex-end" >
                 {/* Набор инструментов для вкладки Образование */}
                 {
-                    // router.pathname === '/app/education' && <>
-                    //     {/* Поиск по курсам. Только НЕ для мобильной версии */}
-                    //     {!openSearch && <Hidden only={['xs', 'sm']}>
-                    //         <Paper component="form" className={classes.GridHeaderSearch}>
-                    //             <InputBase
-                    //                 className={classes.input}
-                    //                 placeholder="Поиск курсов"
-                    //                 inputProps={{ 'aria-label': 'Поиск курсов' }}
-                    //             />
-                    //             <Divider className={classes.divider} orientation="vertical" />
-                    //             <IconButton type="submit" className={classes.iconButton} aria-label="search">
-                    //                 <SearchIcon />  {/*  className={classes.iconButtonSearch} */}
-                    //             </IconButton>
-                    //         </Paper>
-                    //     </Hidden>}
-                    //     {/* Кнопка-иконка для открытия панели поиска в мобильной версии. (Видна только в мобильной версии)  */}
-                    //     {!openSearch && <Hidden mdUp>
-                    //         <IconButton onClick={setNewOpenSearch} className={classes.iconButton}>
-                    //             <SearchIcon className={classes.iconButtonSearch} />
-                    //         </IconButton>
-                    //     </Hidden>}
-                    //     {/* Панель поиска, открывающаяся для мобильной версии при нажатии кнопки-иконки поиска */}
-                    //     {openSearch && <Paper component="form" className={classes.gridHeaderSearchMobile}>
-                    //         <InputBase
-                    //             className={classes.input}
-                    //             placeholder="Поиск курсов"
-                    //             inputProps={{ 'aria-label': 'Поиск курсов' }}
-                    //         />
-                    //         <Divider className={classes.divider} orientation="vertical" />
-                    //         <IconButton type="submit" className={classes.iconButton} aria-label="search">
-                    //             <SearchIcon />  {/*  className={classes.iconButtonSearch} */}
-                    //         </IconButton>
-                    //         <Divider className={classes.divider} orientation="vertical" />
-                    //         <IconButton onClick={setNewOpenSearch} className={classes.iconButton}>
-                    //             <ExitToAppIcon />  {/*  className={classes.iconButtonSearch} */}
-                    //         </IconButton>
-                    //     </Paper>}
-                    //     {/* Кнопка-иконка создания новых курсов */}
-                    //     {/* <LightTooltip title="Создать курс">
-                    //         <Fab size="medium" aria-label="add" className={classes.addCourse}>
-                    //             <AddIcon />
-                    //         </Fab>
-                    //     </LightTooltip> */}
-                    // </>
+                    router.pathname === '/app/education' && <>
+                        <FormControl className={classes.formControl}>
+                            {/* <InputLabel htmlFor="standard-adornment-password"><Typography className={classes.typographyInputLabel}> Поиск </Typography>  </InputLabel> */}
+                            <Input
+                                type='text'
+                                placeholder="Поиск"
+                                value={store.coursesFilters["search"]}
+                                onChange={handleChange()}
+                                endAdornment={
+                                    <InputAdornment position="end">
+                                        <IconButton
+                                            onClick={(event) => clickedSearch(event)}
+                                        //onMouseDown={handleMouseDownPassword}
+                                        >
+                                            <SearchIcon className={classes.icons} />
+                                        </IconButton>
+                                    </InputAdornment>
+                                }
+                            />
+                        </FormControl>
+                    </>
 
                 }
                 {

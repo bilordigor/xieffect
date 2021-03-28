@@ -8,7 +8,6 @@ import ShareOutlinedIcon from '@material-ui/icons/ShareOutlined';
 import Page from 'react-page-loading'
 
 import TuneIcon from '@material-ui/icons/Tune';
-import SearchIcon from '@material-ui/icons/Search';
 import { useSnackbar } from 'notistack';
 
 import { inject, observer } from 'mobx-react'
@@ -106,6 +105,11 @@ const useStyles = makeStyles((theme) => ({
     },
     typographyInputLabel: {
         color: theme.main.palette.content.text,
+    },
+    applyButton: {
+        marginLeft: 8,
+        marginTop: 8,
+        marginBottom: 8,
     }
 
 }));
@@ -134,19 +138,7 @@ const Chipper = inject('store')(observer(({ store, loadingMoreCourses }) => {
         setOpen(false)
     }
 
-    const clickedSearch = (event) => {
-        event.preventDefault()
-        store.counterZero()
-        store.setAllLoading(false)
-        store.clearCoursesList()
-        console.log("filtersSerch:", store.coursesFilters)
-        loadingMoreCourses()
-    }
 
-    const handleChange = () => (event) => {
-        store.setSearchValue(event.target.value)
-        //setValues({ ...values, [prop]: event.target.value });
-    };
 
 
     return (
@@ -162,25 +154,11 @@ const Chipper = inject('store')(observer(({ store, loadingMoreCourses }) => {
                     <Typography className={classes.labelTypography}> Фильтры </Typography>
                     <TuneIcon className={classes.icons} />
                 </Button>
-                <FormControl className={classes.formControl}>
-                    {/* <InputLabel htmlFor="standard-adornment-password"><Typography className={classes.typographyInputLabel}> Поиск </Typography>  </InputLabel> */}
-                    <Input
-                        type='text'
-                        placeholder="Поиск"
-                        value={store.coursesFilters["search"]}
-                        onChange={handleChange()}
-                        endAdornment={
-                            <InputAdornment position="end">
-                                <IconButton
-                                    onClick={(event) => clickedSearch(event)}
-                                //onMouseDown={handleMouseDownPassword}
-                                >
-                                    <SearchIcon className={classes.icons}/>
-                                </IconButton>
-                            </InputAdornment>
-                        }
-                    />
-                </FormControl>
+
+                {open && <Button className={classes.applyButton} variant="contained" onClick={clickedLoadingCourses}>
+                    <Typography className={classes.labelTypographyAccept}> Применить </Typography>
+                </Button>}
+
             </Grid>
             <Divider />
             { open && <Grid
@@ -373,12 +351,8 @@ const Chipper = inject('store')(observer(({ store, loadingMoreCourses }) => {
                 ))
             } */}
             {/* { open && <Divider />} */}
-            { open && <Grid className={classes.gridLabelTypographyAccept} container>
-                <Button variant="contained" onClick={clickedLoadingCourses}>
-                    <Typography className={classes.labelTypographyAccept}> Применить </Typography>
-                </Button>
-            </Grid>}
-            { open && <Divider />}
+
+            {/* { open && <Divider />} */}
         </Grid>
     )
 }));
