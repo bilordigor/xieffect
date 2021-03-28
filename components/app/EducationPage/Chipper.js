@@ -1,14 +1,14 @@
 import React from 'react';
 import clsx from 'clsx';
 
-import { Chip, Divider, IconButton, CardMedia, Avatar, CardContent, CardHeader, Menu, MenuItem, Button, Card, CardActions, Grid, Box, Typography, makeStyles, useTheme } from '@material-ui/core';
+import { FormControl, InputLabel, InputAdornment, Input, Chip, Divider, IconButton, CardMedia, Avatar, CardContent, CardHeader, Menu, MenuItem, Button, Card, CardActions, Grid, Box, Typography, makeStyles, useTheme } from '@material-ui/core';
 
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import ShareOutlinedIcon from '@material-ui/icons/ShareOutlined';
 import Page from 'react-page-loading'
 
 import TuneIcon from '@material-ui/icons/Tune';
-
+import SearchIcon from '@material-ui/icons/Search';
 import { useSnackbar } from 'notistack';
 
 import { inject, observer } from 'mobx-react'
@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
         marginBottom: 8,
         width: "calc(100% - 12px)",
         //height: 30,
-        borderRadius: 4,    
+        borderRadius: 4,
         background: theme.main.palette.content.background,
     },
     gridChip: {
@@ -100,6 +100,12 @@ const useStyles = makeStyles((theme) => ({
         paddingTop: 8,
         paddingLeft: 8,
         paddingBottom: 8,
+    },
+    formControl: {
+        marginBottom: 4,
+    },
+    typographyInputLabel: {
+        color: theme.main.palette.content.text,
     }
 
 }));
@@ -112,32 +118,69 @@ const Chipper = inject('store')(observer(({ store, loadingMoreCourses }) => {
     const [open, setOpen] = React.useState(false);
 
     const chipClickedA = (name, key) => {
-        store.counterZero()
         store.chipperClickAny(name, key)
     }
 
     const chipClickedO = (key) => {
-        store.counterZero()
         store.chipperClickOneSort(key)
-        
+
     }
 
     const clickedLoadingCourses = () => {
+        store.counterZero()
         store.setAllLoading(false)
         store.clearCoursesList()
         loadingMoreCourses()
         setOpen(false)
     }
 
+    const clickedSearch = (event) => {
+        event.preventDefault()
+        store.counterZero()
+        store.setAllLoading(false)
+        store.clearCoursesList()
+        console.log("filtersSerch:", store.coursesFilters)
+        loadingMoreCourses()
+    }
+
+    const handleChange = () => (event) => {
+        store.setSearchValue(event.target.value)
+        //setValues({ ...values, [prop]: event.target.value });
+    };
+
 
     return (
 
         <Grid container direction="column" className={classes.root}>
-            <Grid container>
+            <Grid
+                container
+                direction="row"
+                justifyContent="flex-start"
+                alignItems="center"
+            >
                 <Button onClick={() => setOpen(!open)}>
                     <Typography className={classes.labelTypography}> Фильтры </Typography>
                     <TuneIcon className={classes.icons} />
                 </Button>
+                <FormControl className={classes.formControl}>
+                    {/* <InputLabel htmlFor="standard-adornment-password"><Typography className={classes.typographyInputLabel}> Поиск </Typography>  </InputLabel> */}
+                    <Input
+                        type='text'
+                        placeholder="Поиск"
+                        value={store.coursesFilters["search"]}
+                        onChange={handleChange()}
+                        endAdornment={
+                            <InputAdornment position="end">
+                                <IconButton
+                                    onClick={(event) => clickedSearch(event)}
+                                //onMouseDown={handleMouseDownPassword}
+                                >
+                                    <SearchIcon className={classes.icons}/>
+                                </IconButton>
+                            </InputAdornment>
+                        }
+                    />
+                </FormControl>
             </Grid>
             <Divider />
             { open && <Grid

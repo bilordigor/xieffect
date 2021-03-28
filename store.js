@@ -489,8 +489,14 @@ class Store {
     "counter": 0,
   }
 
+  @action setSearchValue = (value) => {
+    this.coursesFilters["search"] = value
+    console.log(this.coursesFilters["search"])
+  }
+
   @action collectFilters = () => {
     console.log("Collect")
+    let search =  this.coursesFilters["search"]
     this.coursesFilters = {
       "filters": {
         "global": [],
@@ -526,6 +532,7 @@ class Store {
       }
     }
     this.coursesFilters.counter = this.counterCourses
+    this.coursesFilters["search"] = search
     console.log("coursesFilters:", this.coursesFilters)
 
   }

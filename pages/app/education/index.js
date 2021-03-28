@@ -107,7 +107,7 @@ const Education = inject('store')(observer(({ store }) => {
   useEffect(() => {
     store.getDataScr(`${store.url}/filters/`)
       .then((data) => {
-        console.log("filters:", data)
+        console.log("filtersI:", data)
         if (data !== undefined) {
           store.setFiltersGlobal(data)
           loadingMoreCourses()
