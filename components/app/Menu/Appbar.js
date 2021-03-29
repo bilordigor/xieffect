@@ -185,7 +185,7 @@ const Appbar = inject('store')(observer(({ store }) => {
         store.setAllLoading(false)
         store.clearCoursesList()
         console.log("filtersSerch:", store.coursesFilters)
-        loadingMoreCourses()
+        store.loadingMoreCourses()
     }
 
     const handleChange = () => (event) => {

@@ -134,7 +134,7 @@ const Chipper = inject('store')(observer(({ store, loadingMoreCourses }) => {
         store.counterZero()
         store.setAllLoading(false)
         store.clearCoursesList()
-        loadingMoreCourses()
+        store.loadingMoreCourses()
         setOpen(false)
     }
 

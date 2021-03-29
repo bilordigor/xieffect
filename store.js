@@ -496,7 +496,7 @@ class Store {
 
   @action collectFilters = () => {
     console.log("Collect")
-    let search =  this.coursesFilters["search"]
+    let search = this.coursesFilters["search"]
     this.coursesFilters = {
       "filters": {
         "global": [],
@@ -540,6 +540,25 @@ class Store {
   @observable coursesList = [
 
   ]
+
+  @action loadingMoreCourses = () => {
+    console.log("loading new courses")
+    this.setIsLoading(true)
+    this.collectFilters()
+    let filters = this.coursesFilters
+    this.postDataScr(`${this.url}/courses/`, filters)
+      .then((data) => {
+        //console.log("courses:", data)
+        if (data != undefined) {
+          if (data.length < 12) {
+            this.setAllLoading(true)
+          }
+          //console.log(data.length)
+          this.setIsLoading(false)
+          this.addItemsCoursesList(data)
+        }
+      });
+  }
 
   @action clearCoursesList = (data) => {
     this.coursesList = [

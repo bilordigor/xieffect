@@ -110,7 +110,7 @@ const Education = inject('store')(observer(({ store }) => {
         console.log("filtersI:", data)
         if (data !== undefined) {
           store.setFiltersGlobal(data)
-          loadingMoreCourses()
+          store.loadingMoreCourses()
         }
       });
   }, []);
@@ -118,7 +118,7 @@ const Education = inject('store')(observer(({ store }) => {
   const bottomLoading = () => {
     if (!store.allLoading) {
       store.counterUp()
-      loadingMoreCourses()
+      store.loadingMoreCourses()
     }
   }
 
@@ -138,24 +138,7 @@ const Education = inject('store')(observer(({ store }) => {
   //   console.log('Fetch more list items!');
   // }
 
-  const loadingMoreCourses = () => {
-    console.log("loading new courses")
-    store.setIsLoading(true)
-    store.collectFilters()
-    let filters = store.coursesFilters
-    store.postDataScr(`${store.url}/courses/`, filters)
-      .then((data) => {
-        //console.log("courses:", data)
-        if (data != undefined) {
-          if (data.length < 12) {
-            store.setAllLoading(true)
-          }
-          //console.log(data.length)
-          store.setIsLoading(false)
-          store.addItemsCoursesList(data)
-        }
-      });
-  }
+  
 
   return (
     <>
@@ -169,7 +152,7 @@ const Education = inject('store')(observer(({ store }) => {
           {/* <Background src="https://wallpapercave.com/wp/wp5440815.png" /> */}
           <Grid container direction="column" className={classes.main}>
             <Grid className={classes.gridChipper}>
-              <Chipper loadingMoreCourses={loadingMoreCourses} />
+              <Chipper/>
             </Grid>
             <Grid className={classes.gridCoursesList}>
               <CoursesList />
